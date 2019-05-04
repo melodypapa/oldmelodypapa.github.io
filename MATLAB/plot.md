@@ -6,7 +6,7 @@ enter the `help graph2d` to display all the two dimensional graph functions.
 
 ### The Plot Function
 
-* Draw a point (100, 200) on the plot
+Draw a point (100, 200) on the plot
 
 ```MATLAB
 % create coordinate variables and plot a red '*'
@@ -15,7 +15,7 @@ y = 200;
 plot(x, y, 'r*');
 ```
 
-* Change the axes and label (x: 50 - 160; y: 100 - 300). In the call to the **axis** function, the first two values of the vector are the minimum and maximum for the x-axis, and the last two values are the minimum vand maximum for the y-axis.
+Change the axes and label (x: 50 - 160; y: 100 - 300). In the call to the **axis** function, the first two values of the vector are the minimum and maximum for the x-axis, and the last two values are the minimum vand maximum for the y-axis.
 
 ```MATLAB
 axis([50 160 100 300]);
@@ -23,13 +23,13 @@ xlabel('Time');
 ylabel('Money');
 ```
 
-* Put the title on the plot
+Put the title on the plot
 
 ```MATLAB
 title('Time and Money');
 ```
 
-* Draw more than one point
+Draw more than one point on the plot
 
 ```MATLAB
 x = 1:2:12;
@@ -37,16 +37,16 @@ y = randi([1, 20], 1, 6);
 plot(x, y);
 ```
 
-* Draw the point without x axis
+Draw the point without x axis
 
 ```MATLAB
 y = randi([1, 20], 1, 6);
 plot(y);
 ```
 
-### Customizing Plot
+### How to customize Plot with color, symobl and line styles
 
-* Line color
+Line color:
 
 | Code        | Color         |
 | ------------|:-------------:|
@@ -59,7 +59,7 @@ plot(y);
 | k           |  black        |
 | w           |  white        |
 
-* plot symbols (markers)
+Plot symbols (markers)
 
 | Code        | Marker           |
 | ------------|:----------------:|
@@ -77,7 +77,7 @@ plot(y);
 | p           |  pentagram       |
 | h           |  hexagram        |
 
-* line types
+Line types
 
 | Code        | Line Type        |
 | ------------|:----------------:|
@@ -88,8 +88,25 @@ plot(y);
 
 ### Simple Related Plot Functions
 
-* **clf** : clears the Figure Window by removing everything from it.
-* **figure** : creates a new, empty Figure Window when called without any arguments.
+* **clf**
+
+    clears the Figure Window by removing everything from it.
+
+* **figure**
+
+    creates a new, empty Figure Window when called without any arguments.
+
+* **hold**
+
+    toggles to freeze the current graph in the Figure Window.
+
+* **legend**
+
+    displays strings or character vectors passed to it in a legend box in the Figure Window.
+
+* **grid**
+
+    toggles to display grid lines on a graph or not.
 
 ## Graph 3D
 
