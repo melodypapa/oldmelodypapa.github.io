@@ -43,5 +43,21 @@ fprintf('The number is %8.3f\n', number);
 
 ### Parctice 3.4
 
-> “Modify the script plotonepoint to prompt the user for the time and temperature, and set the axes based on these values.”
+> “Modify the script plotonepoint.m to prompt the user for the time and temperature, and set the axes based on these values.”
 
+```MATLAB
+% This is a really simple plot of just one point!
+
+% Create coordinate variables and plot a red '⁎'
+x = input('Please enter the x coordinate:');
+y = input('Please enter the y coordinate:');
+plot(x,y,'r*');
+
+% Change the axes and label them
+axis([x-5  x+5  y-5 y+5]);
+xlabel('Time');
+ylabel('Temperature');
+
+% Put a title on the plot
+title('Time and Temp');
+```

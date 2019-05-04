@@ -27,6 +27,7 @@ ylabel('Money');
 
 ```MATLAB
 title('Time and Money');
+```
 
 ## Graph 3D
 
