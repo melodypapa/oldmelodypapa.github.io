@@ -21,3 +21,9 @@ A multi-line comments begins with **%{** and end with **%}**. Everything betewee
     2. second line
 }%
 ```
+
+### Block comment
+
+The first comment at the beginning of the script file is called a **block comment**. The **block comment** will be displayed in the **help** command.
+
+It is also for the **lookfor** command searches through.

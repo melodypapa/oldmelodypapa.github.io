@@ -2,7 +2,7 @@
 
 ## Language
 
-[The pages shows you how to use the MATLAB language features, from the variables to classes.](language.md)
+The [pages](language.md) shows you the overview MATLAB language features, from the variables to classes.
 
 ## Videos
 
