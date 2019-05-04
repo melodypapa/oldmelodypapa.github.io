@@ -28,3 +28,20 @@ length = input('Enter the length:')
 feet_or_meters = input('Is that f(eet) or m(eters)?:', 's')
 
 ```
+
+### Parctice 3.3
+
+> Write a script to prompt the user separately for a character and a number, and print the character in a field width of 3 and the number left justified in a field width of 8 with 3 decimal places. Test this by entering numbers with varying widths.
+
+```MATLAB
+character = input('Please enter a character:', 's');
+fprintf('The character is %3c\n', character);
+
+number = input('Please enter a number:');
+fprintf('The number is %8.3f\n', number);
+```
+
+### Parctice 3.4
+
+> “Modify the script plotonepoint to prompt the user for the time and temperature, and set the axes based on these values.”
+

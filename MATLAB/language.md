@@ -57,8 +57,58 @@ name =
 * How to enter a vector?
 
 ```
->> vector = input('Enter the vector:', 's')
+>> vector = input('Enter the vector:')
 Enter the vector: [1 2 3]
 vector =
     1 2 3
+```
+
+### Output functions (disp and fprintf)
+
+#### disp function
+
+The **disp** function is used to display the result of an expression. But **disp** does not allow formatting.
+
+```MATLAB
+>> disp('String')
+String
+>> disp(2 ^ 2)
+4
+```
+
+#### fprintf function
+
+The **fprintf** function can format the output.
+
+***
+>> fprintf("3 + 4 = %d\n", 3 + 4);
+3 + 4 = 7
+
+#### Printing Vectors and Matrices
+
+```MATLAB
+>> mat = [1 2 3; 4 5 6]
+mat =
+   1    2    3
+   4    5    6
+```
+
+* Print each element in each line
+
+```MATLAB
+fprintf('%d\n', mat)
+```
+
+* Print three elements in each line
+
+```MATLAB
+fprintf('%d %d %d\n', mat)
+```
+
+* The **disp** function
+
+It may be much easier to use, the output of vector will be formatted automatically.
+
+```MATLAB
+disp(mat)
 ```
