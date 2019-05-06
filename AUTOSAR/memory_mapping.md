@@ -10,15 +10,73 @@ The memory mapping file name shall be {Mip}_MemMap.h for basic software modules 
 
 The usual patterns for Memory Allocation Keywords are:
 
-* {PREFIX}_START_SEC_CODE[_{codePeriode}][_{safety}][_{coreScope}]
-* {PREFIX}_STOP_SEC_CODE[_{codePeriode}][_{safety}][_{coreScope}]
-* {PREFIX}_START_SEC_VAR_{INIT_POLICY}[_{safety}][_{coreScope}]_{ALIGNMENT}
-* {PREFIX}_STOP_SEC_VAR_{INIT_POLICY}[_{safety}][_{coreScope}]_{ALIGNMENT}
+* {PREFIX}\_START_SEC_CODE[\_{codePeriode}][\_{safety}][\_{coreScope}]
+* {PREFIX}\_STOP_SEC_CODE[\_{codePeriode}][\_{safety}][\_{coreScope}]
+* {PREFIX}\_START_SEC_VAR_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_STOP_SEC_VAR_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_START_SEC_VAR_FAST_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_STOP_SEC_VAR_FAST_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_START_SEC_VAR_SLOW_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_STOP_SEC_VAR_SLOW_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_START_SEC_INTERNAL_VAR_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_STOP_SEC_INTERNAL_VAR_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
 
 ### PREFIX
 
-* <PREFIX> is composed according <snp>[_<vi>_<ai>] for basic software modules
-* <PREFIX> is the shortName of the software component type for software components (case sensitive)
+* \<PREFIX\> is composed according <snp>[\_<vi>\_<ai>] for basic software modules
+* \<PREFIX\> is the shortName of the software component type for software components (case sensitive)
+
+### Section Type
+
+**SEC_VAR (VAR)**
+To be used for all global or static variables.
+
+**SEC_VAR_FAST (VAR)**
+To be used for all global or static variables.
+To be used for all global or static variables that have at least one of the following properties:
+
+* accessed bitwise
+* frequently used
+* high number of accesses in source code
+  
+Some platforms allow the use of bit instructions for variables located in this specific RAM area as well as shorter addressing instructions. This saves code and runtime.
+
+**SEC_VAR_SLOW (VAR)**
+To be used for all infrequently accessed global or static variables.
+
+**SEC_INTERNAL_VAR (VAR)**
+To be used for global or static variables those are accessible from a calibration tool.
+
+**SEC_VAR_SAVED_ZONE (VAR)**
+To be used for RAM buffers of variables saved in non volatile memory.
+{anyNamePart} denotes the specific content of the saved zone.
+
+**SEC_CONST_SAVED_RECOVERY_ZONE (CONST)**
+To be used for ROM buffers of variables saved in non volatile memory.
+{anyNamePart} denotes the specific content of the recovery zone
+
+**SEC_CONST (COSNT)**
+To be used for global or static constants.
+
+**SEC_CALIB (CALPRM)**
+To be used for calibration constants.
+
+**SEC_CONFIG_DATA (CONFIG-DATA)**
+Constants with attributes that show that they reside in one segment for module configuration.
+
+**SEC_CODE (CODE)**
+To be used for mapping code to application block, boot block, external flash etc.
+
+**SEC_CALLOUT_CODE (CODE)**
+To be used for mapping callouts of the BSW Modules which shall typically use the global linker settings for callouts
+
+**SEC_CODE_FAST (CODE)**
+To be used for code that shall go into fast code memory segments. The FAST sections should be used when the execution does not happen in a well defined period times but with the knowledge of high frequent access and
+/or high execution time. For example, a callback for a frequent notification.
+
+**SEC_CODE_SLOW (CODE)**
+To be used for code that shall go into slow code memory segments. The SLOW sections should be used when the execution does not happen in a well defined period times but with the knowledge of low frequent access. For
+example, a callback in case of seldom error.
 
 ### ALIGNMENT
 
