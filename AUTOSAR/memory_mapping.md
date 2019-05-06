@@ -150,3 +150,46 @@ The part <NAME> from may contain the following core scope keywords to indicate t
     code/data must be mapped by the integrator to a specific core (Core 0, Core 1, ...) in case of multi-core ECUs.
 
 The {coreScope} tag is optional after the safety keyword. If no {coreScope} keyword is added the default shall be treated as GLOBAL.
+
+## How to use mem map file in the source file
+
+### For example (BSW Module):
+
+```C
+#define EEP_START_SEC_VAR_INIT_16
+#include "Eep_MemMap.h"
+static uint16 EepTimer = 100;
+static uint16 EepRemainingBytes = 16;
+#define EEP_STOP_SEC_VAR_INIT_16
+#include "Eep_MemMap.h"
+```
+
+### For example (SWC):
+
+```C
+#define Abc_START_SEC_CODE
+#include "Abc_MemMap.h"
+/* --- Write a Code here */
+#define Abc_STOP_SEC_CODE
+#include "Abc_MemMap.h"
+```
+
+### For example (ecuconfig)
+
+```xml
+<MEMORY-SECTION>
+  <SHORT-NAME>COM_SOMECALLOUT_CODE</SHORT-NAME>
+  <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/CALLOUT_CODE</SWADDRMETHOD-REF>
+</MEMORY-SECTION>
+```
+
+### For example (Code Section)
+
+```C
+#define MySwc_START_SEC_CODE
+#include "MySwc_MemMap.h"
+FUNC(void, MySwc_CODE) Run1 (void);
+#define MySwc_STOP_SEC_CODE
+#include "MySwc_MemMap.h"
+```
+
