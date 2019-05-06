@@ -15,3 +15,7 @@ And the dart/python/java are also my favorite. I hope all my information can hel
 ## Python
 
 ## Java
+
+## AUTOSAR
+
+* [Memory Mapping](AUTOSAR/memory_mapping.md)

@@ -6,7 +6,7 @@
 
 A signle-line comment begins with **%**. Everything between **%** to the end of the lineis ignored when the script is executed.
 
-```MATLAB
+```MATLAB
 % This is a line comment
 ```
 
@@ -14,7 +14,7 @@ A signle-line comment begins with **%**. Everything between **%** to the end of 
 
 A multi-line comments begins with **%{** and end with **%}**. Everything beteween **%{** and **%}**. is ignored when the script is execute.
 
-```MATLAB
+```MATLAB
 %{
     this is a mutl-line comments example:
     1. first line
@@ -36,7 +36,7 @@ Input statements read in values from the stdin or standard input device. The **i
 
 * How to enter a number in the prompt?
 
-```
+```MATLAB
 >> number = input('Enter the number:')
 Enter the number: 5
 number =
@@ -47,7 +47,7 @@ number =
 
 If the character or string is desired, the second funtion argument shall be **'s'**.
 
-```
+```MATLAB
 >> name = input('Enter the name:', 's')
 Enter the number: melodypapa
 name =
@@ -56,7 +56,7 @@ name =
 
 * How to enter a vector?
 
-```
+```MATLAB
 >> vector = input('Enter the vector:')
 Enter the vector: [1 2 3]
 vector =
@@ -86,7 +86,7 @@ The **fprintf** function can format the output.
 
 #### Printing Vectors and Matrices
 
-```MATLAB
+```MATLAB
 >> mat = [1 2 3; 4 5 6]
 mat =
    1    2    3
@@ -95,13 +95,13 @@ mat =
 
 * Print each element in each line
 
-```MATLAB
+```MATLAB
 fprintf('%d\n', mat)
 ```
 
 * Print three elements in each line
 
-```MATLAB
+```MATLAB
 fprintf('%d %d %d\n', mat)
 ```
 
@@ -109,6 +109,6 @@ fprintf('%d %d %d\n', mat)
 
 It may be much easier to use, the output of vector will be formatted automatically.
 
-```MATLAB
+```MATLAB
 disp(mat)
 ```

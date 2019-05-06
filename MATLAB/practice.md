@@ -6,7 +6,7 @@
 
 > Write a script to calculate the circumference of a circle (C = 2 πr). Comment the script.
 
-```MATLAB
+```MATLAB
 
 % Calculate the circumference of a circle (C = 2 πr)
 
@@ -22,7 +22,7 @@ C = 2 * pi * radium
 >
 > Is that f(eet)or m(eters)?: m
 
-```MATLAB
+```MATLAB
 length = input('Enter the length:')
 
 feet_or_meters = input('Is that f(eet) or m(eters)?:', 's')
@@ -33,7 +33,7 @@ feet_or_meters = input('Is that f(eet) or m(eters)?:', 's')
 
 > Write a script to prompt the user separately for a character and a number, and print the character in a field width of 3 and the number left justified in a field width of 8 with 3 decimal places. Test this by entering numbers with varying widths.
 
-```MATLAB
+```MATLAB
 character = input('Please enter a character:', 's');
 fprintf('The character is %3c\n', character);
 
@@ -45,7 +45,7 @@ fprintf('The number is %8.3f\n', number);
 
 > “Modify the script plotonepoint.m to prompt the user for the time and temperature, and set the axes based on these values.”
 
-```MATLAB
+```MATLAB
 % This is a really simple plot of just one point!
 
 % Create coordinate variables and plot a red '⁎'
