@@ -48,7 +48,7 @@ fprintf('The number is %8.3f\n', number);
 ```MATLAB
 % This is a really simple plot of just one point!
 
-% Create coordinate variables and plot a red '⁎'
+% Create coordinate variables and plot a red '*'
 x = input('Please enter the x coordinate:');
 y = input('Please enter the y coordinate:');
 plot(x,y,'r*');
@@ -60,4 +60,29 @@ ylabel('Temperature');
 
 % Put a title on the plot
 title('Time and Temp');
+```
+
+### Practice 3.5
+
+> “Modify the plot2figs script using the axis function so that all points are easily seen.”
+
+```MATLAB
+% This creates 2 different plots, in 2 different
+% Figure window, to demostrate some plot feature
+
+clf
+x = 1:5; % Not necessary
+y1 = [2 11 6 9 3];
+y2 = [4 5 8 6 2];
+% Put a bar chart in Figure 1
+figure(1)
+bar(x, y1)
+% Put plots using differnt y values on one plot
+figure(2)
+plot(x, y1, 'k')
+hold on
+plot(x, y2, 'ko')
+grid on
+legend('y1', 'y2')
+axis([0 6 0 12])
 ```
