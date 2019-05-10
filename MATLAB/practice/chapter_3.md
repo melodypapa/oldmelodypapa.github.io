@@ -105,3 +105,26 @@ title('exp and log on one graph');
 ```
 
 ## Practice 3.7
+
+> Prompt the user for the number of rows and columns of a matrix, create a matrix with that many rows and columns of random integers, and write it to a file.
+
+```MATLAB
+row = input('Please enter the row:');
+column = input('Please enter the column:');
+
+numbers = randi([1 100], row, column);
+save datafile.dat numbers -ascii;
+```
+
+## Practice 3.8
+
+> “The sales (in billions) for two separate divisions of the ABC Corporation for each of the four quarters of 2013 are stored in a file called “salesfigs.dat”:
+>
+> 1.2 1.4 1.8 1.3
+> 2.2 2.5 1.7 2.9
+>
+> First, create this file (just type the numbers in the Editor, and Save As “salesfigs.dat”).
+> Then, write a script that will
+> load the data from the file into a matrix
+> separate this matrix into 2 vectors.
+> create the plot seen in Figure 3.7 (which uses black circles and stars as the plot symbols).”
