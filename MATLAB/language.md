@@ -1,6 +1,6 @@
 # MATLAB language
 
-## Comments
+c
 
 ### Single-line comments
 
@@ -111,4 +111,31 @@ It may be much easier to use, the output of vector will be formatted automatical
 
 ```MATLAB
 disp(mat)
+```
+
+## Function
+
+Every function shall be stored in a seperate file. And function files have an extension of .m.
+
+### Function Definitions
+
+```MATLAB
+function outputargument = functionname(input arguments)
+% Comment description of the function
+
+Statement ...
+
+end
+```
+
+* For example
+
+```MATLAB
+function area = circle_area(rad)
+% circlearea will calcuate the area of a cirle
+% Fomrat of call: circle_area(rad)
+% Returns the area
+
+area = pi * rad * rad;
+end
 ```

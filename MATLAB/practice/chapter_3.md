@@ -121,10 +121,29 @@ save datafile.dat numbers -ascii;
 > “The sales (in billions) for two separate divisions of the ABC Corporation for each of the four quarters of 2013 are stored in a file called “salesfigs.dat”:
 >
 > 1.2 1.4 1.8 1.3
+> 
 > 2.2 2.5 1.7 2.9
 >
 > First, create this file (just type the numbers in the Editor, and Save As “salesfigs.dat”).
-> Then, write a script that will
-> load the data from the file into a matrix
+>
+> Then, write a script that will load the data from the file into a matrix.
+>
 > separate this matrix into 2 vectors.
+>
 > create the plot seen in Figure 3.7 (which uses black circles and stars as the plot symbols).”
+
+```MATLAB
+load salesfigs.dat
+salesfigs
+y1 = salesfigs(1,:)
+y2 = salesfigs(2,:)
+
+clf
+plot(y1, 'ko')
+hold on
+plot(y2, 'b.')
+legend('Division A','Division B')
+xlabel('Quarter')
+ylabel('Sales (billions)')
+title('ABC corporation sales:2013')
+```
