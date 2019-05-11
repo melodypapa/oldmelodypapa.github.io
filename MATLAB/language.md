@@ -1,6 +1,6 @@
 # MATLAB language
 
-c
+## Comments
 
 ### Single-line comments
 
@@ -148,10 +148,46 @@ The "doc fnmame" command will display the function explanations with the MATLAB 
 
 If all of the arguments to be passed to a function are strings, and the function does not return any values, it can be used as a commend
 
-The command 
-
 > type script1
 
 equals to call the function with 'script1' string argument.
 
 > type('script1')
+
+## Exception
+
+MATLAB can throw an exception with the **error** function.
+
+```MATLAB
+error('Sorry; %.2f is not a valid radius\n',radius);
+```
+
+## Branching Statements
+
+### if statements
+
+```MATALAB
+if condition
+    action
+end
+```
+
+The condition shall be the logical value. In MATLAB the concept of false can be represented by the value of 0, and the concept of true can be reprsented by any nonzero value.
+
+```MATLAB
+if 5
+    disp('Yes, this is true');
+end
+```
+
+### if-else statements
+
+```MATLAB
+if condition
+    action1
+else
+    action2
+ends
+```
+
+### switch statemnets
