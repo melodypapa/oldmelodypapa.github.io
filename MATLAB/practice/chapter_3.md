@@ -147,3 +147,26 @@ xlabel('Quarter')
 ylabel('Sales (billions)')
 title('ABC corporation sales:2013')
 ```
+
+## Practice 3.9
+
+> Write a script that will prompt the user for the radius and height, call the function conevol to calculate the cone volume, and print the result in a nice sentence format. So, the program will consist of a script and the conevol function that it calls.
+
+```MATLAB
+radium = input('Please enter the radium of cone:');
+height = input('Please enter the height of cone:');
+
+volumn = conevol(radium, height);
+fprintf('The volume of the cone is %.2f \n', volumn);
+```
+
+## Practice 3.10
+
+> For a project, we need some material to form a rectangle. Write a function calcrectarea that will receive the length and width of a rectangle in inches as input arguments and will return the area of the rectangle. For example, the function could be called as shown, in which the result is stored in a variable and then the amount of material required is printed, rounded up to the nearest square inch.
+ >> ra = calcrectarea(3.1, 4.4)
+ >>
+ >> ra = 13.6400
+ >>
+ >> fprintf('We need %d sq in.', ceil(ra))
+ >>
+ >> We need 14 sq in.

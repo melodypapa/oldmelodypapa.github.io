@@ -139,3 +139,19 @@ function area = circle_area(rad)
 area = pi * rad * rad;
 end
 ```
+
+The "help fnname" command will display the short explanations (comments) of the function.
+
+The "doc fnmame" command will display the function explanations with the MATLAB help.
+
+### Command and Function
+
+If all of the arguments to be passed to a function are strings, and the function does not return any values, it can be used as a commend
+
+The command 
+
+> type script1
+
+equals to call the function with 'script1' string argument.
+
+> type('script1')
