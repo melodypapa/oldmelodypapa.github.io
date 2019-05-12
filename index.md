@@ -8,7 +8,7 @@ And the dart/python/java are also my favorite. I hope all my information can hel
 
 ## MATLAB
 
-[MATLAB](MATLAB/index.md)
+* [MATLAB](MATLAB/index.md)
 
 ## Flutter
 
