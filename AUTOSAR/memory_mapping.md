@@ -20,10 +20,12 @@ The usual patterns for Memory Allocation Keywords are:
 * {PREFIX}\_STOP_SEC_VAR_SLOW_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
 * {PREFIX}\_START_SEC_INTERNAL_VAR_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
 * {PREFIX}\_STOP_SEC_INTERNAL_VAR_{INIT_POLICY}[\_{safety}][\_{coreScope}]\_{ALIGNMENT}
+* {PREFIX}\_START_SEC_CONST[\_{accessPeriod}][\_{safety}]\_{ALIGNMENT}
+* {PREFIX}\_STOP_SEC_CONST[\_{accessPeriod}][\_{safety}]\_{ALIGNMENT}
 
 ### PREFIX
 
-* \<PREFIX\> is composed according <snp>[\_<vi>\_<ai>] for basic software modules
+* \<PREFIX\> is composed according \<snp\>[\_<vi\>\_<ai\>] for basic software modules
 * \<PREFIX\> is the shortName of the software component type for software components (case sensitive)
 
 ### Section Type
@@ -80,7 +82,7 @@ example, a callback in case of seldom error.
 
 ### ALIGNMENT
 
-The shortcut {ALIGNMENT} means the typical variable alignment. In order to avoid memory gaps variables are allocated separately according their size for the kind of memory sections where a high amount of variables is expected.
+The shortcut \{ALIGNMENT\} means the typical variable alignment. In order to avoid memory gaps variables are allocated separately according their size for the kind of memory sections where a high amount of variables is expected.
 
 **BOOLEAN**
     used for variables and constants of size 1 bit
@@ -105,7 +107,7 @@ In case structures and unions, it shall be allowed to use an alignment larger th
 
 ### INIT_POLICY
 
-The shortcut {INIT_POLICY} means the initialization policy of variables.
+The shortcut \{INIT_POLICY\} means the initialization policy of variables.
 
 **NO_INIT**
     used for variables that are never cleared and never initialized.
@@ -124,13 +126,22 @@ The shortcut {INIT_POLICY} means the initialization policy of variables.
 
 ### codePeriod
 
-{codePeriod} is the typical period time value and unit of the ExecutableEntitys
+\{codePeriod\} is the typical period time value and unit of the ExecutableEntitys
 in this MemorySection. The name part _{codePeriod} is optional. Units are:
 
 * US microseconds
 * MS milli second
 * S second
   
+For example: 100US, 400US, 1MS, 5MS, 10MS, 20MS, 100MS, 1S
+
+### accessPeriod
+
+\{accessPeriod\} is the typical period time value and unit of the ExecutableEntitys in this MemorySection. The name part _{accessPeriod} is optional. Units are:
+
+* US microseconds
+* MS milli second
+* S second
 For example: 100US, 400US, 1MS, 5MS, 10MS, 20MS, 100MS, 1S
 
 ### safety
@@ -192,4 +203,3 @@ FUNC(void, MySwc_CODE) Run1 (void);
 #define MySwc_STOP_SEC_CODE
 #include "MySwc_MemMap.h"
 ```
-
