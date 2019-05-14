@@ -47,3 +47,40 @@ function printsindegorrad
 end
 ```
 
+## Practice 4.3
+
+> Modify the function findargtype to return either 'scalar.', 'row vector.', 'column vector.' or 'matrix.' depending on the input argument
+
+```MATLAB
+function outtype = findargtype(inputarg)
+    [r c] = size(inputarg)
+    if (r == 1 && c == 1)
+        outtype = 'scalar';
+    elseif (r == 1)
+        outtype = 'row vector';
+    elseif (c == 1)
+        outtype = 'column vector';
+    else
+        outtype = 'matrix';
+    end
+end
+```
+
+## Parctice 4.4
+
+> Modify the original function findargtype to use three sepeare **if** statements instead of a nested **if-else** statement
+
+```MATLAB
+function outtype = findargtype(inputarg)
+    [r c] = size(inputarg)
+    if (r == 1 && c == 1)
+        outtype = 'scalar';
+    end
+    if (r == 1 || c == 1)
+        outtype = 'vector';
+    end
+    if (r > 1 && c > 1)
+        outtype = 'matrix';
+    end
+end
+```

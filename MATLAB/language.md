@@ -187,7 +187,30 @@ if condition
     action1
 else
     action2
-ends
+end
+```
+
+### elseif statements
+
+```MATLAB
+if condition1
+    action1
+elseif condition2
+    action2
+else
+    actionn
+end
 ```
 
 ### switch statemnets
+
+```MATLAB
+switch expression
+    case condition1
+        action1
+    case condition2
+        action2
+    otherwise
+        actionn
+end
+```
