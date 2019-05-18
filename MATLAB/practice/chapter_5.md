@@ -14,6 +14,20 @@ end
 ## Practice 5.2
 
 > Write a script prodnnums that is similar to the sumnnums script, but will calculate and print the product of the numbers entered by the user.
+>> answer
+
+```MATLAB
+function result = prodnnums(n)
+% prodnnums results the product of  the n numbers entered by the user
+% Format of call: prodnnums(n)
+    result = 1;
+    for loop = 1:n
+        number = input('Please enter a number:');
+        result = result * number;
+    end % for
+
+end % function
+```
 
 ## Practice 5.3
 
