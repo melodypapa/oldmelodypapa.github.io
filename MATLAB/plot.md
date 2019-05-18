@@ -108,6 +108,12 @@ Line types
 
     toggles to display grid lines on a graph or not.
 
+### subplot function
+
+Subplot creates a matrix of plots in the current Figure Window.
+
+Three arguments are passed to it in the form subplot(r,c,n), where r and c are the dimensions of the matrix and n is the number of the particular plot within this matrix.
+
 ## Graph 3D
 
 enter the `help graph3d` to display all the three dimensional graph functions.
