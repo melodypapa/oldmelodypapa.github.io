@@ -3,6 +3,13 @@
 ## Practice 5.1
 
 > Write a for loop that will print a column of five ⁎’s.
+>> answer:
+
+```MATLAB
+for loop = 1:5
+   fprintf('*\n')
+end
+```
 
 ## Practice 5.2
 
