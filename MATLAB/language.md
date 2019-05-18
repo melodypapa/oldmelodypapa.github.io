@@ -214,3 +214,41 @@ switch expression
         actionn
 end
 ```
+
+More than one choice can be combined with curly braces.
+
+```MATLAB
+switch quiz
+  case {10,9}
+    ...
+  case 8
+    ...
+end
+```
+
+### Menu & listdlg function
+
+The **menu** function can display a Figure Window with push button for the options. But after R2015b, the **menu** command is not recommended any more. It can be replaced with **listdlg** function.
+
+```MATLAB
+K = menu('Choose a color','Red','Blue','Green')
+```
+
+```MATLAB
+d = dir;
+str = {d.name};
+[s,v] = listdlg('PromptString','Select a file:',...
+                'SelectionMode','single',...
+                'ListString',str)
+```
+
+## Isxxx Function
+
+* **isletter** function: It can be used to determine whether the first argument is the letter of the alphabet.
+
+* **isempty** function: It can be used to determine whether the first argument is empty array.
+
+* **isa** function: It can be used to determine whether the first argument is a particular type.
+
+other similar function like **ischar**, **isfloat**, **isinteger**, **islogical**, **isnumeric**, **isstr**, **isreal**, **isvector**, **isrow**, **iscolumn**
+

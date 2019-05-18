@@ -66,7 +66,7 @@ function outtype = findargtype(inputarg)
 end
 ```
 
-## Parctice 4.4
+## Practice 4.4
 
 > Modify the original function findargtype to use three sepeare **if** statements instead of a nested **if-else** statement
 
@@ -83,4 +83,12 @@ function outtype = findargtype(inputarg)
         outtype = 'matrix';
     end
 end
+```
+
+## Practice 4.5
+
+> Prompt the user for a string, and then print either the string that the user entered or an error message if the user did not enter anything.
+
+```MATLAB
+
 ```
