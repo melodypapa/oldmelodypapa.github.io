@@ -2,7 +2,13 @@ function output = mymatmin(matrix)
 %mymatmin - find the mininum value of each column
 %
 % Syntax: output = mymatmin(matrix)
-[rows cols] = size(matrix);
+% Test with: 
+%   mymatmin(3),
+%   mymatmin([3 4 5])
+%   mymatmin([3 4 5]')
+% 
+
+[rows, cols] = size(matrix);
 output = zeros(1,cols);
 
 for col = 1:cols

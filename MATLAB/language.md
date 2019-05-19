@@ -272,3 +272,13 @@ for loopvarone = rangeone
   end
 end
 ```
+
+### While Loop
+
+The while statement is used as the conditional loop in MATLAB
+
+```MATLAB
+while condition
+    action
+end
+```

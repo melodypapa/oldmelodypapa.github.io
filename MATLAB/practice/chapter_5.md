@@ -3,7 +3,8 @@
 ## Practice 5.1
 
 > Write a for loop that will print a column of five ⁎’s.
->> answer:
+
+### Answer to 5.1
 
 ```MATLAB
 for loop = 1:5
@@ -14,7 +15,8 @@ end
 ## Practice 5.2
 
 > Write a script prodnnums that is similar to the sumnnums script, but will calculate and print the product of the numbers entered by the user.
->> answer
+
+### Answer to 5.2
 
 ```MATLAB
 function result = prodnnums(n)
@@ -41,8 +43,9 @@ for i = 1:r
 end
 ```
 
+### Answer 5.3
+
 > The sum is 21
->
 > The sum is 12
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,6 +78,34 @@ mat =
 >> mymatmin(mat)
 ans =
     6  5  3  5
+```
+
+### Answer to 5.4
+
+```MATLAB
+function output = mymatmin(matrix)
+%mymatmin - find the mininum value of each column
+%
+% Syntax: output = mymatmin(matrix)
+% Test with:
+%   mymatmin(3),
+%   mymatmin([3 4 5])
+%   mymatmin([3 4 5]')
+%
+
+[rows, cols] = size(matrix);
+output = zeros(1,cols);
+
+for col = 1:cols
+    output(col) = matrix(1, col);
+    for row = 1:rows
+        if matrix(row, col) > output(col)
+            output(col) = matrix(row, col);
+        end
+    end
+end
+
+end
 ```
 
 ## Practice 5.5
