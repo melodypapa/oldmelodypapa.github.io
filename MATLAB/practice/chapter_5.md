@@ -182,7 +182,7 @@ for inc = 0: 0.5: 3
     i = i + 1;
     myvec(i) = sqrt(inc);
 end
-- - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - -
 [r c] = size(mat);
 newmat = zeros(r,c);
 for i = 1:r
