@@ -1,7 +1,10 @@
 function outmat = signum(matrix)
 %signum - imitates the sign function
+% and you can also use the build-in sign function to accomplish the same purpose.
 %
 % Syntax: outmat = signum(matrix)
+
+
 
 [rows, cols] = size(matrix);
 outmat = zeros(rows, cols);
