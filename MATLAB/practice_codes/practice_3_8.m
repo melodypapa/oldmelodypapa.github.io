@@ -1,7 +1,7 @@
 load salesfigs.dat
-salesfigs
-y1 = salesfigs(1,:)
-y2 = salesfigs(2,:)
+salesfigs;
+y1 = salesfigs(1,:);
+y2 = salesfigs(2,:);
 
 clf
 plot(y1, 'ko')

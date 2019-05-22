@@ -1,4 +1,4 @@
-function avenegnum()
+function practice_5_5
 % Prompt the user for negative numbers until the suer enters a zero or positive number.
 % Then calaculate the average of these numbers
 % Syntax: avenegnum()

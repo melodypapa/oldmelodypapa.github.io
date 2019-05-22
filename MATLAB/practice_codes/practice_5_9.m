@@ -4,6 +4,6 @@ function result = practice_5_9(vector, n)
 % Syntax: result = practice_5_9(vector, n)
 
     vec = testvecgtnii(vector, n);
-    sum(vec)
+    result = sum(vec);
 
 end

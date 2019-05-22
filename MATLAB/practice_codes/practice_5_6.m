@@ -1,4 +1,4 @@
-function result = practice_5_6(n)
+function practice_5_6(n)
 %readnposint - read n positve integers.
 %
 % Syntax: result = readnposint(n)
