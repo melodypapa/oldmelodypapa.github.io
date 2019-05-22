@@ -43,7 +43,7 @@ number =
     5
 ```
 
-* How to enter a string in the prompt? 
+* How to enter a string in the prompt?
 
 If the character or string is desired, the second funtion argument shall be **'s'**.
 
