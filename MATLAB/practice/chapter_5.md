@@ -154,13 +154,15 @@ end
 
 > Modify the script readoneposint to read n positive integers, instead of just one.
 
+### Answer to Practice 5.6
+
 ```MATLAB
 function result = practice_5_6(n)
 %readnposint - read n positve integers.
 %
 % Syntax: result = readnposint(n)
 
-for loop = 1:n 
+for loop = 1:n
     inputnum = input('Please enter a positive integer: ');
     num2 = int32(inputnum);
     while num2 ~= inputnum || num2 < 0
@@ -175,6 +177,25 @@ end
 
 > Write a function that imitates the cumprod function. Use the method of preallocating the output vector.
 
+### Answer to the practice 5.7
+
+```MATLAB
+function result = practice_5_7(vector)
+%practice_5_7 - imitates the cumprod function. Use the method of preallocating the output vector
+%
+% Syntax: result = cumprod(vector)
+
+result = ones(size(vector));
+
+intermediate_result = 1;
+for loop = 1: length(vector)
+    intermediate_result = intermediate_result * vector(loop);
+    result(loop) = intermediate_result;
+end % for
+
+end
+```
+
 ## Practice 5.8
 
 > Modify the function matcolsum. Create a function matrowsum to calculate and return a vector of all of the row sums instead of column sums. For example, calling it and passing the mat variable above would result in the following:
@@ -183,6 +204,25 @@ end
  >> matrowsum(mat)
  ans =
     12   14
+```
+
+### Answer to the practice 5.8
+
+```MATLAB
+function output = matrowsum(matrix)
+%matrowsum - calculate and return a vector of all of the row sums.
+%
+% Syntax: output = matrowsum(matrix)
+
+[rows, cols] = size(matrix);
+output = zeros(1:rows);
+for row = 1: rows
+    for col = 1:cols
+        output(row) = output(row) + matrix(row, col);
+    end
+end
+
+end
 ```
 
 ## Practice 5.9
