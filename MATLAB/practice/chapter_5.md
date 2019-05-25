@@ -240,7 +240,7 @@ for inc = 0: 0.5: 3
     myvec(i) = sqrt(inc);
 end
 - - - - - - - - - - - - - - - - - - - - - - - - - -
-[r c] = size(mat);
+[r, c] = size(mat);
 newmat = zeros(r,c);
 for i = 1:r
     for j = 1:c
