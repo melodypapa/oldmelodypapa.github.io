@@ -248,3 +248,15 @@ for i = 1:r
     end
 end
 ```
+
+### Answer to 5.10
+
+```MATLAB
+myvec2 = zeros(1,7);
+for loop = 0:6
+    myvec2(loop + 1) = sqrt(loop/2);
+    %disp(sqrt(loop/2))
+end
+-------------------------------------
+newmat = sign(mat);
+```
