@@ -6,6 +6,8 @@
 * The [practice page](practice.md) shows you the answer to each practice in the book Stormy Attaway - **MATLAB**
 * The [plot](plot.md) shows you the usage of plot in MATLAB
 * The [File I/O](file.md) Introduction to File Input/Output(Load and Save)
+* [MATLAB help](help.md) can give you support any time
+
 
 ## Testing Frameworks
 
