@@ -1,0 +1,12 @@
+package1 = struct('item_no', 123, 'cost', 19.99,...
+    'price', 39.95, 'code', 'g')
+
+class(package1)
+
+ti
+package2.item_no = 123;
+package2.cost = 19.99;
+package2.price = 39.95;
+package2.code = 'g';
+
+disp(package2)
