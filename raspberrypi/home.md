@@ -1,5 +1,6 @@
 # Raspberry Pi
 
-## Configuration
+## Networks
 
-* [Static IP](raspberrypi/configuration.md)
+* [Static IP](/raspberrypi/network.md)
+
