@@ -18,6 +18,11 @@ docsify serve ./docs
 ## Raspberry Pi
 
 * [Raspberry Pi](raspberrypi/index.md)
+* [Create the AP in Raspberry Pi](/raspberrypi/network.md#create-ap)
+
+## Arduino
+
+* [Special Port](/arduino/hardware.md#speical-port)
 
 ## MATLAB
 
