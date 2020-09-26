@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/melodypapa/melodypapa.github.io#readme",
   "devDependencies": {
-    "docsify-cli": "^4.4.1"
+    "docsify-cli": "^4.4.1",
+    "johnny-five": "^2.0.0"
   }
 }

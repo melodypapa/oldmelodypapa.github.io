@@ -1,0 +1,20 @@
+{
+  "name": "arduino_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/johnny-five": "^1.3.0",
+    "johnny-five": "^2.0.0",
+    "ts-node": "^9.0.0"
+  },
+  "dependencies": {
+    "typescript": "^4.0.3"
+  }
+}
