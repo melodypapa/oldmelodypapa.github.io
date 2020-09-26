@@ -6,6 +6,10 @@ And the dart/python/java are also my favorite. I hope all my information can hel
 
 ## Rhapsody
 
+## Web development
+
+* [Bootstrap 4.5 Browser compatiblity](/web_development/bootstrap.md#bootstrap-45-browser-support)
+
 ## Raspberry Pi
 
 * [Raspberry Pi](/raspberrypi)
