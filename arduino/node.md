@@ -19,3 +19,4 @@ npm install ts-node --save-dev
 ## More infomation
 
 * [NodeJs and Arduino](https://www.instructables.com/id/NodeJs-and-Arduino/#:~:text=%20NodeJs%20and%20Arduino%20%201%20Step%201%3A,javasript.%20It%20is%20built%20on%20Chrome%27s...%20More%20)
+* [Arduino Experimenter's Guide for NodeJS](http://node-ardx.org)
