@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docsify": "docsify serve ."
+    "docsify": "npx docsify serve ."
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,7 @@
     "url": "https://github.com/melodypapa/melodypapa.github.io/issues"
   },
   "homepage": "https://github.com/melodypapa/melodypapa.github.io#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "docsify-cli": "^4.4.1"
+  }
 }
