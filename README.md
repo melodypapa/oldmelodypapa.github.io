@@ -4,20 +4,12 @@ I am an automotive field SW engineer. My daily work mainly focuses on how to cre
 
 And the dart/python/java are also my favorite. I hope all my information can help or assist you for your daily work and study.
 
-## Create doc website with docsify and markdown
-
-### Installation and create
-
-```
-npm install docsify-cli -g
-docsify init ./docs
-docsify serve ./docs
-```
 ## Rhapsody
 
 ## Raspberry Pi
 
-* [Raspberry Pi](raspberrypi/index.md)
+* [Raspberry Pi](/raspberrypi/index.md)
+* [Raspberry]
 * [Create the AP in Raspberry Pi](/raspberrypi/network.md#create-ap)
 
 ## Arduino

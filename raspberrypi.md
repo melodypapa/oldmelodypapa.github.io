@@ -5,3 +5,7 @@
 * [Static IP](/raspberrypi/network.md)
 * [Create the AP in Raspberry Pi](/raspberrypi/network.md#create-ap)
 
+## Hardware
+
+* [Port Definition](/raspberrypi/hardware.md#port-definition) 
+* 
