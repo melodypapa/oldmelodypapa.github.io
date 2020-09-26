@@ -8,8 +8,8 @@ And the dart/python/java are also my favorite. I hope all my information can hel
 
 ## Raspberry Pi
 
-* [Raspberry Pi](/raspberrypi/index.md)
-* [Raspberry]
+* [Raspberry Pi](/raspberrypi)
+* [Raspberry Pi Port Definition](/rapberrypi/hardware.md#port-definition)
 * [Create the AP in Raspberry Pi](/raspberrypi/network.md#create-ap)
 
 ## Arduino
@@ -26,7 +26,7 @@ And the dart/python/java are also my favorite. I hope all my information can hel
 
 ## Java
 
-## AUTOSAR
+## Automotive
 
 * [Memory Mapping](AUTOSAR/memory_mapping.md)
 

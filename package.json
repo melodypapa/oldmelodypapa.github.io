@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/melodypapa/melodypapa.github.io/issues"
   },
-  "homepage": "https://github.com/melodypapa/melodypapa.github.io#readme"
+  "homepage": "https://github.com/melodypapa/melodypapa.github.io#readme",
+  "devDependencies": {}
 }

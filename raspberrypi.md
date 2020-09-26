@@ -8,4 +8,7 @@
 ## Hardware
 
 * [Port Definition](/raspberrypi/hardware.md#port-definition) 
-* 
+
+## Node.js
+
+* [Upgrade to latest version](/raspberrypi/node.md#installation)
