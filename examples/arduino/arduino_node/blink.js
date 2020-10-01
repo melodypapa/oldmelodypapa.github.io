@@ -5,6 +5,6 @@ var board = new five.Board(); //the Board class from johnny-five module
 //every 500 milliseconds.
 
 board.on('ready', function () {
-    var myLed = new five.Led("A0");
+    var myLed = new five.Led(13);
     myLed.strobe(300);
 });

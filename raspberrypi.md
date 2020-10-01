@@ -3,7 +3,7 @@
 ## Networks
 
 * [Static IP](/raspberrypi/network.md)
-* [Create the AP in Raspberry Pi](/raspberrypi/network.md#create-ap)
+* [Create the AP in Raspberry Pi](/raspberrypi/network/create_ap.md)
 
 ## Hardware
 
