@@ -41,5 +41,8 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 
 ## Automotive
 
-* [Memory Mapping](AUTOSAR/memory_mapping.md)
+### ISO 26262
+
+* [SW Unit Testing / Chinese](./automotive/FSM/ISO26262.md#unit-testing)
+* [Memory Mapping](./automotive/AUTOSAR/memory_mapping.md)
 
