@@ -11,7 +11,7 @@ UDS is the standard for Unified Diagnostic Services which includes ISO 14229, IS
 
 ### UDS Introduction
 
-* [UDS Diagnosis Part I](http://mp.weixin.qq.com/s?__biz=Mzg4NjIxODk4Mg==&mid=2247483736&idx=1&sn=25a98f21bd8e214438e650ada8d7396a&chksm=cf9c48d1f8ebc1c715edf1fb275801ad9eb0580576a5d99329c30f88bbefc0fdfea2eafab92c)
+* [UDS诊断服务——诊断和通信管理单元](http://mp.weixin.qq.com/s?__biz=Mzg4NjIxODk4Mg==&mid=2247483736&idx=1&sn=25a98f21bd8e214438e650ada8d7396a&chksm=cf9c48d1f8ebc1c715edf1fb275801ad9eb0580576a5d99329c30f88bbefc0fdfea2eafab92c)
 
 ## AUTOSAR
 
