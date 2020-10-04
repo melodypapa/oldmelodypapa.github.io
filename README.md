@@ -10,6 +10,7 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [Rhapsody](#rhapsody)
 * [Web Development](#web-development)
 * [Raspberry Pi](#raspberry-pi)
+* [Open sources](./opensources/opensources.md)
 
 ## Rhapsody
 
@@ -38,4 +39,5 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [SW Unit Testing (Chinese)](./automotive/FSM/ISO26262.md#unit-testing)
 * [UDS (Chinese)](./automotive/UDS/uds.md)
 * [Memory Mapping](./automotive/AUTOSAR/memory_mapping.md)
+
 

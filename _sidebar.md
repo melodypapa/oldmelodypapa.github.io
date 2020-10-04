@@ -1,4 +1,5 @@
 * [Home](/)
-* [Automotive](/automotive)
-* [Arduino](/arduino)
-* [Raspberry Pi](/raspberrypi)
+* [Automotive](./automotive/automotive.md)
+* [Arduino](./arduino/arduino.md)
+* [Raspberry Pi](./raspberrypi/raspberrypi.md)
+* [Open Sources](./opensources/opensources.md)
