@@ -3,17 +3,16 @@
 ## Install required packages
 
 ```
-sudo apt-get install hostapd dnsmasq
+$ sudo apt-get install hostapd dnsmasq
 ```
 
-## How to configure create_ap
+## How to configure create ap
 
 ```
-git clone https://github.com/lakinduakash/linux-wifi-hotspot.git
-cd linux-wifi-hotspot/src/scripts
-sudo make install
-backup old config file (/etc/create_ap.conf)
-create_ap wlan0 eth0 -g 192.168.1.115 mywifi Password123 --mkconfig /etc/create_ap.conf
+$ git clone https://github.com/lakinduakash/linux-wifi-hotspot.git
+$ cd linux-wifi-hotspot/src/scripts
+$ sudo make install
+$ sudo create_ap wlan0 eth0 -g 192.168.1.115 mywifi Password123 --mkconfig /etc/create_ap.conf
 ```
 
 **Note**
@@ -23,14 +22,15 @@ create_ap wlan0 eth0 -g 192.168.1.115 mywifi Password123 --mkconfig /etc/create_
 ## Verify the configure
 
 ```
-create_ap --config /etc/create_ap.conf
+$ sudo create_ap --config /etc/create_ap.conf
 ```
 
 ## Start the create_ap as service
 
 ```
-sudo systemctl enable create_ap
-sudo systemctl start create_ap
+$ sudo systemctl enable create_ap
+$ sudo systemctl start create_ap
+$ sudo reboot
 ```
 
 ## More inforation

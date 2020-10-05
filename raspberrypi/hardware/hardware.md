@@ -2,4 +2,4 @@
 
 ## Port Definition
 
-![Image of Ports](./hardware/pi-gpio.png)
+![Image of Ports](./raspberrypi/hardware/pi-gpio.png)

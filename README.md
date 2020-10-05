@@ -21,10 +21,9 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 
 ## Raspberry Pi
 
-* [Raspberry Pi Page](/raspberrypi.md)
-* [Raspberry Pi Port Definition](/rapberrypi/hardware.md#port-definition)
-* [Create the AP in Raspberry Pi](/raspberrypi/network.md#create-ap)
-* [Node.js](./raspberrypi/node.md)
+* [Raspberry Pi Port Definition](./raspberrypi/hardware/hardware.md#port-definition)
+* [Create the AP in Raspberry Pi](./raspberrypi/network/create_ap.md)
+* [Node.js](./raspberrypi/node/node.md)
 
 ## Arduino
 
