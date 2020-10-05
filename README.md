@@ -24,6 +24,9 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [Raspberry Pi Port Definition](./raspberrypi/hardware/hardware.md#port-definition)
 * [Create the AP in Raspberry Pi](./raspberrypi/network/create_ap.md)
 * [Node.js](./raspberrypi/node/node.md)
+* [Git Setup](./raspberrypi/git/git.md)
+* [CAN Driver](./raspberrypi/network/can.md)
+
 
 ## Arduino
 
@@ -38,6 +41,7 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [Automotive Page Index](./automotive/automotive.md)
 * [SW Unit Testing (Chinese)](./automotive/FSM/ISO26262.md#unit-testing)
 * [UDS (Chinese)](./automotive/UDS/uds.md)
+* [CAN driver for Raspberry Pi](./raspberrypi/network/can.md))
 * [Memory Mapping](./automotive/AUTOSAR/memory_mapping.md)
 
 
