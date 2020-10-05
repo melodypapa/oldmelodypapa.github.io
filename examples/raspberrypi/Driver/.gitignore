@@ -1,0 +1,7 @@
+hello.mod.*
+*.o
+Module.symvers
+modules.order
+.hello.*
+hello.ko
+hello.mod
