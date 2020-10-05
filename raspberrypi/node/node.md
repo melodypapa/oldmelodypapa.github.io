@@ -7,6 +7,7 @@
 ```
 $ curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 $ sudo apt-get install -y nodejs
+$ sudo apt -y autoremove
 ```
 
 ### Upgrade the latest version node.js (12.x)
@@ -14,6 +15,7 @@ $ sudo apt-get install -y nodejs
 ```
 $ curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 $ sudo apt-get install -y nodejs
+$ sudo apt -y autoremove
 ```
 
 * More information can be found at [NodeSource](https://github.com/nodesource/distributions)
