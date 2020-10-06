@@ -5,3 +5,5 @@ modules.order
 .hello.*
 hello.ko
 hello.mod
+.built-in.a.cmd
+built-in.a
