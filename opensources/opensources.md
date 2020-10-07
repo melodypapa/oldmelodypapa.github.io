@@ -3,6 +3,7 @@
 ## Common
 
 * [Count Lines of Code](https://github.com/AlDanial/cloc)
+* [Vim Key mapping](./opensources/vim.md)
 
 ## C/C++
 
