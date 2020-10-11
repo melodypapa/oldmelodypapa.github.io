@@ -37,3 +37,4 @@
 | c   | change  |
 | d   | delete  |
 | p   | put     |
+| y   | yank    |
