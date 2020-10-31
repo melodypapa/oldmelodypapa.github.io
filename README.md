@@ -12,6 +12,7 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [Raspberry Pi](#raspberry-pi)
 * [Open sources](./opensources/opensources.md)
 * [IoT](./IoT/IoT.md)
+* [Linux](./Linux/Linux.md)
 
 ## Rhapsody
 
