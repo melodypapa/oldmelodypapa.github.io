@@ -4,6 +4,20 @@
 
 * [CAN总线终端电阻的作用？为什么是120Ω？为什么是0.25W？](https://mp.weixin.qq.com/s/Jd8ffrql5abHB5JdBB2Fpg)
 
+## CAN通讯系列
+
+* [CAN通讯简介1](https://zhuanlan.zhihu.com/p/268498263)
+* [CAN总线基础2](https://zhuanlan.zhihu.com/p/268901221)
+* [CAN总线基础3](https://zhuanlan.zhihu.com/p/270279135)
+* [CAN总线基础4](https://zhuanlan.zhihu.com/p/278394305)
+* [AUTOSAR架构的CAN通讯5](https://zhuanlan.zhihu.com/p/282714370)
+* [AUTOSAR架构的CAN Driver6](https://zhuanlan.zhihu.com/p/292883117)
+* [AUTOSAR架构的CAN Interface7](https://zhuanlan.zhihu.com/p/268430023)
+* [AUTOSAR架构的Pdu Router8](https://zhuanlan.zhihu.com/p/244513364)
+* [AUTOSAR架构的COM9](https://zhuanlan.zhihu.com/p/187554132)
+* [阶段性总结10](https://zhuanlan.zhihu.com/p/319441752)
+* [CAN总线基础11 - 总线信号错误，总线错误状态和总线网络状态](https://zhuanlan.zhihu.com/p/334768194)
+
 ## Protocol
 
 * [CAN总线技术详解](https://mp.weixin.qq.com/s/jIpYHdSqR2hDqnR34AZuCg)
