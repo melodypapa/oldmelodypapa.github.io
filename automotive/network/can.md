@@ -49,6 +49,7 @@
 * [AUTOSAR CanNM Video](https://mp.weixin.qq.com/s/cnJd9Sj0DzmoZH7zo9vAwg)
 * [从ECU和CPU视角理解AutoSar网络管理](https://blog.csdn.net/weixin_40137252/article/details/100552611)
 * [CAN网络管理在Boot和App程序的应用方案](https://blog.csdn.net/weixin_40137252/article/details/100560125)
+* [KL15和KL30节点网络管理概念](https://blog.csdn.net/weixin_40137252/article/details/100162715)
 
 ## AUTOSAR
 
