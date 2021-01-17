@@ -4,6 +4,10 @@
 
 * [CAN总线终端电阻的作用？为什么是120Ω？为什么是0.25W？](https://mp.weixin.qq.com/s/Jd8ffrql5abHB5JdBB2Fpg)
 
+## ISO Standard
+
+* []
+
 ## CAN通讯系列
 
 * [CAN通讯简介1](https://zhuanlan.zhihu.com/p/268498263)
@@ -27,19 +31,24 @@
 * [CAN消息中的Motorola和Intel](https://mp.weixin.qq.com/s/qhDz3JUcK08LJ_lcnpS27w)
 * [dbc文件格式解析](https://mp.weixin.qq.com/s/YALznkYSNnR1BtBKnh_B_g)
 * [XCP协议介绍](https://mp.weixin.qq.com/s/pQsVUCiIMrTvNcIjFXoh-w)
-* [CAN总线错误处理机制](https://mp.weixin.qq.com/s/-OCqPnidfWZBeskC4GtUyw)
+* [CAN总线错误处理机制](https://mp.weixin.qq.com/s/-OCqPnidfWZBeskC4GtUyw)|[(知乎Link)](https://zhuanlan.zhihu.com/p/81026123)
 
 ## CAN FD
 
+* [CAN FD介绍](https://zhuanlan.zhihu.com/p/75047334)
 * [一文搞懂CAN FD总线](https://mp.weixin.qq.com/s/Xr31_ogLOBq4wY3uwrV1cA)
+* [如何实现CAN与CAN FD组网通信呢？](https://mp.weixin.qq.com/s?__biz=Mzg4NjIxODk4Mg==&mid=2247488985&idx=1&sn=ce7fa3f63e21e5a76b427b828e1f01af)
 
 ## FBL
 
 * [基于CAN的刷写流程](https://mp.weixin.qq.com/s/tIl8fxsUwJ1KdMaSkVxQhw)
+* [如何实现BootLoader自更新呢？](https://blog.csdn.net/weixin_40137252/article/details/111054011)
 
 ## NM
 
 * [AUTOSAR CanNM Video](https://mp.weixin.qq.com/s/cnJd9Sj0DzmoZH7zo9vAwg)
+* [从ECU和CPU视角理解AutoSar网络管理](https://blog.csdn.net/weixin_40137252/article/details/100552611)
+* [CAN网络管理在Boot和App程序的应用方案](https://blog.csdn.net/weixin_40137252/article/details/100560125)
 
 ## AUTOSAR
 
