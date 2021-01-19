@@ -38,7 +38,7 @@
 * [CAN FD介绍](https://zhuanlan.zhihu.com/p/75047334)
 * [一文搞懂CAN FD总线](https://mp.weixin.qq.com/s/Xr31_ogLOBq4wY3uwrV1cA)
 * [如何实现CAN与CAN FD组网通信呢？](https://mp.weixin.qq.com/s?__biz=Mzg4NjIxODk4Mg==&mid=2247488985&idx=1&sn=ce7fa3f63e21e5a76b427b828e1f01af)
-
+* [Simplifying the transition to CAN FD by enabling hybrid CAN and CAN FD networks](https://www.nxp.com.cn/docs/en/white-paper/939775017710.pdf)
 ## FBL
 
 * [基于CAN的刷写流程](https://mp.weixin.qq.com/s/tIl8fxsUwJ1KdMaSkVxQhw)
