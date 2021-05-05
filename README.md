@@ -1,12 +1,13 @@
 # Who am I
 
-I am an automotive field SW engineer. My daily work mainly focuses on how to create the model base design with the IBM Rhapsody and MATLAB technolody. So I want to share all my knowledge with you.
+I am a Software engineer for automotive. My daily work mainly focuses on how to create the model base design with the IBM Rhapsody and MATLAB technology. So I want to share all my knowledge with you.
 
 And the Dart/Python/Java/JavaScript are also my favorite. I hope all my information can help or assist you for your daily work and study.
 
 ## Table of Content
 
 * [Automotive](#automotive)
+* [AUTOSAR Adaptive Platform](automotive/)  
 * [Rhapsody](#rhapsody)
 * [Web Development](#web-development)
 * [Raspberry Pi](#raspberry-pi)
@@ -15,10 +16,6 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [Linux](./Linux/Linux.md)
 
 ## Rhapsody
-
-## Web development
-
-* [Bootstrap 4.5 Browser compatiblity](/web_development/bootstrap.md#bootstrap-45-browser-support)
 
 ## Raspberry Pi
 
