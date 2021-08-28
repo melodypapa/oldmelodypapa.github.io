@@ -6,6 +6,7 @@
 * [Raspberry Pi](./raspberrypi/raspberrypi.md)
 * [Open Sources](./opensources/opensources.md)
 * [Linux](./Linux/Linux.md)
+  * [WSL](./Linux/wsl.md)
   * [QEMU](./Linux/qemu.md)
   * [Embedded Linux](./Linux/EmbeddedLinux.md)
 * [Visual Studio Code](./vscode/extension.md)

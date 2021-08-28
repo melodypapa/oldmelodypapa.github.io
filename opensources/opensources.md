@@ -9,3 +9,7 @@
 
 * [Utilities for Linux CAN subsystem (aka SocketCAN)](https://github.com/linux-can/can-utils)
 * [CMake](./opensources/cmake.md)
+
+## Git
+
+* [Line Ending](./opensource/git.md)
