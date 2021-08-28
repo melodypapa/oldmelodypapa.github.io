@@ -1,11 +1,12 @@
 # Embedded Linux
 
 - [Embedded Linux](#embedded-linux)
-  - [Toolchains](#toolchains)
+  - [Tool chains](#tool-chains)
     - [Create the environment on Ubuntu](#create-the-environment-on-ubuntu)
     - [References](#references)
+    - [Prefix for GNU](#prefix-for-gnu)
 
-## Toolchains
+## Tool chains
 
 ### Create the environment on Ubuntu
 
@@ -24,3 +25,5 @@ $ sudo apt install autoconf automake bison bzip2 cmake flex g++ gawk gcc gettext
 * [Building Linux kernel with Clang/LLVM](https://www.kernel.org/doc/html/latest/kbuild/llvm.html)
 * [Clang for cross-compilation](https://clang.llvm.org/docs/CrossCompilation.html)
 * [EmbToolkit](https://embtoolkit.org)
+
+### Prefix for GNU

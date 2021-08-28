@@ -1,6 +1,8 @@
 {
     "python.pythonPath": "/usr/bin/python3",
     "cSpell.words": [
+        "AUTOSAR",
+        "LLVM",
         "QEMU",
         "automake",
         "bzip",
@@ -10,6 +12,9 @@
         "libncurses",
         "libstdc",
         "libtool",
+        "ntpdate",
+        "opensources",
+        "raspberrypi",
         "rsync",
         "texinfo",
         "vexpress"
