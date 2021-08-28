@@ -2,6 +2,16 @@
     "python.pythonPath": "/usr/bin/python3",
     "cSpell.words": [
         "QEMU",
+        "automake",
+        "bzip",
+        "cmake",
+        "gettext",
+        "gperf",
+        "libncurses",
+        "libstdc",
+        "libtool",
+        "rsync",
+        "texinfo",
         "vexpress"
     ]
 }
