@@ -1,19 +1,15 @@
 # Who am I
 
+- [Who am I](#who-am-i)
+  - [Rhapsody](#rhapsody)
+  - [Raspberry Pi](#raspberry-pi)
+  - [Arduino](#arduino)
+  - [MATLAB](#matlab)
+  - [Automotive](#automotive)
+
 I am a Software engineer for automotive. My daily work mainly focuses on how to create the model base design with the IBM Rhapsody and MATLAB technology. So I want to share all my knowledge with you.
 
 And the Dart/Python/Java/JavaScript are also my favorite. I hope all my information can help or assist you for your daily work and study.
-
-## Table of Content
-
-* [Automotive](#automotive)
-* [AUTOSAR Adaptive Platform](automotive/)  
-* [Rhapsody](#rhapsody)
-* [Web Development](#web-development)
-* [Raspberry Pi](#raspberry-pi)
-* [Open sources](./opensources/opensources.md)
-* [IoT](./IoT/IoT.md)
-* [Linux](./Linux/Linux.md)
 
 ## Rhapsody
 
