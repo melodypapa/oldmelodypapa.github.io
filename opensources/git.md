@@ -4,6 +4,7 @@
   - [Line ending](#line-ending)
     - [More information](#more-information)
   - [Simple Workflow](#simple-workflow)
+  - [Modify a commit](#modify-a-commit)
 
 ## Line ending
 
@@ -30,3 +31,11 @@ https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-
 | 8    | git push               | Push the changes to the remote server     |
 
 * Note: [develop] is only the example of branch name.
+
+## Modify a commit
+
+To modify a commit, you have to use the git commit command but with “--amend” as a parameter. It will open your default text editor like a normal commit but with the staged files and commit message already there.
+
+```
+$ git commit --amend
+```
