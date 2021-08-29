@@ -1,7 +1,7 @@
-# Embedded Linux
+# Toolchain for embedded linux
 
-- [Embedded Linux](#embedded-linux)
-  - [Tool chains](#tool-chains)
+- [Toolchain for embedded linux](#toolchain-for-embedded-linux)
+  - [Toolchain](#toolchain)
     - [Create the environment on Ubuntu](#create-the-environment-on-ubuntu)
     - [References](#references)
     - [Kernel Tuple](#kernel-tuple)
@@ -9,8 +9,9 @@
   - [crosstool-NG](#crosstool-ng)
     - [Downloading & Compiling](#downloading--compiling)
     - [Running](#running)
+    - [Create toolchain for QEMU ARM-versatile](#create-toolchain-for-qemu-arm-versatile)
 
-## Tool chains
+## Toolchain
 
 ### Create the environment on Ubuntu
 
@@ -87,8 +88,32 @@ After that and type *bin/ct-ng* to launch the crosstool.
 | update-samples | Regenerate sample configuration using the current Kconfig   |
 | show-tuple     | Print the tuple of the currently configured toolchain       |
 
-### Generate the ARM-versatile configure for qemu
+### Create toolchain for QEMU ARM-versatile
 
 ARM-versatile PB evaluation board has one ARM926EJ-S processor core, which implements the ARMv5TE instruction set.
 
+Create the configuration according to following steps:
+1. Find a good base configuration to work from
+```
+bin/ct-ng list-samples
+```
+2. No exact fit one is found and choose to use a generic target (arm-unknown-linux-gnueabi).
+```
+$ bin/ct-ng distclean
+$ bin/ct-ng arm-unknown-linux-gnueabi 
+```
+3. Review the configuration and make minor changes with menu command.
+```
+$ bin/ct-ng menuconfig
+``` 
+  * In **Paths and misc** options, disable **Render the toolchain read-only** (CT_PREFIX_DIR_RO).
+
+4. Now, build the toolchain
+```  
+$ bin/ct-ng build
+```
+
+If you meet the problem of expat downloading, please refer to [this link](https://github.com/crosstool-ng/crosstool-ng/issues/1479). And changing CT_EXPAT_VERSION to "2.4.1" can also resolve the problem. 
+
+5. The toolchain will be installed in ~/x-tools/arm-unknown-linux-gnueabi.
 

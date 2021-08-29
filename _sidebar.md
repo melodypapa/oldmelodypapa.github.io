@@ -8,5 +8,5 @@
 * [Linux](./Linux/Linux.md)
   * [WSL](./Linux/wsl.md)
   * [QEMU](./Linux/qemu.md)
-  * [Embedded Linux](./Linux/EmbeddedLinux.md)
+  * [Embedded Linux](./Linux/embedded.md)
 * [Visual Studio Code](./vscode/extension.md)
