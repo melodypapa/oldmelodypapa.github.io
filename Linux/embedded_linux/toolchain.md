@@ -9,7 +9,8 @@
   - [crosstool-NG](#crosstool-ng)
     - [Downloading & Compiling](#downloading--compiling)
     - [Running](#running)
-    - [Create toolchain for QEMU ARM-versatile](#create-toolchain-for-qemu-arm-versatile)
+    - [Hwo to create toolchain for QEMU ARM-versatile](#hwo-to-create-toolchain-for-qemu-arm-versatile)
+    - [How to use the toolchain](#how-to-use-the-toolchain)
 
 ## Toolchain
 
@@ -88,7 +89,7 @@ After that and type *bin/ct-ng* to launch the crosstool.
 | update-samples | Regenerate sample configuration using the current Kconfig   |
 | show-tuple     | Print the tuple of the currently configured toolchain       |
 
-### Create toolchain for QEMU ARM-versatile
+### Hwo to create toolchain for QEMU ARM-versatile
 
 ARM-versatile PB evaluation board has one ARM926EJ-S processor core, which implements the ARMv5TE instruction set.
 
@@ -117,3 +118,12 @@ If you meet the problem of expat downloading, please refer to [this link](https:
 
 5. The toolchain will be installed in ~/x-tools/arm-unknown-linux-gnueabi.
 
+### How to use the toolchain
+
+1. Add the toolchain to path environment
+
+```
+$ PATH=~/x-tools/arm-unknown-linux-gnueabihf/bin:$PATH
+```
+
+2. 
