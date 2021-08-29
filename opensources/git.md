@@ -18,13 +18,15 @@ https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-
 
 ## Simple Workflow
 
-| Step | git command              | Description                               |
-| ---- | ------------------------ | ----------------------------------------- |
-| 1    | git branch [branchname]  | Create the new branch for development     |
-| 2    | git checkout [brachname] | Switch to new branch and start to develop |
-| 3    | git add ...              | Add files to staging area                 |
-| 4    | git commit -m "..."      | Commit all changes to local repository    |
-| 5    | git checkout master      | Switch back to the master branch          |
-| 6    | git pull origin master   | Pull the updates from the remote server   |
-| 7    | git merge [branchname]   | Merge the branch back to master branch    |
-| 8    | git push                 | Push the changes to the remote server     |
+| Step | git command            | Description                               |
+| ---- | ---------------------- | ----------------------------------------- |
+| 1    | git branch [develop]   | Create the new branch for development     |
+| 2    | git checkout [develop] | Switch to new branch and start to develop |
+| 3    | git add ...            | Add files to staging area                 |
+| 4    | git commit -m "..."    | Commit all changes to local repository    |
+| 5    | git checkout master    | Switch back to the master branch          |
+| 6    | git pull origin master | Pull the updates from the remote server   |
+| 7    | git merge [develop]    | Merge the branch back to master branch    |
+| 8    | git push               | Push the changes to the remote server     |
+
+* Note: [develop] is only the example of branch name.
