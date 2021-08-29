@@ -35,7 +35,6 @@ https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-
 ## Modify a commit
 
 To modify a commit, you have to use the git commit command but with “--amend” as a parameter. It will open your default text editor like a normal commit but with the staged files and commit message already there.
-
 ```
 $ git commit --amend
 ```
