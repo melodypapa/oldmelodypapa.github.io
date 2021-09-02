@@ -9,6 +9,8 @@
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+
+  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
 </head>
 
 <body>
@@ -19,12 +21,23 @@
       name: '',
       repo: '',
       plugins: [
-        EditOnGithubPlugin.create(docBase, docEditBase, title)
+        EditOnGithubPlugin.create(
+          'https://github.com/docsifyjs/docsify/blob/master/docs/',
+          null,
+          function (file) {
+            if (file.indexOf('en') === -1) {
+              return '编辑'
+            } else {
+              return 'edit on git'
+            }
+          }
+        )
       ]
     }
   </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js">
+  </script>
+
 </body>
 
 </html>
