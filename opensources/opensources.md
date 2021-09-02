@@ -12,4 +12,4 @@
 
 ## Git
 
-* [Line Ending](./opensource/git.md)
+* [Line Ending](./opensources/git.md)
