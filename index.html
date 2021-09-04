@@ -22,14 +22,10 @@
       repo: '',
       plugins: [
         EditOnGithubPlugin.create(
-          'https://github.com/docsifyjs/docsify/blob/master/docs/',
+          'https://github.com/melodypapa/melodypapa.github.io/',
           null,
           function (file) {
-            if (file.indexOf('en') === -1) {
-              return '编辑'
-            } else {
-              return 'edit on git'
-            }
+            return 'edit on git'
           }
         )
       ]
