@@ -1,0 +1,14 @@
+{
+  "name": "melodypapa.github.io",
+  "version": "1.0.0",
+  "devDependencies": {
+    "docsify-cli": "^4.4.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/melodypapa/melodypapa.github.io/issues"
+  },
+  "homepage": "https://github.com/melodypapa/melodypapa.github.io"
+}
