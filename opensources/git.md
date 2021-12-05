@@ -4,6 +4,8 @@
   - [Line ending](#line-ending)
     - [More information](#more-information)
   - [Simple Workflow](#simple-workflow)
+  - [FAQ](#faq)
+    - [How to Undo the Last Commit](#how-to-undo-the-last-commit)
 
 ## Line ending
 
@@ -30,3 +32,18 @@ https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-
 | 8    | git push               | Push the changes to the remote server     |
 
 * Note: [develop] is only the example of branch name.
+
+## FAQ
+
+### How to Undo the Last Commit
+
+```
+$ git log -10 --oneline
+75be203 (HEAD -> master) ...
+92e5dac (origin/master, origin/HEAD) Merge pull request #15 ...
+07991f0 Merge pull request #14 ...
+b409cff Merge pull request #13 ...
+...
+
+$
+```
