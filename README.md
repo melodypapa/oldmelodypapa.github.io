@@ -6,6 +6,7 @@
   - [Arduino](#arduino)
   - [MATLAB](#matlab)
   - [Automotive](#automotive)
+  - [Hardware](#hardware)
 
 I am a Software engineer for automotive. My daily work mainly focuses on how to create the model base design with the IBM Rhapsody and MATLAB technology. So I want to share all my knowledge with you.
 
@@ -38,5 +39,9 @@ And the Dart/Python/Java/JavaScript are also my favorite. I hope all my informat
 * [CAN driver for Raspberry Pi](./raspberrypi/network/can.md)
 * [Memory Mapping](./automotive/AUTOSAR/memory_mapping.md)
 * [AUTOSAR](./automotive/AUTOSAR/autosar.md)
+
+## Hardware
+
+* [Breadboard Layout](./hardware/breadboard/breadboard.webp)
 
 
