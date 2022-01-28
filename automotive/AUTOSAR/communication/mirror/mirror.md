@@ -1,5 +1,6 @@
-# 1. AUTOSAR Mirror （总线镜像）
-# 2. 简介和功能概述
+**AUTOSAR Mirror （总线镜像）**
+
+# 1. 简介和功能概述
 
 本文档说明了AUTOSAR基本软件模块总线镜像（**Bus Mirroring**）的功能、API和配置。
 总线镜像（**Bus Mirroring**）需要AUTOSAR 4.4.0以上版本支持。
@@ -10,13 +11,13 @@
 
 在文档中，术语总线 (**Bus**) 和网络 (**Network**) 可视为同义词。在大多数AUTOSAR规范中，更倾向于使用术语网络 (**Network**) 。因此在引用API参数、配置或协议布局 (**protocol layout**) 时使用它。但该模块被称为总线镜像 (**Bus mirroring**) ，因此在考虑到了镜像方向，比如源总线 (**source bus**) 或目的总线 (**destination bus**) 。
 
-# 3. 相关的规范
+# 2. 相关的规范
 
 AUTOSAR提供了基本软件模块的通用规范，对总线镜像模块来说同样适用。
 
-# 4. 约束和假设
+# 3. 约束和假设
 
-## 4.1. 限制
+## 3.1. 限制
 
 总线镜像模块不能用于影响配置为源总线 (**source bus**) 上的流量。为了确保这一点，必须避免消息环回 (**loop-back of messages**) 导致总线过载，生成的工具应确保没有总线同时作为源总线和目的总线连接到总线镜像模块。
 
@@ -39,23 +40,23 @@ AUTOSAR提供了基本软件模块的通用规范，对总线镜像模块来说�
 
 总线镜像模块也不支持从以太网转发到以太网。AUTOSAR以太网交换机驱动程序的端口镜像特性已经涵盖了这个用例。
 
-## 4.2. 汽车领域的适用性
+## 3.2. 汽车领域的适用性
 总线镜像模块可用于所有带有外部CAN连接器和以太网连接器（Ethernet connectors）的车辆，例如诊断连接器（Diagnostic connector）。
 
-# 5. 对其他模块的依赖关系
+# 4. 对其他模块的依赖关系
 
 总线镜像（**Bus Mirroring**）模块的接口关联到CAN接口（**CanIf**）、LIN接口（**LinIf**）、FlexRay接口（**FrIf**）、PDU路由器（**PduR**）、默认错误跟踪器（**DET**）以及诊断应用程序（**diagnostic application**），它通过AUTOSAR的运行时环境（**RTE**）或者总线镜像模块的复杂驱动程序（**CDD**）API来访问这些服务端口（**service port**）的程序接口API。
 
 总线镜像模块可以包含CanIf、LinIf、FrIf、PduR、DET、StbM和RTE的头文件。
 
-# 6. 功能规格
-## 6.1. 概述
+# 5. 功能规格
+## 5.1. 概述
 
 总线镜像模块的任务是收集来自几个源总线（**source buses**）的帧，然后将这些帧转发到目标总线（**destination bus**）。转发是严格单向的，从而可以避免消息循环（**message loops**）和阻止入侵场景（**intrusion scenarios**）
 
 下图显示了如何将总线镜像集成到AUTOSAR BSW通信堆栈中：
 
-![AUTOSAR BSW architecture showing the Bus Mirroring module](2022-01-23-20-02-54.png)
+![AUTOSAR BSW architecture showing the Bus Mirroring module](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-23-20-02-54.png)
 
 **总线镜像模块支持以下镜像场景:**
 * CAN和LIN总线 => CAN总线 
@@ -70,12 +71,12 @@ LIN和CAN或者CANFD帧被镜像到CAN或者CANFD总线上，可以直接发送�
 
 当帧被镜像到FlexRay总线、IP总线（以太网）或作为CDD连接的专有总线时，源帧被将使用指定的协议，封装到一个更大的帧中。当路由到FlexRay总线时，只有那些足够小的FlexRay帧才可以被路由到目标FlexRay帧中，从而减少协议开销。
 
-## 6.2. 模块处理
+## 5.2. 模块处理
 总线镜像模块通过**Mirror_Init**函数进行模块初始化，通过**Mirror_DeInit**进行反初始化。除了**Mirror_GetVersionInfo**和**Mirror_Init**之外，总线镜像模块的API函数只能在模块正确初始化后被调用。
 
 为了能够测量时间，总线镜像模块通过Mirror_MainFunction循环触发。
 
-### 6.2.1. 源总线的选择（Selection of Active Source Buses）
+### 5.2.1. 源总线的选择（Selection of Active Source Buses）
 在初始化时，总线镜像模块将处于非活动状态。没有启用源总线（**source bus**）。要启动总线镜像模块，必须激活一个已配置的源总线（参见MirrorSourceNetwork），这样才能开始收集来自源总线的帧和状态信息。
 
 当使用**Mirror_StartSourceNetwork**使能源总线（**source bus**）时，从该总线获取的帧和状态将被启动，源总线（**source bus**）的状态将被重置，以便在第一次更新后直接报告。
@@ -86,7 +87,7 @@ LIN和CAN或者CANFD帧被镜像到CAN或者CANFD总线上，可以直接发送�
 
 当目标网络改变时，源总线（**source bus**）也被禁用。
 
-### 6.2.2. 目的总线的切换（Switching the Destination Bus）
+### 5.2.2. 目的总线的切换（Switching the Destination Bus）
 
 初始化时，**MirrorInitialDestNetworkRef**配置的目标总线（**MirrorDestNetwork**）会被选中。镜像启动前，需转发的帧和状态信息并不会被发送。
 
@@ -94,7 +95,7 @@ LIN和CAN或者CANFD帧被镜像到CAN或者CANFD总线上，可以直接发送�
 
 镜像停止时，目标总线（**destination bus**）将被重置。
 
-### 6.2.3. 控制帧的过滤（Controlling Frame Filters）
+### 5.2.3. 控制帧的过滤（Controlling Frame Filters）
 
 帧过滤器可以静态配置（**MirrorSourceCanFilter**、**MirrorSourceLinFilter**和**MirrorSourceFlexRayFilter**），也可以在运行时为每个源总线（**source bus**）进行动态配置。
 
@@ -106,14 +107,14 @@ LIN和CAN或者CANFD帧被镜像到CAN或者CANFD总线上，可以直接发送�
 
 当一个静态配置的过滤器被**Mirror_SetStaticFilterState**被停用，或者一个动态添加的过滤器被**Mirror_RemoveFilter**被移除，在停用/移除之前已经被接受的帧仍然会被镜像到目的总线（**destination bus**）。
 
-## 6.3. 访问源总线
+## 5.3. 访问源总线
 
 总线镜像模块支持CAN、LIN和FlexRay作为源总线（**source bus**）。为了获取这些总线的帧和状态信息，总线镜像模块与相应的总线接口模块进行交互。报告的帧在被镜像到目的总线之前会被过滤。总线镜像模块只能从同一个分区（**same partition**）调用CAN、LIN和FlexRay接口模块的接口，同时还必须是**MirrorSourceNetwork**配置所引用的那个**ComMChannel**所分配的那个通道。
 
-### 6.3.1. 访问CAN的源总线
+### 5.3.1. 访问CAN的源总线
 总线镜像模块通过CAN接口模块（**CanIf**）访问CAN总线。在总线镜像模块启动CAN总线的镜像后，CanIf模块将接收和发送的CAN帧上报给总线镜像模块。同时在**Mirror_MainFunction**函数中会周期的轮询CAN总线状态（**CAN bus state**）。
 
-#### 6.3.1.1. CAN源总线激活
+#### 5.3.1.1. CAN源总线激活
 初始化后，CAN接口模块不会向总线镜像模块报告任何帧。
 
 当**Mirror_StartSourceNetwork**被调用来启动CAN源总线时，总线镜像模块将调用**CanIf_EnableBusMirroring**，并将**MirroringActive**设置为TRUE，来开始报告从相应的CAN控制器接收和发送的CAN帧。
@@ -122,7 +123,7 @@ LIN和CAN或者CANFD帧被镜像到CAN或者CANFD总线上，可以直接发送�
 
 当**Mirror_StopSourceNetwork**被调用来停止CAN源总线时，总线镜像模块将调用**CanIf_EnableBusMirroring**，并将**MirroringActive**设置为**FALSE**，来停止从相应的CAN控制器接收和发送的CAN帧的报告。
 
-#### 6.3.1.2. CAN报文采集
+#### 5.3.1.2. CAN报文采集
 
 CAN接口模块（**CanIf**）通过调用**Mirror_ReportCanFrame**来报告接收和发送的CAN帧。从接收中断或任务中报告接收帧，而从传输确认中断或任务中报告发送帧。
 
@@ -134,7 +135,7 @@ CAN接口模块（**CanIf**）通过调用**Mirror_ReportCanFrame**来报告接�
 
 当镜像到FlexRay、IP或专有的目的总线时，源总线由**network ID**标识。但**Mirror_ReportCanFrame**报告确实**cotrollerID**。**network ID**到**controllerID**的转换，可以在代码生成时确定，通过ECU配置中的**MirrorComMNetworkHandleRef**里的**CanIfCtrlId**到**MirrorNetworkId**的引用来确定。
 
-#### 6.3.1.3. CAN报文的过滤
+#### 5.3.1.3. CAN报文的过滤
 
 CAN掩码过滤器（**CAN mask filter**）可以静态配置为**MirrorSourceCanFilterMask**的匹配报告的**canId**，如果该**canId**被**MirrorSourceCanFilterCanIdMask**屏蔽掩码计算后等于**MirrorSourceCanFilterCanIdCode**。
 
@@ -144,17 +145,17 @@ CAN 范围过滤器（**CAN range filter**）可以静态配置为**MirrorSource
 
 CAN 范围过滤器（**CAN range filter**）也可以通过调用**Mirror_AddCanRangeFilter**动态添加用来匹配上报的**canId**，如果该**canId**的值大于等于**lowerId**参数，并且小于等于**upperId**参数。
 
-#### 6.3.1.4. CAN状态采集
+#### 5.3.1.4. CAN状态采集
 
 总线镜像模块通过循环调用**Mirror_MainFunction**中的**CanIf_GetControllerMode**和**CanIf_GetTrcvMode**来轮询每个被激活CAN源总线的状态。如果返回的**ControllerModePtr**为**CAN_CS_STARTED**，而**TransceiverModePtr**为**CANTRCV_TRCVMODE_NORMAL**，则上报的CAN源总线状态为在线（**online**），否则为离线（**offline**）。
 
 如果总线处于在线（online）状态，总线镜像模块调用**CanIf_GetControllerErrorState**，如果返回的**ErrorStatePtr**为**CAN_ERRORSTATE_PASSIVE**或**CAN_ERRORSTATE_BUSOFF**，则上报的CAN源总线状态分别设置为**Passive**错误或**Bus-off**错误。同时如果总线是在线（online）的，总线镜像模块也应该调用**CanIf_GetControllerTxErrorCounter**，并将返回的**TxErrorCounterPtr**添加到报告的CAN源总线状态中。
 
-### 6.3.2. 访问LIN的源总线
+### 5.3.2. 访问LIN的源总线
 
 总线镜像模块通过LIN接口模块（**LinIf**）访问LIN总线。总线镜像模启动LIN总线的镜像后，LIN接口模块将接收和发送的LIN帧报告给总线镜像模块。部分的LIN总线的状态是与LIN帧内容一起被报告，部分状态时通过**Mirror_MainFunction**循环轮询。
 
-#### 6.3.2.1. LIN源总线激活
+#### 5.3.2.1. LIN源总线激活
 
 初始化后，LIN接口模块（**LinIf**）不会向总线镜像模块报告任何帧。
 
@@ -162,7 +163,7 @@ CAN 范围过滤器（**CAN range filter**）也可以通过调用**Mirror_AddCa
 
 当**Mirror_StopSourceNetwork**被调用来停止LIN源总线时，总线镜像模块应该调用**LinIf_EnableBusMirroring**并将**MirroringActive**设置为**FALSE**，来停止从该总线接收和发送LIN帧的报告。
 
-#### 6.3.2.2. LIN帧采集
+#### 5.3.2.2. LIN帧采集
 
 LIN接口模块通过调用**Mirror_ReportLinFrame**来报告接收和发送的LIN帧。在执行了相应的状态检查之后，接收和发送的帧被LIN调度处理报告。
 
@@ -172,27 +173,27 @@ LIN接口模块通过调用**Mirror_ReportLinFrame**来报告接收和发送的L
 
 当**Mirror_ReportLinFrame**被调用来报告接收或发送的LIN帧时，总线镜像模块将从上报的PID中提取帧ID（Frame ID），并将其与相应源总线中所有静态配置和动态添加的活动过滤器进行匹配。如果LIN帧匹配至少一个过滤器，它被总线镜像模块接受。LIN帧的帧ID（Frame ID）是从PID中去掉两个最重要的位来计算的。
 
-#### 6.3.2.3. LIN帧的过滤
+#### 5.3.2.3. LIN帧的过滤
 
 LIN掩码过滤器（**LIN mask filter**）可以静态配置为**MirrorSourceLinFilterMask**用来匹配报告的**frame ID**，如果这个**frame ID**被**MirrorSourceLinFilterLinIdMask**掩码屏蔽计算后等于**MirrorSourceLinFilterLinIdCode**。
 
 LIN掩码过滤器（**LIN mask filter**）也可以通过调用**Mirror_AddLinMaskFilter**动态添加用来匹配报告的**frame ID**，如果这个**frame ID**被**mask**参数掩码屏蔽计算后等于**id**参数。
 
-LIN范围过滤器（**LIN range filter**）可以静态配置为**MirrorSourceLinFilterRange**用来匹配报告的**frame ID**，如果这个**frame ID**的值大于等于**MirrorSourceLinFilterLower****，并且小于等于MirrorSourceLinFilterUpper**。
+LIN范围过滤器（**LIN range filter**）可以静态配置为**MirrorSourceLinFilterRange**用来匹配报告的**frame ID**，如果这个**frame ID**的值大于等于**MirrorSourceLinFilterLower**，并且小于等于MirrorSourceLinFilterUpper**。
 
 LIN范围过滤器（**LIN range filter**）也可以通过调用**Mirror_AddLinRangeFilter**动态添加用来匹配报告的**frame ID**，如果这个**frame ID**的值大于或等于**lowerId**参数，并且小于或等于**upperId**参数。
 
-#### 6.3.2.4. LIN状态采集
+#### 5.3.2.4. LIN状态采集
 
-总线镜像模块应评估**Mirror_ReportLinFrame****报告的状态。如果是LIN_TX_HEADER_ERROR**、**LIN_TX_ERROR**、**LIN_RX_ERROR或LIN_RX_NO_RESPONSE**，则上报的LIN源总线状态应设置为报头传输错误（**header transmission error**）、传输错误（**transmission error**）、接收错误（**reception error**）或无响应（**no response**）。
+总线镜像模块应评估**Mirror_ReportLinFrame**报告的状态。如果是LIN_TX_HEADER_ERROR**、**LIN_TX_ERROR**、**LIN_RX_ERROR或LIN_RX_NO_RESPONSE**，则上报的LIN源总线状态应设置为报头传输错误（**header transmission error**）、传输错误（**transmission error**）、接收错误（**reception error**）或无响应（**no response**）。
 
 总线镜像模块通过从**Mirror_MainFunction**循环调用**LinIf_GetTrcvMode**来轮询每个激活LIN源总线的状态。如果返回的**TransceiverModePtr**为**LINTRCV_TRCV_MODE_NORMAL**，则上报的LIN源总线状态应设置为在线（**online**），否则设置为离线（**offline**）。
 
-### 6.3.3. 访问FlexRay的源总线
+### 5.3.3. 访问FlexRay的源总线
 
 总线镜像模块通过FlexRay接口模块（**FrIf**）访问FlexRay总线。当总线镜像模块启动FlexRay总线的镜像后，FlexRay接口模块将接收到的FlexRay帧上报给总线镜像模块。FlexRay总线状态是通过**Mirror_MainFunction**循环轮询的。一个FlexRay源总线对应一个FlexRay集群，它可以连接到多个控制器。
 
-#### 6.3.3.1. FlexRay源总线激活
+#### 5.3.3.1. FlexRay源总线激活
 
 初始化后，FlexRay接口模块不会向总线镜像模块报告任何帧。
 
@@ -202,7 +203,7 @@ LIN范围过滤器（**LIN range filter**）也可以通过调用**Mirror_AddLin
 
 当**Mirror_StopSourceNetwork**被调用来停止FlexRay源总线时，总线镜像模块应该调用**FrIf_EnableBusMirroring**, 并将**FrIf_MirroringActive**设置为**FALSE**，停止从相应的FlexRay集群接收和发送的FlexRay帧的报告。
 
-#### 6.3.3.2. FlexRay帧采集
+#### 5.3.3.2. FlexRay帧采集
 
 FlexRay接口（**FrIf**）模块通过调用**Mirror_ReportFlexRayFrame**来报告接收和发送的FlexRay帧。接收和传输的帧由FlexRay接口（**FrIf**）的作业列表执行函数或传输函数报告。
 
@@ -216,13 +217,13 @@ FlexRay接口（**FrIf**）模块通过调用**Mirror_ReportFlexRayFrame**来报
 
 在目标总线（**destination bus**）上，源总线由网络ID（**network ID**）标识，但**Mirror_ReportFlexRayFrame**却报告是**controllerId**。**controllerId**到**network ID**的转换可以在代码生成时，通过ECU配置的**MirrorComMNetworkHandleRef**里的**FrIfCtrlIdx**到**MirrorNetworkId**的引用来确定。
 
-#### 6.3.3.3. FlexRay帧过滤器
+#### 5.3.3.3. FlexRay帧过滤器
 
 FlexRay过滤器（**FlexRay filter**）可以静态配置**MirrorSourceFlexRayFilter**来匹配被报告的**slotId**和**cycle**参数。匹配算法为**slotId**参数大于或等于**MirrorSourceFlexRayFilterLowerSlot**参数，并且小于或等于**MirrorSourceFlexRayFilterUpperSlot**。同时**cycle**参数以**MirrorSourceFlexRayFilterCycleRepetition**取模，大于或等于 **MirrorSourceFlexRayFilterLowerBaseCycle**，并且小于等于**MirrorSourceFlexRayFilterUpperBaseCycle**。
 
 FlexRay滤波器（**FlexRay filter**）动态添加，可以调用**Mirror_AddFlexRayFilter**来匹配被报告的**slotId**和**cycle**参数。匹配算法为**slotId**参数大于或等于**lowerSlotId**，并且小于或等于**upperSlotId**；同时**cycle**参数以**cycleRepetition**取模，大于或等于**lowerBaseCycle**和小于或等于**upperBaseCycle**。
 
-#### 6.3.3.4. FlexRay状态采集
+#### 5.3.3.4. FlexRay状态采集
 
 当**Mirror_ReportFlexRayFrame**被调用来报告传输冲突（txConflict被报告为TRUE）时，总线镜像模块应该匹配所被激活的静态配置和动态添加的过滤器的**slotId**和**cycle**。如果它至少匹配一个过滤器，该帧所报告的FlexRay源总线状态应设置为传输冲突。
 
@@ -230,20 +231,20 @@ FlexRay滤波器（**FlexRay filter**）动态添加，可以调用**Mirror_AddF
 
 总线镜像模块通过从**Mirror_MainFunction**循环调用**FrIf_GetState**来轮询每个活跃的FlexRay源总线的状态。如果返回的**FrIf_StatePtr**为**FRIF_STATE_ONLINE**，则报告的FlexRay源总线状态设置为在线（online），否则设置为离线（offline）。如果总线是在线的，总线镜像模块也需要为每个连接到FlexRay集群的控制器调用**FrIf_GetPOCStatus**。如果所有控制器返回的**Fr_POCStateType**为**FR_POCSTATE_NORMAL_ACTIVE**，则报告的源总线状态应为同步且正常激活。如果**Fr_POCStateType**对于至少一个控制器是**FR_POCSTATE_NORMAL_PASSIVE**，则报告的源总线状态应该是同步的，但不是正常活动的。如果**Fr_POCStateType**处于至少一个控制器的任何其他状态，则报告的源总线状态应该既不是同步的也不是正常活动的。
 
-## 6.4. 镜像协议 (Mirroring Protocol)
+## 5.4. 镜像协议 (Mirroring Protocol)
 总线镜像模块中，镜像协议（Mirroring Protocol）应用于IP、FlexRay和CDD连接的专有网络作为目的总线中。如图所示，在本例中，该协议用于以太网目的总线。
 
-​![Bus Mirroring Serialization Protocol](2022-01-23-20-19-12.png)
+​![Bus Mirroring Serialization Protocol](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-23-20-19-12.png)
 
 协议由一个协议头（Header）和几个数据项组成。
 
 字节数的增加顺序与字节在目的总线上传输的顺序相同，并从0开始。对于字节中位的定义是，一个字节的最高有效位是第7位，最低有效位是0位。
 
-### 6.4.1. 镜像协议头布局（Header）
+### 5.4.1. 镜像协议头布局（Header）
 
 每个目的帧都有一个协议头，如图所示。
 
-![Bus Mirroring Protocol Header](2022-01-23-20-20-15.png)
+![Bus Mirroring Protocol Header](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-23-20-20-15.png)
 
 总线镜像目标帧的协议头应按此顺序包含以下字段:
 1. ProtocolVersion
@@ -251,7 +252,7 @@ FlexRay滤波器（**FlexRay filter**）动态添加，可以调用**Mirror_AddF
 1. HeaderTimestamp
 1. DataLength
    
-#### 6.4.1.1. 协议版本（ProtocolVersion）
+#### 5.4.1.1. 协议版本（ProtocolVersion）
 
 协议版本用来表示协议头和数据项的布局。当前定义的布局固定使用1来标识**ProtocolVersion**。范围[2::127]保留给AUTOSAR标准，用来扩展未来协议定义。客户特定的协议可使用范围[128::255]来定义。
 
@@ -259,7 +260,7 @@ FlexRay滤波器（**FlexRay filter**）动态添加，可以调用**Mirror_AddF
 
 ProtocolVersion字段的宽度为8个Bit。
 
-#### 6.4.1.2. 序列号（SequenceNumber）
+#### 5.4.1.2. 序列号（SequenceNumber）
 
 SequenceNumber应该随着每一个目的帧的传输而增加。在初始化后或在Mirror_SwitchDestNetwork切换到新的目标总线后，SequenceNumber应该从0重新开始计数。
 
@@ -267,25 +268,25 @@ SequenceNumber允许诊断仪（**Tester**）识别丢失的目标帧。
 
 SequenceNumber字段的宽度为8个Bit。这意味着SequenceNumber将在达到255后绕圈到0。诊断仪（**Tester**）必须能够处理这种行为，并且仍然能够正确地对帧进行排序。
 
-#### 6.4.1.3. 协议头时间戳（HeaderTimestamp）
+#### 5.4.1.3. 协议头时间戳（HeaderTimestamp）
 
 HeaderTimestamp应该反映数据项收集到目的帧开始的时间。这个时间是从1970年1月1日以来的绝对秒数和纳秒数。
 
 HeaderTimestamp字段的宽度应为10字节，布局如图所示。HeaderTimestamp字段的元素应按网络字节顺序（MSB优先）进行编码。
 
-​![Layout of HeaderTimestamp](2022-01-23-20-21-36.png)
+​![Layout of HeaderTimestamp](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-23-20-21-36.png)
 
-#### 6.4.1.4. 数据长度（DataLength）
+#### 5.4.1.4. 数据长度（DataLength）
 
 DataLength应该给出报头后面的字节数。它是目标帧中所有数据项的长度之和。
 
 DataLength字段的宽度应为16位。它应该以网络字节顺序（MSB优先）进行编码。
 
-### 6.4.2. 镜像协议数据项的布局（Data Item Layout）
+### 5.4.2. 镜像协议数据项的布局（Data Item Layout）
 
 每个源帧被放置在一个数据项中，如图7所示。
 
-![Bus Mirroring Protocol Data Item](2022-01-27-16-28-46.png)
+![Bus Mirroring Protocol Data Item](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-16-28-46.png)
 
 总线镜像目的帧的数据项应按此顺序包含以下字段：
 
@@ -300,31 +301,31 @@ DataLength字段的宽度应为16位。它应该以网络字节顺序（MSB优�
 9. PayloadLength (optional)
 10. Payload (optional)
 
-#### 6.4.2.1. 时间戳（Timestamp）
+#### 5.4.2.1. 时间戳（Timestamp）
 
 时间戳（**Timestamp**）应该反映源帧接收到HeaderTimestamp的时间偏移量，即从开始收集数据项到目的帧的总时间。它的单位将是**10us**的倍数。
 
 **Timestamp**字段的宽度应为16位。它应该以网络字节顺序(MSB优先)进行编码。
 
-#### 6.4.2.2. NetworkStateAvailable
+#### 5.4.2.2. NetworkStateAvailable
 
 **NetworkStateAvailable**表示网络状态（**NetworkState**）字段是否存在于数据项中。如果**NetworkStateAvailable**为**1**，则存在该字段。如果为**0**，则该字段信息需要被省略。
 
 **NetworkStateAvailable**字段的宽度应为1位。
 
-#### 6.4.2.3. FrameIDAvailable
+#### 5.4.2.3. FrameIDAvailable
 
 **FrameIDAvailable**表示**FrameID**字段是否存在于数据项中。如果**FrameIDAvailable**为**1**，则存在该字段。如果为**0**，则该字段信息需要被省略。
 
 **FrameIDAvailable**字段的宽度应为1位。
 
-#### 6.4.2.4. PayloadAvailable
+#### 5.4.2.4. PayloadAvailable
 
 **PayloadAvailable**表示**Payload**和**PayloadLength**字段是否存在于数据项中。如果**FrameIDAvailable**为**1**，则存在这些字段。如果为**0**，则这些字段信息需要被省略。
 
 **PayloadAvailable**字段的宽度应为1位。
 
-#### 6.4.2.5. NetworkType
+#### 5.4.2.5. NetworkType
 
 **NetworkType**表示源总线的类型。NetworkType字段的宽度应为5位，可能的值如表所示。范围[5::15]预留给AUTOSAR自有协议的未来扩展，范围[16::31]可用定义客户特定的总线类型。
 
@@ -336,13 +337,13 @@ DataLength字段的宽度应为16位。它应该以网络字节顺序（MSB优�
 | FlexRay      | 3         |
 | Ethernet     | 4         |
 
-#### 6.4.2.6. NetworkID
+#### 5.4.2.6. NetworkID
 
 **NetworkID**应唯一地标识特定**NetworkType**的总线，即相同的**NetworkID**可以出现在不同的**NetworkType上**，但不能出现在相同的**NetworkType**上。
 
 **NetworkID**字段的宽度应为8位。
 
-#### 6.4.2.7. NetworkState
+#### 5.4.2.7. NetworkState
 
 **NetworkState**应提供有关源总线状态的信息。只有当源总线的状态自上次被报告以来发生变化时，它才会出现，该状态应由NetworkStateAvailable表示。
 
@@ -352,11 +353,11 @@ DataLength字段的宽度应为16位。它应该以网络字节顺序（MSB优�
 
 **NetworkState**的第6位总是包含总线在线状态（**Bus Online State**）。这是一种连续状态（**continuous state**），与在同一数据项中报告的源帧无关。即使在**FrameIDAvailable**和**PayloadAvailable**字段设置为0是，它仍然会报告在数据项中。当源总线在线时，即控制器和收发器都能通信时，总线在线状态设置为1。否则设置为0。
 
-##### 6.4.2.7.1. NetworkStateCAN
+##### 5.4.2.7.1. NetworkStateCAN
 
 CAN总线的网络状态（**NetworkStateCAN**）布局如表所示。
 
-![Layout of CAN NetworkState](2022-01-27-16-58-55.png)
+![Layout of CAN NetworkState](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-16-58-55.png)
 
 NetworkStateCAN的第5位应该包含错误被动状态（**Error-Passive state**）。这是一种连续状态，与在同一数据项中报告的源帧无关。也可能在**FrameIDAvailable**和**PayloadAvailable**字段设置为0的数据项中报告。
 当CAN控制器处于错误被动状态（**Error-Passive state**）时，应将无错误状态设置为1。当它处于错误主动（**Error-Active**）或**Bus-Off**状态时，值为0。
@@ -365,11 +366,11 @@ NetworkStateCAN的第5位应该包含错误被动状态（**Error-Passive state*
 
 NetworkStateCAN的第0位到底3位，应该包含可以控制器的发送（**Tx**）错误计数器，数值位Tx错误计算除以8。这是一种连续状态，与在同一数据项中报告的源帧无关，也可能在**FrameIDAvailable**和**PayloadAvailable**字段设置为0的数据项中报告。
 
-##### 6.4.2.7.2. NetworkStateLIN
+##### 5.4.2.7.2. NetworkStateLIN
 
 LIN总线的网络状态（**NetworkStateLIN**）布局如表所示。
 
-![Layout of LIN NetworkState](2022-01-27-17-08-22.png)
+![Layout of LIN NetworkState](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-17-08-22.png)
 
 **NetworkStateLIN**的第5位和第4位目前被保留。它们总是被设为0。
 
@@ -381,11 +382,11 @@ LIN总线的网络状态（**NetworkStateLIN**）布局如表所示。
 
 **NetworkStateLIN**的第0位应包含报头接收无响应状态（**Header Rx No Response state**）。这是一个与同一数据项中报告的源帧相关的错误。当LIN控制器在传输LIN报头后没有收到预期的LIN帧时，报头接收无响应状态（**Header Rx No Response state**应设置为1。否则设置为0。
 
-##### 6.4.2.7.3. NetworkStateFlexRay
+##### 5.4.2.7.3. NetworkStateFlexRay
 
 FlexRay总线的网络状态（**NetworkStateFlexRay**）布局如表所示。
 
-![Layout of FlexRay NetworkState](2022-01-27-17-18-50.png)
+![Layout of FlexRay NetworkState](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-17-18-50.png)
 
 **NetworkStateFlexRay**的第5位应该包含总线同步状态（**Bus Synchronous state**）。这是一种连续状态，与在同一数据项中报告的源帧无关，也可能在**FrameIDAvailable**和**PayloadAvailable**字段设置为0的数据项中报告。当所有连接到总线上的FlexRay控制器都与网络时间同步时，总线同步状态应设置为1。否则设置为0。
 
@@ -399,35 +400,35 @@ FlexRay总线的网络状态（**NetworkStateFlexRay**）布局如表所示。
 
 **NetworkStateFlexRay**的第0位应包含Tx冲突状态（**Tx Conflict state**）。这是一个与使用相同FrameID报告的前一个源帧相关的错误，并且总是在一个数据项中报告，其中**FrameIDAvailable**字段设置为1，**PayloadAvailable**字段设置为0。当FlexRay控制器检测到传输冲突时，Tx冲突状态（**Tx Conflict state**）应该设置为1。否则设置为0。
 
-#### 6.4.2.8. FrameID
+#### 5.4.2.8. FrameID
 
 **FrameID**应提供源帧（**Source Frame**）的标识。此标识对于一个由**NetworkType**和**NetworkID**标识的源总线（**Source Bus**）应该是唯一的。当报告源总线状态改变时，FrameID可以被省略，**FrameID**存在与否应由**FrameIDAvailable**来表示。
 
 **FrameID**字段的宽度和布局是总线特定的，针对不同的总线类型，分别定义了**FrameIDCAN**、**FrameIDLIN**和**FrameIDFlexRay**。
 
-##### 6.4.2.8.1. FrameIDCAN
+##### 5.4.2.8.1. FrameIDCAN
 
 CAN总线的FrameID布局如表7.6.
 
-![Layout of CAN FrameID](2022-01-27-20-11-10.png)
+![Layout of CAN FrameID](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-20-11-10.png)
 
 **FrameIDCAN**的布局对应于**Mirror_ReportCanFrame**提供的Can_IdType。**FrameIDCAN**字段的宽度应为4字节。
 
 对于扩展CAN ID（**Extended CAN ID**），第0字节的第7位应该设置为1，对于标准CAN ID （**Standard CAN ID**），应该设置为0。**FrameIDCAN**的第0字节的第6位表示是否是CANFD帧，对应CANFD帧格式设置为1，对于CAB 2.0帧应该设置为0。**FrameIDCAN**的第0字节的第5位目前被保留。它总是被设为0。FrameIDCAN的字节0的第0位到第4位以及字节1到字节3，包含了以网络字节顺序（MSB优先）报告的CAN帧的CAN ID。
 
-##### 6.4.2.8.2. FrameIDLIN
+##### 5.4.2.8.2. FrameIDLIN
 
 LIN总线的FrameID布局如表所示
 
-![Layout of LIN FrameID](2022-01-27-20-18-43.png)
+![Layout of LIN FrameID](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-20-18-43.png)
 
 **FrameIDLIN**字段的宽度应为1字节。**FrameIDLIN**的字节0应该包含报告LIN帧的LIN PID。
 
-##### 6.4.2.8.3. FrameIDFlexRay
+##### 5.4.2.8.3. FrameIDFlexRay
 
 **FlexRay**总线的**FrameID**布局如表所示。
 
-![Layout of FlexRay FrameID](2022-01-27-20-20-55.png)
+![Layout of FlexRay FrameID](https://melodypapa.github.io/automotive/AUTOSAR/communication/mirror/2022-01-27-20-20-55.png)
 
 **FrameIDFlexRay**字段的宽度应为3字节。
 
@@ -441,23 +442,23 @@ LIN总线的FrameID布局如表所示
 
 **FrameIDFlexRay**的字节2包含了发送或接收所报告的FlexRay帧的周期。对于接收到的帧和在静态段发送的帧，周期总是可靠的。对于在动态段中发送的帧，由于可能不会在计划的周期内发送，因此无法提前知道实际的周期。
 
-#### 6.4.2.9. PayloadLength
+#### 5.4.2.9. PayloadLength
 
 **PayloadLength**应提供源帧的有效载荷长度。当报告源总线状态变化时，可以省略。它的存在与否通过**PayloadAvailable**来表示。
 
 **PayloadLength**字段的宽度应为8位。
 
-#### 6.4.2.10. Payload （有效负载）
+#### 5.4.2.10. Payload （有效负载）
 
 有效负载（Payload）应提供源帧的实际有效载荷。当报告源总线状态变化时，可以省略。它的存在与否通过**PayloadAvailable**来表示。
 
 有效负载字段的宽度应与报告的源帧相对应。LIN和CAN 2.0的最大值为8字节，CAN-FD的最大值为64字节，FlexRay的最大值为254字节。
 
-## 6.5. 镜像到FlexRay、IP和CDD
+## 5.5. 镜像到FlexRay、IP和CDD
 
 当镜像到FlexRay目的总线、IP目的总线（如以太网）或作为CDD连接的专有网络时，总线镜像模块应用协议将几个较小的帧打包成目标总线的一个大帧。
 
-### 6.5.1. 创建
+### 5.5.1. 创建
 
 当总线镜像模块初始化或当Mirror_SwitchDestNetwork叫调用来激活FlexRay（**MirrorDestNetworkFlexRay**）, IP（**MirrorDestNetworkIp**），或专有的（**MirrorDestNetworkCdd**）为目的地总线，总线镜像模块将激活一个新的目的地帧缓冲器和重置**SequenceNumber**为0。
 
@@ -487,7 +488,7 @@ LIN总线的FrameID布局如表所示
 
 **PayloadAvailable**位设置为0，**PayloadLength**和**Payload**字段应省略。
 
-### 6.5.2. 队列
+### 5.5.2. 队列
 
 当一个数据项不适合当前活动的目标帧缓冲区的剩余空间时，总线镜像模块应该将这个缓冲区放入队列并激活一个新的目标帧缓冲区。然后数据项应放置在新的缓冲区中。
 
@@ -499,7 +500,7 @@ LIN总线的FrameID布局如表所示
 
 如果目标帧因为队列已经满而不能放入队列中，总线镜像模块将丢弃该目标帧，并报告镜像运行时错误**MIRROR_E_QUEUE_OVERRUN**，并且设置当前活动的目标帧缓冲区中创建的下一个数据项的**NetworkState**的Frame Lost位为1。
 
-### 6.5.3. 传输
+### 5.5.3. 传输
 
 为了启动已经队列化并且序列化的目的帧的发送，总线镜像模块需要调用**PduR_MirrorTransmit**函数, 同时**PduInfoPtr->MetaDataPtr**参数设置为**NULL_PTR**, **PduInfoPtr->SduLength**设置为目的帧实际写入的部分。如果**MirrorDestPduUsesTriggerTransmit**配置被使能, 那么**PduInfoPtr->SduDataPtr**参数必须设置为**NULL_PTR**，否则设置为队列目的帧被使用的部分。
 
@@ -523,19 +524,19 @@ LIN总线的FrameID布局如表所示
 
 如果**Mirror_TxConfirmation**报告了一个序列化的目的帧传输失败（结果是**E_NOT_OK**），总线镜像模块应该报告运行时错误**MIRROR_E_TRANSMIT_FAILED**，在当前活动的目的帧缓冲区中创建的新的数据项作为下一个数据项，同时把数据项中的**NetworkState**的**Frame Lost**位设置为1。
 
-## 6.6. 镜像到CAN
+## 5.6. 镜像到CAN
 
 当镜像到CAN目的总线时，总线镜像模块将接收到的CAN和LIN帧直接发送到目的总线，尽管可能会更改CAN ID，以避免与目的总线上的常规消息冲突。
 
 本章定义了总线镜像模块如何转换CAN id和队列源帧，以及如何创建和队列状态帧，然后在目的总线上传输它们。
 
-### 6.6.1. 源帧的处理
+### 5.6.1. 源帧的处理
 
-#### 6.6.1.1. ID映射
+#### 5.6.1.1. ID映射
 
 通常情况下，CAN源帧可以不用任何改变就能在目的总线上进行传输，而LIN源帧的**PID**需要映射到一定范围的**CAN ID**。但有时很难找到连续的未使用的**CAN ID**序列来映射**LIN PID**。或者传输的帧也使用相同的**CAN ID**在目的CAN总线上已经被使用。在这种情况下，这些**CAN ID**和**LIN PID**必须映射到另一个特殊的**CAN ID**。
 
-##### 6.6.1.1.1. CAN上的ID映射
+##### 5.6.1.1.1. CAN上的ID映射
 
 如果CAN源帧的**canId**与**MirrorSourceCanSingleId**的**MappingSourceCanId**相匹配，则CAN目的帧（**CAN destination frame**）就需要使用转换成**MirrorSourceCanSingleIdMappingDestCanId**后再传输。
 
@@ -543,19 +544,19 @@ LIN总线的FrameID布局如表所示
 
 如果CAN源帧的**canId**与**MirrorSourceCanSingleIdMapping**和**MirrorSourceCanMaskBasedIdMapping**都不匹配，则CAN目的帧（**CAN destination frame**）需要使用原始的canID来进行传输。 相同的CAN ID：包括ID类型（扩展或标准）和帧类型（CAN-FD或CAN 2.0）。
 
-##### 6.6.1.1.2. LIN上的ID映射
+##### 5.6.1.1.2. LIN上的ID映射
 
 如果从LIN源帧的**PID**中提取的**Frame ID**与**MirrorSourceLinToCanIdMapping**的**MirrorSourceLinToCanIdMappingLinId**相匹配，则该CAN目的帧需是使用**MirrorSourceLinToCanIdMappingCanId**进行传输。
 
 如果从LIN源帧的**PID**中提取的**Frame ID**与**MirrorSourceLinToCanIdMapping**不匹配，则在发送CAN目的帧时，需要将**LIN Frame ID**加上**MirrorSourceLinToCanBaseId**中后再进行传输。
 
-### 6.6.2. 排队
+### 5.6.2. 排队
 
 总线镜像模块应将所有的CAN目的帧放入队列中。CAN目的帧的队列大小由配置参数**MirrorDestQueueSize**决定，队列元素的大小由**MirrorDestPduRef**引用的**Pdu**的**PduLength**决定。
 
 如果目标帧因为队列已经满而不能放入队列，总线镜像模块将丢弃该目标帧，并报告运行时错误（**MIRROR_E_QUEUE_OVERRUN**），并且设置当前活动的目标帧缓冲区中创建的下一个数据项的**NetworkState**的**Frame Lost**位为1。
 
-### 传输
+### 5.6.3. 传输
 
 为了发起一个排队的CAN目的帧的传输，总线镜像模块需要调用**PduR_MirrorTransmit**, **PduInfoPtr->MetaDataPtr**设置为包含目的帧**CAN ID**的元数据，**PduInfoPtr->SduLength**设置为目的帧的长度。如果启用了**MirrorDestPduUsesTriggerTransmit**, **PduInfoPtr->SduDataPtr**必须设置为**NULL_PTR**，否则为源帧的负载。
 

@@ -6,5 +6,5 @@
 
 ## Communication
 
-* [AUTOSAR Mirror](communication/mirror/mirror.md)
+* [AUTOSAR Mirror](/automotive/AUTOSAR/communication/mirror/mirror.md)
 
