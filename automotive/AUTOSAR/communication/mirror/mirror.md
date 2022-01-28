@@ -529,14 +529,52 @@ LIN总线的FrameID布局如表所示
 
 本章定义了总线镜像模块如何转换CAN id和队列源帧，以及如何创建和队列状态帧，然后在目的总线上传输它们。
 
-### 源帧的处理
+### 6.6.1. 源帧的处理
 
-#### ID映射
+#### 6.6.1.1. ID映射
 
-通常情况下，CAN源帧可以不用任何改变就能在目的总线上进行传输，而LIN源帧的**PID**需要映射到一定范围的**CAN ID**。
+通常情况下，CAN源帧可以不用任何改变就能在目的总线上进行传输，而LIN源帧的**PID**需要映射到一定范围的**CAN ID**。但有时很难找到连续的未使用的**CAN ID**序列来映射**LIN PID**。或者传输的帧也使用相同的**CAN ID**在目的CAN总线上已经被使用。在这种情况下，这些**CAN ID**和**LIN PID**必须映射到另一个特殊的**CAN ID**。
 
-但有时很难找到连续的未使用的CAN ID序列来映射LIN PID。或者在目的CAN总线上通常传输的帧也使用相同的CAN ID。
-在这种情况下，某些CAN id和LIN pid必须映射到特殊的CAN id。
+##### 6.6.1.1.1. CAN上的ID映射
+
+如果CAN源帧的**canId**与**MirrorSourceCanSingleId**的**MappingSourceCanId**相匹配，则CAN目的帧（**CAN destination frame**）就需要使用转换成**MirrorSourceCanSingleIdMappingDestCanId**后再传输。
+
+如果CAN源帧的**canId**与**MirrorSourceCanMaskBasedIdMapping**配置的**MirrorSourceCanMaskBasedIdMappingSourceCanIdMask**屏蔽计算（**Masked**）和**MirrorSourceCanMaskBasedIdMappingSourceCanIdCode**相匹配，则CAN目的帧（**CAN destination frame**）需要将经过屏蔽计算的**canId**加上**MirrorSourceCanMaskBasedIdMappingDestBaseId**后再进行传输。
+
+如果CAN源帧的**canId**与**MirrorSourceCanSingleIdMapping**和**MirrorSourceCanMaskBasedIdMapping**都不匹配，则CAN目的帧（**CAN destination frame**）需要使用原始的canID来进行传输。 相同的CAN ID：包括ID类型（扩展或标准）和帧类型（CAN-FD或CAN 2.0）。
+
+##### 6.6.1.1.2. LIN上的ID映射
+
+如果从LIN源帧的**PID**中提取的**Frame ID**与**MirrorSourceLinToCanIdMapping**的**MirrorSourceLinToCanIdMappingLinId**相匹配，则该CAN目的帧需是使用**MirrorSourceLinToCanIdMappingCanId**进行传输。
+
+如果从LIN源帧的**PID**中提取的**Frame ID**与**MirrorSourceLinToCanIdMapping**不匹配，则在发送CAN目的帧时，需要将**LIN Frame ID**加上**MirrorSourceLinToCanBaseId**中后再进行传输。
+
+### 6.6.2. 排队
+
+总线镜像模块应将所有的CAN目的帧放入队列中。CAN目的帧的队列大小由配置参数**MirrorDestQueueSize**决定，队列元素的大小由**MirrorDestPduRef**引用的**Pdu**的**PduLength**决定。
+
+如果目标帧因为队列已经满而不能放入队列，总线镜像模块将丢弃该目标帧，并报告运行时错误（**MIRROR_E_QUEUE_OVERRUN**），并且设置当前活动的目标帧缓冲区中创建的下一个数据项的**NetworkState**的**Frame Lost**位为1。
+
+### 传输
+
+为了发起一个排队的CAN目的帧的传输，总线镜像模块需要调用**PduR_MirrorTransmit**, **PduInfoPtr->MetaDataPtr**设置为包含目的帧**CAN ID**的元数据，**PduInfoPtr->SduLength**设置为目的帧的长度。如果启用了**MirrorDestPduUsesTriggerTransmit**, **PduInfoPtr->SduDataPtr**必须设置为**NULL_PTR**，否则为源帧的负载。
+
+**PduInfoPtr->SduDataPtr**的**NULL_PTR**确保目标总线接口模块（**CanIf**）使用**Mirror_TriggerTransmit**来获取目标帧。
+
+如果**PduR_MirrorTransmit**返回**E_NOT_OK**，总线镜像模块应该立即从队列中删除目的帧，应该报告运行时错误（**MIRROR_E_TRANSMIT_FAILED**），并且设置当前活动的目标帧缓冲区中创建的下一个数据项的**NetworkState**的**Frame Lost**位为1。
+
+总线镜像模块应该从**Mirror_MainFunction**和**Mirror_TxConfirmation**回调函数开始传输队列中的CAN目标帧。这确保了队列目标帧的传输速度尽可能快。
+
+在上一个目的帧被**Mirror_TxConfirmation**调用确认之前，总线镜像模块不能传输下一个CAN目的帧。
+
+当CAN目的帧调用**Mirror_TriggerTransmit**时，镜像模块将源帧的负载复制到PduInfoPtr->SduDataPtr上，并更新PduInfoPtr->SduLength。
+
+CAN总线，它是不可能**Mirror_TriggerTransmit**提供**PduInfoPtr->SduLength**太小的问题，因为目标帧已经为CAN 2.0配置8字节，为CAN-FD配置64字节，同时**CanIf**总是提供相应的硬件缓冲区大小。
+
+当**Mirror_TxConfirmation**被调用来报告CAN目的帧的成功或失败传输时，总线镜像模块应该将目的帧从队列中移除。
+
+如果**Mirror_TxConfirmation**报告CAN目的帧传输失败（结果是**E_NOT_OK**），总线镜像模块应报告运行错误（**MIRROR_E_TRANSMIT_FAILED**），并且设置当前活动的目标帧缓冲区中创建的下一个数据项的**NetworkState**的**Frame Lost**位为1。
+
 
 
 
