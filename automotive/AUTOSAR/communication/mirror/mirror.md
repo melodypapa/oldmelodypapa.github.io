@@ -116,118 +116,119 @@ LIN和CAN或者CANFD帧被镜像到CAN或者CANFD总线上，可以直接发送�
 #### 6.3.1.1. CAN源总线激活
 初始化后，CAN接口模块不会向总线镜像模块报告任何帧。
 
-当Mirror_StartSourceNetwork被调用来启动CAN源总线时，总线镜像模块将调用CanIf_EnableBusMirroring，并将MirroringActive设置为TRUE，来开始报告从相应的CAN控制器接收和发送的CAN帧。
+当**Mirror_StartSourceNetwork**被调用来启动CAN源总线时，总线镜像模块将调用**CanIf_EnableBusMirroring**，并将**MirroringActive**设置为TRUE，来开始报告从相应的CAN控制器接收和发送的CAN帧。
 
-Mirror_StartSourceNetwork接收一个ComMChannelId参数作为网络（network），而CanIf_EnableBusMirroring接收一个CanIfCtrlId参数作为ControllerId。这两个参数的的转换可以在代码生成时，通过ECU配置ComMChannelId到CanIfCtrlId的引用来确定。
+**Mirror_StartSourceNetwork**接收一个**ComMChannelId**参数作为网络（**network**），而**CanIf_EnableBusMirroring**接收一个**CanIfCtrlId**参数作为**ControllerId**。这两个参数的的转换可以在代码生成时，通过ECU配置**ComMChannelId**到**CanIfCtrlId**的引用来确定。
 
-当Mirror_StopSourceNetwork被调用来停止CAN源总线时，总线镜像模块将调用CanIf_EnableBusMirroring，并将MirroringActive设置为FALSE，来停止从相应的CAN控制器接收和发送的CAN帧的报告。
+当**Mirror_StopSourceNetwork**被调用来停止CAN源总线时，总线镜像模块将调用**CanIf_EnableBusMirroring**，并将**MirroringActive**设置为**FALSE**，来停止从相应的CAN控制器接收和发送的CAN帧的报告。
 
 #### 6.3.1.2. CAN报文采集
 
-CAN接口模块（CanIf）通过调用Mirror_ReportCanFrame来报告接收和发送的CAN帧。从接收中断或任务中报告接收帧，而从传输确认中断或任务中报告发送帧。
+CAN接口模块（**CanIf**）通过调用**Mirror_ReportCanFrame**来报告接收和发送的CAN帧。从接收中断或任务中报告接收帧，而从传输确认中断或任务中报告发送帧。
 
-总线镜像模块需要运用适当的机制来确保，Mirror_ReportCanFrame接口能在MirrorComMNetworkHandleRef引用的ComMChannel所分配到的那个分区中被调用。（例如在该分区中提供一个卫星服务（satellite）。
+总线镜像模块需要运用适当的机制来确保，**Mirror_ReportCanFrame**接口能在**MirrorComMNetworkHandleRef**引用的**ComMChannel**所分配到的那个分区中被调用。例如在该分区中提供一个卫星服务（**satellite**）。
 
-对于上报的每一个CAN帧，CAN接口模块（CanIf）提供接收的CAN控制器、CAN ID、CAN ID类型（扩展帧或标准帧）、CAN帧类型（CAN-FD或CAN 2.0）、帧长度和实际负载信息。
+对于上报的每一个CAN帧，CAN接口模块（**CanIf**）提供接收的CAN控制器、CAN ID、CAN ID类型（扩展帧或标准帧）、CAN帧类型（CAN-FD或CAN 2.0）、帧长度和实际负载信息。
 
-当Mirror_ReportCanFrame被调用来报告接收或发送的CAN帧时，总线镜像模块需要将包含实际CAN ID、ID类型和帧类型的canId与相应源总线中所有活动的静态配置和动态添加的过滤器进行匹配。如果CAN帧至少匹配了一个过滤器，它会被总线镜像模块接受。
+当**Mirror_ReportCanFrame**被调用来报告接收或发送的CAN帧时，总线镜像模块需要将包含实际CAN ID、ID类型和帧类型的canId与相应源总线中所有活动的静态配置和动态添加的过滤器进行匹配。如果CAN帧至少匹配了一个过滤器，它会被总线镜像模块接受。
 
-当镜像到FlexRay、IP或专有的目的总线时，源总线由network ID标识。但Mirror_ReportCanFrame报告确实cotrollerID。network ID到controllerID的转换，可以在代码生成时确定，通过ECU配置中的MirrorComMNetworkHandleRef里的CanIfCtrlId到MirrorNetworkId的引用来确定。
+当镜像到FlexRay、IP或专有的目的总线时，源总线由**network ID**标识。但**Mirror_ReportCanFrame**报告确实**cotrollerID**。**network ID**到**controllerID**的转换，可以在代码生成时确定，通过ECU配置中的**MirrorComMNetworkHandleRef**里的**CanIfCtrlId**到**MirrorNetworkId**的引用来确定。
 
 #### 6.3.1.3. CAN报文的过滤
 
-CAN掩码过滤器（CAN mask filter）可以静态配置为MirrorSourceCanFilterMask的匹配报告的canId，如果该canId被MirrorSourceCanFilterCanIdMask屏蔽掩码计算后等于MirrorSourceCanFilterCanIdCode。
+CAN掩码过滤器（**CAN mask filter**）可以静态配置为**MirrorSourceCanFilterMask**的匹配报告的**canId**，如果该**canId**被**MirrorSourceCanFilterCanIdMask**屏蔽掩码计算后等于**MirrorSourceCanFilterCanIdCode**。
 
-CAN掩码过滤器（CAN mask filter）也可以通过调用Mirror_AddCanMaskFilter动态添加用来匹配报告的canId，如果这个canId被mask参数屏蔽掩码计算后等于id参数。
+CAN掩码过滤器（**CAN mask filter**）也可以通过调用**Mirror_AddCanMaskFilter**动态添加用来匹配报告的**canId**，如果这个**canId**被**mask**参数屏蔽掩码计算后等于**id**参数。
 
-CAN 范围过滤器（CAN range filter）可以静态配置为MirrorSourceCanFilterRange来匹配报告的canId，如果该canId的值大于等于MirrorSourceCanFilterLower，并且小于等于MirrorSourceCanFilterUpper时，匹配上报的canId。
+CAN 范围过滤器（**CAN range filter**）可以静态配置为**MirrorSourceCanFilterRange**来匹配报告的**canId**，如果该**canId**的值大于等于**MirrorSourceCanFilterLower**，并且小于等于**MirrorSourceCanFilterUpper**时，匹配上报的**canId**。
 
-CAN 范围过滤器（CAN range filter）也可以通过调用Mirror_AddCanRangeFilter动态添加用来匹配上报的canId，如果该canId的值大于等于lowerId参数，并且小于等于upperId参数。
+CAN 范围过滤器（**CAN range filter**）也可以通过调用**Mirror_AddCanRangeFilter**动态添加用来匹配上报的**canId**，如果该**canId**的值大于等于**lowerId**参数，并且小于等于**upperId**参数。
 
 #### 6.3.1.4. CAN状态采集
 
-总线镜像模块通过循环调用Mirror_MainFunction中的CanIf_GetControllerMode和CanIf_GetTrcvMode来轮询每个被激活CAN源总线的状态。如果返回的ControllerModePtr为CAN_CS_STARTED，而TransceiverModePtr为CANTRCV_TRCVMODE_NORMAL，则上报的CAN源总线状态为在线（online），否则为离线（offline）。
+总线镜像模块通过循环调用**Mirror_MainFunction**中的**CanIf_GetControllerMode**和**CanIf_GetTrcvMode**来轮询每个被激活CAN源总线的状态。如果返回的**ControllerModePtr**为**CAN_CS_STARTED**，而**TransceiverModePtr**为**CANTRCV_TRCVMODE_NORMAL**，则上报的CAN源总线状态为在线（**online**），否则为离线（**offline**）。
 
-如果总线处于在线（online）状态，总线镜像模块调用CanIf_GetControllerErrorState，如果返回的ErrorStatePtr为CAN_ERRORSTATE_PASSIVE或CAN_ERRORSTATE_BUSOFF，则上报的CAN源总线状态分别设置为Passive错误或Bus-off错误。同时如果总线是在线（online）的，总线镜像模块也应该调用CanIf_GetControllerTxErrorCounter，并将返回的TxErrorCounterPtr添加到报告的CAN源总线状态中。
+如果总线处于在线（online）状态，总线镜像模块调用**CanIf_GetControllerErrorState**，如果返回的**ErrorStatePtr**为**CAN_ERRORSTATE_PASSIVE**或**CAN_ERRORSTATE_BUSOFF**，则上报的CAN源总线状态分别设置为**Passive**错误或**Bus-off**错误。同时如果总线是在线（online）的，总线镜像模块也应该调用**CanIf_GetControllerTxErrorCounter**，并将返回的**TxErrorCounterPtr**添加到报告的CAN源总线状态中。
 
 ### 6.3.2. 访问LIN的源总线
 
-总线镜像模块通过LIN接口模块（LinIf）访问LIN总线。Bus Mirroring模块启动LIN总线的镜像后，LIN接口模块将接收和发送的LIN帧报告给总线镜像模块。部分的LIN总线的状态是与LIN帧内容一起被报告，部分状态时通过Mirror_MainFunction循环轮询。
+总线镜像模块通过LIN接口模块（**LinIf**）访问LIN总线。总线镜像模启动LIN总线的镜像后，LIN接口模块将接收和发送的LIN帧报告给总线镜像模块。部分的LIN总线的状态是与LIN帧内容一起被报告，部分状态时通过**Mirror_MainFunction**循环轮询。
 
 #### 6.3.2.1. LIN源总线激活
 
-初始化后，LIN接口模块（LinIf）不会向总线镜像模块报告任何帧。
+初始化后，LIN接口模块（**LinIf**）不会向总线镜像模块报告任何帧。
 
-当Mirror_StartSourceNetwork被调用来启动LIN源总线时，总线镜像模块应该调用LinIf_EnableBusMirroring并将MirroringActive设置为TRUE，来开始报告从该总线接收和发送的LIN帧。
+**当Mirror_StartSourceNetwork**被调用来启动LIN源总线时，总线镜像模块应该调用**LinIf_EnableBusMirroring**并将**MirroringActive**设置为**TRUE**，来开始报告从该总线接收和发送的LIN帧。
 
-当Mirror_StopSourceNetwork被调用来停止LIN源总线时，总线镜像模块应该调用LinIf_EnableBusMirroring并将MirroringActive设置为FALSE，来停止从该总线接收和发送LIN帧的报告。
+当**Mirror_StopSourceNetwork**被调用来停止LIN源总线时，总线镜像模块应该调用**LinIf_EnableBusMirroring**并将**MirroringActive**设置为**FALSE**，来停止从该总线接收和发送LIN帧的报告。
 
 #### 6.3.2.2. LIN帧采集
 
-LIN接口模块通过调用Mirror_ReportLinFrame来报告接收和发送的LIN帧。在执行了相应的状态检查之后，接收和发送的帧被LIN调度处理报告。
+LIN接口模块通过调用**Mirror_ReportLinFrame**来报告接收和发送的LIN帧。在执行了相应的状态检查之后，接收和发送的帧被LIN调度处理报告。
 
-总线镜像模块需要运用适当的机制，允许MirrorComMNetworkHandleRef引用的ComMChannel被分配到的分区中调用Mirror_ReportCanFrame。（例如在该分区中提供一个卫星服务（satellite）。
-对于每个上报的LIN帧，LIN接口模块（LinIf）提供接收总线、受保护ID (PID)、帧长度、实际负载以及接收或传输状态等信息。
+总线镜像模块需要运用适当的机制，允许**MirrorComMNetworkHandleRef**引用的**ComMChannel**被分配到的分区中调用**Mirror_ReportCanFrame**。（例如在该分区中提供一个卫星服务（**satellite**）。
 
-当Mirror_ReportLinFrame被调用来报告接收或发送的LIN帧时，总线镜像模块将从上报的PID中提取帧ID（Frame ID），并将其与相应源总线中所有静态配置和动态添加的活动过滤器进行匹配。如果LIN帧匹配至少一个过滤器，它被总线镜像模块接受。LIN帧的帧ID（Frame ID）是从PID中去掉两个最重要的位来计算的。
+对于每个上报的LIN帧，LIN接口模块（**LinIf**）提供接收总线、受保护ID (**PID**)、帧长度、实际负载以及接收或传输状态等信息。
+
+当**Mirror_ReportLinFrame**被调用来报告接收或发送的LIN帧时，总线镜像模块将从上报的PID中提取帧ID（Frame ID），并将其与相应源总线中所有静态配置和动态添加的活动过滤器进行匹配。如果LIN帧匹配至少一个过滤器，它被总线镜像模块接受。LIN帧的帧ID（Frame ID）是从PID中去掉两个最重要的位来计算的。
 
 #### 6.3.2.3. LIN帧的过滤
 
-LIN掩码过滤器（LIN mask filter）可以静态配置为MirrorSourceLinFilterMask用来匹配报告的frame ID，如果这个frame ID被MirrorSourceLinFilterLinIdMask掩码屏蔽计算后等于MirrorSourceLinFilterLinIdCode。
+LIN掩码过滤器（**LIN mask filter**）可以静态配置为**MirrorSourceLinFilterMask**用来匹配报告的**frame ID**，如果这个**frame ID**被**MirrorSourceLinFilterLinIdMask**掩码屏蔽计算后等于**MirrorSourceLinFilterLinIdCode**。
 
-LIN掩码过滤器（LIN mask filter）也可以通过调用Mirror_AddLinMaskFilter动态添加用来匹配报告的frame ID，如果这个frame ID被mask参数掩码屏蔽计算后等于id参数。
+LIN掩码过滤器（**LIN mask filter**）也可以通过调用**Mirror_AddLinMaskFilter**动态添加用来匹配报告的**frame ID**，如果这个**frame ID**被**mask**参数掩码屏蔽计算后等于**id**参数。
 
-LIN范围过滤器（LIN range filter）可以静态配置为MirrorSourceLinFilterRange用来匹配报告的frame ID，如果这个frame ID的值大于等于MirrorSourceLinFilterLower，并且小于等于MirrorSourceLinFilterUpper。
+LIN范围过滤器（**LIN range filter**）可以静态配置为**MirrorSourceLinFilterRange**用来匹配报告的**frame ID**，如果这个**frame ID**的值大于等于**MirrorSourceLinFilterLower****，并且小于等于MirrorSourceLinFilterUpper**。
 
-LIN范围过滤器（LIN range filter）也可以通过调用Mirror_AddLinRangeFilter动态添加用来匹配报告的frame ID，如果这个frame ID的值大于或等于lowerId参数，并且小于或等于upperId参数。
+LIN范围过滤器（**LIN range filter**）也可以通过调用**Mirror_AddLinRangeFilter**动态添加用来匹配报告的**frame ID**，如果这个**frame ID**的值大于或等于**lowerId**参数，并且小于或等于**upperId**参数。
 
 #### 6.3.2.4. LIN状态采集
 
-总线镜像模块应评估Mirror_ReportLinFrame报告的状态。如果是LIN_TX_HEADER_ERROR、LIN_TX_ERROR、LIN_RX_ERROR或LIN_RX_NO_RESPONSE，则上报的LIN源总线状态应设置为报头传输错误（header transmission error）、传输错误（transmission error）、接收错误（reception error）或无响应（no response）。
+总线镜像模块应评估**Mirror_ReportLinFrame****报告的状态。如果是LIN_TX_HEADER_ERROR**、**LIN_TX_ERROR**、**LIN_RX_ERROR或LIN_RX_NO_RESPONSE**，则上报的LIN源总线状态应设置为报头传输错误（**header transmission error**）、传输错误（**transmission error**）、接收错误（**reception error**）或无响应（**no response**）。
 
-总线镜像模块通过从Mirror_MainFunction循环调用LinIf_GetTrcvMode来轮询每个激活LIN源总线的状态。如果返回的TransceiverModePtr为LINTRCV_TRCV_MODE_NORMAL，则上报的LIN源总线状态应设置为在线（online），否则设置为离线（offline）。
+总线镜像模块通过从**Mirror_MainFunction**循环调用**LinIf_GetTrcvMode**来轮询每个激活LIN源总线的状态。如果返回的**TransceiverModePtr**为**LINTRCV_TRCV_MODE_NORMAL**，则上报的LIN源总线状态应设置为在线（**online**），否则设置为离线（**offline**）。
 
 ### 6.3.3. 访问FlexRay的源总线
 
-总线镜像模块通过FlexRay接口模块(FrIf)访问FlexRay总线。当总线镜像模块启动FlexRay总线的镜像后，FlexRay接口模块将接收到的FlexRay帧上报给总线镜像模块。FlexRay总线状态是通过Mirror_MainFunction循环轮询的。一个FlexRay源总线对应一个FlexRay集群，它可以连接到多个控制器。
+总线镜像模块通过FlexRay接口模块（**FrIf**）访问FlexRay总线。当总线镜像模块启动FlexRay总线的镜像后，FlexRay接口模块将接收到的FlexRay帧上报给总线镜像模块。FlexRay总线状态是通过**Mirror_MainFunction**循环轮询的。一个FlexRay源总线对应一个FlexRay集群，它可以连接到多个控制器。
 
 #### 6.3.3.1. FlexRay源总线激活
 
 初始化后，FlexRay接口模块不会向总线镜像模块报告任何帧。
 
-当Mirror_StartSourceNetwork被调用来启动FlexRay源总线时，总线镜像模块应该调用FrIf_EnableBusMirroring，并将FrIf_MirroringActive设置为TRUE，开始报告从相应的FlexRay集群接收和发送的FlexRay帧。
+当**Mirror_StartSourceNetwork**被调用来启动FlexRay源总线时，总线镜像模块应该调用**FrIf_EnableBusMirroring**，并将**FrIf_MirroringActive**设置为**TRUE**，开始报告从相应的FlexRay集群接收和发送的FlexRay帧。
 
-Mirror_StartSourceNetwork收到一个ComMChannelId作为网络，而FrIf_EnableBusMirroring期望FrIfClstIdx作为FrIf_ClstIdx。ComMChannelId到FrIf_ClstIdx个的转换可以在代码生成时确定，通过通过ECU配置项的ComMChannelId引用到相关的FrIfClstIdx。
+**Mirror_StartSourceNetwork**收到一个**ComMChannelId**作为网络，而**FrIf_EnableBusMirroring**期望**FrIfClstIdx**作为**FrIf_ClstIdx**。**ComMChannelId**到**FrIf_ClstIdx**个的转换可以在代码生成时确定，通过通过ECU配置项的**ComMChannelId**引用到相关的**FrIfClstIdx**。
 
-当Mirror_StopSourceNetwork被调用来停止FlexRay源总线时，总线镜像模块应该调用FrIf_EnableBusMirroring, 并将FrIf_MirroringActive设置为FALSE，停止从相应的FlexRay集群接收和发送的FlexRay帧的报告。
+当**Mirror_StopSourceNetwork**被调用来停止FlexRay源总线时，总线镜像模块应该调用**FrIf_EnableBusMirroring**, 并将**FrIf_MirroringActive**设置为**FALSE**，停止从相应的FlexRay集群接收和发送的FlexRay帧的报告。
 
 #### 6.3.3.2. FlexRay帧采集
 
-FlexRay接口（FrIf）模块通过调用Mirror_ReportFlexRayFrame来报告接收和发送的FlexRay帧。接收和传输的帧由FlexRay接口（FrIf）的作业列表执行函数或传输函数报告。
+FlexRay接口（**FrIf**）模块通过调用**Mirror_ReportFlexRayFrame**来报告接收和发送的FlexRay帧。接收和传输的帧由FlexRay接口（**FrIf**）的作业列表执行函数或传输函数报告。
 
-总线镜像模块应应用适当的机制，允许MirrorComMNetworkHandleRef引用的ComMChannel被分配到的分区中调用Mirror_ReportFlexRayFrame接口。（例如在该分区中提供一个卫星服务（satellite）。
+总线镜像模块应应用适当的机制，允许**MirrorComMNetworkHandleRef**引用的**ComMChannel**被分配到的分区中调用**Mirror_ReportFlexRayFrame**接口。（例如在该分区中提供一个卫星服务（**satellite**）。
 
-对于每一个上报的FlexRay帧，FlexRay接口模块（FrIf）会提供接收到的FlexRay控制器（FlexRay controller）、Slot ID和周期（cycle）、帧的长度和实际负载，以及传输冲突（transmission conflicts）的信息。
+对于每一个上报的FlexRay帧，FlexRay接口模块（**FrIf**）会提供接收到的FlexRay控制器（**FlexRay controller**）、**Slot ID**和周期（**cycle**）、帧的长度和实际负载，以及传输冲突（**transmission conflicts**）的信息。
 
-当Mirror_ReportFlexRayFrame被调用来报告一个接收或发送的FlexRay帧（txConflict被报告为FALSE）时，总线镜像模块应该匹配对应源总线中所有静态配置和动态添加的活动过滤器的slotId和cycle参数。如果FlexRay帧匹配至少一个过滤器，它被总线镜像模块接受。
+当**Mirror_ReportFlexRayFrame**被调用来报告一个接收或发送的FlexRay帧（**txConflict**被报告为FALSE）时，总线镜像模块应该匹配对应源总线中所有静态配置和动态添加的活动过滤器的**slotId**和**cycle**参数。如果FlexRay帧匹配至少一个过滤器，它被总线镜像模块接受。
 
-在目标总线上，源总线由网络ID标识，但Mirror_ReportFlexRayFrame报告控制器ID。一个到另一个的转换可以在生成时通过遵循从FrIfCtrlIdx到MirrorNetworkId的引用，通过通过MirrorComMNetworkHandleRef的ECU配置来确定
+在目标总线上，源总线由网络ID（**Network ID**）标识，但**Mirror_ReportFlexRayFrame**报告控制器ID（**Controller ID**）。一个到另一个的转换可以在生成时通过遵循从**FrIfCtrlIdx**到**MirrorNetworkId**的引用，通过通过**MirrorComMNetworkHandleRef**的**ECU**配置来确定
 
-在目标总线（destination bus）上，源总线由网络ID（network ID）标识，但Mirror_ReportFlexRayFrame却报告是controllerId。controllerId到network ID的转换可以在代码生成时，通过ECU配置的MirrorComMNetworkHandleRef里的FrIfCtrlIdx到MirrorNetworkId的引用来确定。
+在目标总线（**destination bus**）上，源总线由网络ID（**network ID**）标识，但**Mirror_ReportFlexRayFrame**却报告是**controllerId**。**controllerId**到**network ID**的转换可以在代码生成时，通过ECU配置的**MirrorComMNetworkHandleRef**里的**FrIfCtrlIdx**到**MirrorNetworkId**的引用来确定。
 
 #### 6.3.3.3. FlexRay帧过滤器
 
-FlexRay过滤器可以静态配置MirrorSourceFlexRayFilter来匹配被报告的slotId和cycle参数。匹配算法为slotId参数大于或等于MirrorSourceFlexRayFilterLowerSlot参数，并且小于或等于MirrorSourceFlexRayFilterUpperSlot；同时cycle参数以MirrorSourceFlexRayFilterCycleRepetition取模，大于或等于 MirrorSourceFlexRayFilterLowerBaseCycle，并且小于等于MirrorSourceFlexRayFilterUpperBaseCycle。
+FlexRay过滤器（**FlexRay filter**）可以静态配置**MirrorSourceFlexRayFilter**来匹配被报告的**slotId**和**cycle**参数。匹配算法为**slotId**参数大于或等于**MirrorSourceFlexRayFilterLowerSlot**参数，并且小于或等于**MirrorSourceFlexRayFilterUpperSlot**。同时**cycle**参数以**MirrorSourceFlexRayFilterCycleRepetition**取模，大于或等于 **MirrorSourceFlexRayFilterLowerBaseCycle**，并且小于等于**MirrorSourceFlexRayFilterUpperBaseCycle**。
 
-FlexRay滤波器动态添加，可以调用Mirror_AddFlexRayFilter来匹配被报告的slotId和cycle参数。匹配算法为slotId参数大于或等于lowerSlotId，并且小于或等于upperSlotId；同时cycle参数以cycleRepetition取模，大于或等于lowerBaseCycle和小于或等于upperBaseCycle。
+FlexRay滤波器（**FlexRay filter**）动态添加，可以调用**Mirror_AddFlexRayFilter**来匹配被报告的**slotId**和**cycle**参数。匹配算法为**slotId**参数大于或等于**lowerSlotId**，并且小于或等于**upperSlotId**；同时**cycle**参数以**cycleRepetition**取模，大于或等于**lowerBaseCycle**和小于或等于**upperBaseCycle**。
 
 #### 6.3.3.4. FlexRay状态采集
 
-当Mirror_ReportFlexRayFrame被调用来报告传输冲突（txConflict被报告为TRUE）时，总线镜像模块应该匹配所被激活的静态配置和动态添加的过滤器的slotId和cycle。如果它至少匹配一个过滤器，该帧所报告的FlexRay源总线状态应设置为传输冲突。
+当**Mirror_ReportFlexRayFrame**被调用来报告传输冲突（txConflict被报告为TRUE）时，总线镜像模块应该匹配所被激活的静态配置和动态添加的过滤器的**slotId**和**cycle**。如果它至少匹配一个过滤器，该帧所报告的FlexRay源总线状态应设置为传输冲突。
 
-当Mirror_ReportFlexRayChannelStatus被调用来报告FlexRay通道状态时，总线镜像模块将报告的状态与之前报告的状态进行比较。如果第1位（vSS!SyntaxError）、第2位（vSS!ContentError）和第4位（vSS!Bviolation）的状态不同，总线镜像模块应该相应地更新所报告的FlexRay源总线状态。
+当**Mirror_ReportFlexRayChannelStatus**被调用来报告FlexRay通道状态时，总线镜像模块将报告的状态与之前报告的状态进行比较。如果第1位（vSS!SyntaxError）、第2位（vSS!ContentError）和第4位（vSS!Bviolation）的状态不同，总线镜像模块应该相应地更新所报告的FlexRay源总线状态。
 
-总线镜像模块通过从Mirror_MainFunction循环调用FrIf_GetState来轮询每个活跃的FlexRay源总线的状态。如果返回的FrIf_StatePtr为FRIF_STATE_ONLINE，则报告的FlexRay源总线状态设置为在线（online），否则设置为离线（offline）。如果总线是在线的，总线镜像模块也需要为每个连接到FlexRay集群的控制器调用FrIf_GetPOCStatus。如果所有控制器返回的Fr_POCStateType为FR_POCSTATE_NORMAL_ACTIVE，则报告的源总线状态应为同步且正常激活。如果Fr_POCStateType对于至少一个控制器是FR_POCSTATE_NORMAL_PASSIVE，则报告的源总线状态应该是同步的，但不是正常活动的。如果Fr_POCStateType处于至少一个控制器的任何其他状态，则报告的源总线状态应该既不是同步的也不是正常活动的。
+总线镜像模块通过从**Mirror_MainFunction**循环调用**FrIf_GetState**来轮询每个活跃的FlexRay源总线的状态。如果返回的**FrIf_StatePtr**为**FRIF_STATE_ONLINE**，则报告的FlexRay源总线状态设置为在线（online），否则设置为离线（offline）。如果总线是在线的，总线镜像模块也需要为每个连接到FlexRay集群的控制器调用**FrIf_GetPOCStatus**。如果所有控制器返回的**Fr_POCStateType**为**FR_POCSTATE_NORMAL_ACTIVE**，则报告的源总线状态应为同步且正常激活。如果**Fr_POCStateType**对于至少一个控制器是**FR_POCSTATE_NORMAL_PASSIVE**，则报告的源总线状态应该是同步的，但不是正常活动的。如果**Fr_POCStateType**处于至少一个控制器的任何其他状态，则报告的源总线状态应该既不是同步的也不是正常活动的。
 
 ## 6.4. 镜像协议 (Mirroring Protocol)
 总线镜像模块中，镜像协议（Mirroring Protocol）应用于IP、FlexRay和CDD连接的专有网络作为目的总线中。如图所示，在本例中，该协议用于以太网目的总线。
@@ -412,7 +413,7 @@ CAN总线的FrameID布局如表7.6.
 
 **FrameIDCAN**的布局对应于**Mirror_ReportCanFrame**提供的Can_IdType。**FrameIDCAN**字段的宽度应为4字节。
 
-对于扩展CAN ID（Extended CAN ID），第0字节的第7位应该设置为1，对于标准CAN ID （Standard CAN ID），应该设置为0。**FrameIDCAN**的第0字节的第6位表示是否是CANFD帧，对应CANFD帧格式设置为1，对于CAB 2.0帧应该设置为0。**FrameIDCAN**的第0字节的第5位目前被保留。它总是被设为0。FrameIDCAN的字节0的第0位到第4位以及字节1到字节3，包含了以网络字节顺序（MSB优先）报告的CAN帧的CAN ID。
+对于扩展CAN ID（**Extended CAN ID**），第0字节的第7位应该设置为1，对于标准CAN ID （**Standard CAN ID**），应该设置为0。**FrameIDCAN**的第0字节的第6位表示是否是CANFD帧，对应CANFD帧格式设置为1，对于CAB 2.0帧应该设置为0。**FrameIDCAN**的第0字节的第5位目前被保留。它总是被设为0。FrameIDCAN的字节0的第0位到第4位以及字节1到字节3，包含了以网络字节顺序（MSB优先）报告的CAN帧的CAN ID。
 
 ##### 6.4.2.8.2. FrameIDLIN
 
@@ -499,6 +500,44 @@ LIN总线的FrameID布局如表所示
 如果目标帧因为队列已经满而不能放入队列中，总线镜像模块将丢弃该目标帧，并报告镜像运行时错误**MIRROR_E_QUEUE_OVERRUN**，并且设置当前活动的目标帧缓冲区中创建的下一个数据项的**NetworkState**的Frame Lost位为1。
 
 ### 6.5.3. 传输
+
+为了启动已经队列化并且序列化的目的帧的发送，总线镜像模块需要调用**PduR_MirrorTransmit**函数, 同时**PduInfoPtr->MetaDataPtr**参数设置为**NULL_PTR**, **PduInfoPtr->SduLength**设置为目的帧实际写入的部分。如果**MirrorDestPduUsesTriggerTransmit**配置被使能, 那么**PduInfoPtr->SduDataPtr**参数必须设置为**NULL_PTR**，否则设置为队列目的帧被使用的部分。
+
+设置**PduInfoPtr->SduDataPtr**参数为**NULL_PTR**，能够确保目的总线接口模块（**FrIf**、**SoAd**或**CDD**）使用**Mirror_TriggerTransmit**来获取目的帧。
+
+如果**PduR_MirrorTransmit**返回**E_NOT_OK**错误，总线镜像模块应该立即从队列中删除目的帧，报告运行时错误**MIRROR_E_TRANSMIT_FAILED**，并且在当前活动的目的帧缓冲区中创建的新的数据项作为下一个数据项，同时把数据项中的**NetworkState**的**Frame Lost**位设置为1。
+
+总线镜像模块应该从**Mirror_MainFunction**和**Mirror_TxConfirmation**回调函数初始化队列化序列化的目标帧的传输。这确保了队列目标帧的传输速度尽可能快。为了在FlexRay目的总线上实现一个合适的吞吐量，**MirrorDestNetworkFlexRay**可能包含一组**MirrorDestPdu**。
+
+如果一个**MirrorDestNetworkFlexRay**配置了一组**MirrorDestPdu**，总线镜像模块可以按照任意顺序使用该组的**PDU**。数据项的**SequenceNumber**和**Timestamp**字段将确保诊断仪（**Tester**）能够正确地对它们进行排序。
+
+如果激活的目标通道是**MirrorDestNetworkIp**或**MirrorDestNetworkCdd**，总线镜像模块不会在通过调用**Mirror_TxConfirmation**未确认上一个目标帧已传输成功之前，传输下一个序列化的目标帧。
+
+如果激活的目的通道是**MirrorDestNetworkFlexRay**，总线镜像模块不会在通过调用**Mirror_TxConfirmation**未确认上一个使用**MirrorDestPdu**目标帧已传输成功之前，使用相同的**MirrorDestPdu**发送下一个序列化的目的帧。
+
+当一个序列化的目的帧被调用**Mirror_TriggerTransmit**时，总线镜像模块将队列中的目的帧被使用的部分拷贝到**PduInfoPtr->SduDataPtr**中，并相应地更新**PduInfoPtr->SduLength**。
+
+如果**Mirror_TriggerTransmit**提供的**PduInfoPtr->SduLength**对于当前传输的序列化目的帧来说太小，总线镜像模块需要将目的帧从队列中移除，并报告运行时错误**MIRROR_E_TRANSMIT_FAILED**。在当前活动的目的帧缓冲区中创建的新的数据项作为下一个数据项，同时把数据项中的**NetworkState**的**Frame Lost**位设置为1。并且应该返回**E_NOT_OK**来停止这个传输。
+
+当调用**Mirror_TxConfirmation**来报告一个序列化的目的帧的成功或失败传输时，总线镜像模块应该从队列中删除目的帧。
+
+如果**Mirror_TxConfirmation**报告了一个序列化的目的帧传输失败（结果是**E_NOT_OK**），总线镜像模块应该报告运行时错误**MIRROR_E_TRANSMIT_FAILED**，在当前活动的目的帧缓冲区中创建的新的数据项作为下一个数据项，同时把数据项中的**NetworkState**的**Frame Lost**位设置为1。
+
+## 6.6. 镜像到CAN
+
+当镜像到CAN目的总线时，总线镜像模块将接收到的CAN和LIN帧直接发送到目的总线，尽管可能会更改CAN ID，以避免与目的总线上的常规消息冲突。
+
+本章定义了总线镜像模块如何转换CAN id和队列源帧，以及如何创建和队列状态帧，然后在目的总线上传输它们。
+
+### 源帧的处理
+
+#### ID映射
+
+通常情况下，CAN源帧可以不用任何改变就能在目的总线上进行传输，而LIN源帧的**PID**需要映射到一定范围的**CAN ID**。
+
+但有时很难找到连续的未使用的CAN ID序列来映射LIN PID。或者在目的CAN总线上通常传输的帧也使用相同的CAN ID。
+在这种情况下，某些CAN id和LIN pid必须映射到特殊的CAN id。
+
 
 
 
