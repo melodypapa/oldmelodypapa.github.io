@@ -18,6 +18,7 @@
 }
 
 .markdown-section figure, .markdown-section p {
-  margin: 0.8em 0;
+  margin: 1.4em 0;
+  line-height: 1.6;
 }
 
