@@ -5,9 +5,19 @@
 
 .markdown-section h2 {
   font-size: 1.3rem;
-  margin: 0 0 .8rem
+  margin: 0.8rem 0 .8rem
 } 
 
-.markdown-section figure, .markdown-section p {
-  margin: 0.5em 0;
+.markdown-section h3 {
+  font-size: 1.15rem;
+  margin: .6rem 0 .6rem;
 }
+
+.markdown-section h4 {
+  font-size: 1.1rem;
+}
+
+.markdown-section figure, .markdown-section p {
+  margin: 0.8em 0;
+}
+
