@@ -1,7 +1,13 @@
-.markdown-section h1, section#title {
+.markdown-section h1 {
   font-size: 1.5rem;
   margin: 1rem 0 1rem;
 } 
+
+section#title {
+  font-size: 1.8rem;
+  margin: 1rem 0 1rem;
+  font-weight: bold;
+}
 
 .markdown-section h2 {
   font-size: 1.3rem;
