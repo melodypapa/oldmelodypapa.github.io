@@ -1,8 +1,8 @@
-**AUTOSAR SecOC ()**
+<section id="title">AUTOSAR SecOC (Secure Onboard Communication)</section>
 
 # 1. 简介和功能概述
 
-本文介绍了AUTOSAR安全板载通信模块（**SecOC**）软件规范。它描述了AUTOSAR SecOC模块的基本安全特性、功能和API。
+本文介绍了AUTOSAR安全板载通信模块（**SecOC**）软件规范。它描述了**AUTOSAR SecOC**模块的基本安全特性、功能和API。
 
 **SecOC**模块旨在为PDU级别的关键数据提供资源高效和可行的认证机制。认证机制应该与当前的AUTOSAR通信系统无缝集成。对资源消耗的影响应该尽可能小，以便将保护作为遗留系统的附加组件。该规范基于这样一个假设，主要使用对称的身份（**symmetric authentication approach**）验证方法和消息身份验证码（**message authentication codes**）。它们用比非对称方法小得多的密钥实现了相同的安全级别，并且可以在软件和硬件中紧凑而高效地实现。同时本规范提供了必要的抽象级别，因此对称方法（**symmetric approaches**）和非对称身份验证（**asymmetric authentication approaches**）方法都是可以使用。
 
