@@ -84,7 +84,7 @@ SecOC模块提供了具有管理功能的API。这个API包含以下作为服务
 
 为了提供消息的新鲜度，发送和接收端的**SecOC**模块为每个唯一可识别的受保护的I-PDU（即每个安全通信链路），从外部的freshness Manager获取新鲜度。
 
-在发送端，**SecOC**模块通过在发出的可信**I-PDU**上添加认证信息，创建一个安全的**I-PDU**。验证信息包括验证器（例如：消息验证码MAC）和可选的新鲜度值（**Freshness Value**）。无论在安全**I-PDU**负载中是否包含新鲜度值，在生成验证器时都需要考虑新鲜度值。当使用新鲜度计数器而不是时间戳时，在向接收方提供认证信息之前，新鲜度管理器需要对新鲜度计数器增1。
+在发送端，**SecOC**模块通过在发出的可信**I-PDU**上添加认证信息，创建一个受保护**I-PDU**。验证信息包括验证器（例如：消息验证码MAC）和可选的新鲜度值（**Freshness Value**）。无论在安全**I-PDU**负载中是否包含新鲜度值，在生成验证器时都需要考虑新鲜度值。当使用新鲜度计数器而不是时间戳时，在向接收方提供认证信息之前，新鲜度管理器需要对新鲜度计数器增1。
 
 在接收端，**SecOC**模块通过验证发送端**SecOC**模块附加的认证信息来检测可信**I-PDU**的新鲜度和真实性。为了验证真实的**I-PDU**的真实性和新鲜度，提供给接收方的安全**I-PDU**应该与发送方的安全**I-PDU**相同，接收方的安全**I-PDU**应该知道发送方在创建验证器时使用的新鲜度值。
 
@@ -102,7 +102,7 @@ SecOC模块的主要目的是实现本规范中描述的安全功能。
 
 ![Secured I-PDU contents](2022-01-28-21-02-57.png)
 
-在安全的**I-PDU**中，可信的**I-PDU**的长度、新鲜度值和验证器可能会因为受保护的I-PDU唯一不确定性而不同。
+在受保护的**I-PDU**中，可信的**I-PDU**的长度、新鲜度值和验证器可能会因为受保护的I-PDU唯一不确定性而不同。
 
 验证器（**Authenticator**）是指通过使用密钥（**Key**）、受保护的I-PDU的数据标识符（**Data Identifier**）、可信负载（**Authentic Payload**）和新鲜度值（**Freshness Value**）而生成的唯一认证数据字符串。验证器提供了一个高度的可信度，即可信I-PDU中的数据是由合法源生成的，并在其预期的时间提供给接收ECU。
 
@@ -154,7 +154,7 @@ DataToAuthenticator = 数据标识符（**Data Identifier**） | 可信I-PDU的�
 
 如果对于PDU配置，**SecOCQueryFreshnessValue = RTE**，**SecOC**通过调用业务操作**FreshnessManagement_SPduTxConfirmation**，表示受保护的I-PDU已成功发起传输。
 
-如果对于PDU配置，**SecOCQueryFreshnessValue = RTE**, **SecOCUseAuthDataFreshness = TRUE**，且已完全接收到安全的PDU，**SecOC**则调用RTE服务**FreshnessManagement_GetRxFreshnessAuthData**查询当前的新鲜度。接收到的一部分PDU数据，将根据**SecOCAuthDataFreshnessStartPosition**和**SecOCAuthDataFreshnessLen**配置做为参数传递给该服务操作。
+如果对于PDU配置，**SecOCQueryFreshnessValue = RTE**, **SecOCUseAuthDataFreshness = TRUE**，且已完全接收到受保护的PDU，**SecOC**则调用RTE服务**FreshnessManagement_GetRxFreshnessAuthData**查询当前的新鲜度。接收到的一部分PDU数据，将根据**SecOCAuthDataFreshnessStartPosition**和**SecOCAuthDataFreshnessLen**配置做为参数传递给该服务操作。
 
 如果对于PDU配置，**SecOCQueryFreshnessValue = CFUNC**, **SecOCUseAuthDataFreshness = TRUE**，且已完全收到受保护的PDU，**SecOC**则调用接口函数**SecOC_GetRxFreshnessAuthData**查询当前的新鲜度。接收到的一部分PDU数据，将根据**SecOCAuthDataFreshnessStartPosition**和**SecOCAuthDataFreshnessLen**配置做为参数传递给给该函数。
 
