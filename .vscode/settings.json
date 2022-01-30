@@ -20,5 +20,6 @@
         "texinfo",
         "toolchain",
         "vexpress"
-    ]
+    ],
+    "cmake.configureOnOpen": true
 }

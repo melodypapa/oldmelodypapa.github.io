@@ -1,0 +1,30 @@
+.markdown-section h1 {
+  font-size: 1.5rem;
+  margin: 1rem 0 1rem;
+} 
+
+section#title {
+  font-size: 1.8rem;
+  margin: 1rem 0 1rem;
+  font-weight: bold;
+}
+
+.markdown-section h2 {
+  font-size: 1.3rem;
+  margin: 0.8rem 0 .8rem
+} 
+
+.markdown-section h3 {
+  font-size: 1.15rem;
+  margin: .6rem 0 .6rem;
+}
+
+.markdown-section h4 {
+  font-size: 1.1rem;
+}
+
+.markdown-section figure, .markdown-section p {
+  margin: 1.4em 0;
+  line-height: 1.6;
+}
+
