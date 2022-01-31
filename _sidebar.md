@@ -10,3 +10,4 @@
   * [QEMU](./Linux/qemu.md)
   * [Embedded Linux](./Linux/embedded.md)
 * [Visual Studio Code](./vscode/extension.md)
+* [Classical Music](./classical-music.md)
