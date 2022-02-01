@@ -16,7 +16,7 @@
 
 # 2. 曲目
 
-## 2.1. String Quartet in E-flat Major （H.277）
+## 2.1. H.277: String Quartet in E-flat Major
 
 |      | Name                 |
 | ---- | -------------------- |
@@ -29,7 +29,7 @@
 
 * [2013 - Quatuor Ébène / Felix and Fanny Mendelssohn: String Quartets](https://music.apple.com/cn/album/felix-and-fanny-mendelssohn-string-quartets/732033356?l=en)
 
-## 2.2. Piano Trio in D Minor（Op. 11）
+## 2.2. Op. 11：Piano Trio in D Minor
 
 |      | Name                 |
 | ---- | -------------------- |

@@ -1,10 +1,10 @@
-# 1. Robert Schumann
+<section id="title">Robert Schumann</section>
 
-## 1.1. 生平介绍
+## 1. 生平介绍
 
-## 1.2. 曲目
+## 2. 曲目
 
-### 1.2.1. Op.70: Adagio und Allegro
+## 3. Op.70: Adagio und Allegro
 
 |     | Name    |
 | --- | ------- |
@@ -15,7 +15,7 @@
 
 * [2018 - Sol Gabetta & Bertrand Chamayou / Schumann](https://music.apple.com/cn/album/5-st%C3%BCcke-im-volkston-op-102-ii-langsam/1441430095?i=1441430110&l=en)
 
-### 1.2.2. Op.73: Fantasiestücke
+## 4. Op.73: Fantasiestücke
 
 |      | Name                  |
 | ---- | --------------------- |
@@ -27,7 +27,7 @@
 
 * [2018 - Sol Gabetta & Bertrand Chamayou / Schumann](https://music.apple.com/cn/album/5-st%C3%BCcke-im-volkston-op-102-ii-langsam/1441430095?i=1441430110&l=en)
 
-### 1.2.3. Op.102: 5 Stücke im Volkston
+## 5. Op.102: 5 Stücke im Volkston
 
 |      | Name                                      |
 | ---- | ----------------------------------------- |
@@ -41,7 +41,7 @@
 
 * [2018 - Sol Gabetta & Bertrand Chamayou / Schumann](https://music.apple.com/cn/album/5-st%C3%BCcke-im-volkston-op-102-ii-langsam/1441430095?i=1441430110&l=en)
 
-### 1.2.4. Op.129: Cello Concerto in A minor
+## 6. Op.129: Cello Concerto in A minor
 
 |      | Name             |
 | ---- | ---------------- |
