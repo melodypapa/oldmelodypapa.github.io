@@ -1,6 +1,11 @@
 # 古典音乐
 
-## F
+## M
 
-* [Fanny Mendelssohn](f/fanny_mendelssohn/fanny_mendelssohn.md)
-* [Felix Mendelssohn]
+* [Fanny Mendelssohn](/classical-music/f/fanny_mendelssohn/index.md)
+* [Felix Mendelssohn](/classical-music/f/felix_mendelssohn/index.md)
+
+## S
+
+* [Robert Schumann](/classical-music/s/robert_schumann/index.md)
+

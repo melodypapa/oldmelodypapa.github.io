@@ -1,8 +1,8 @@
-# 1. 范妮·门德尔松（Fanny Mendelssohn）
+<section id="title">范妮·门德尔松（Fanny Mendelssohn）</section>
+
+# 1. 生平介绍
 
 ![](2022-02-01-06-09-45.png)
-
-## 1.1. 生平介绍
 
 范妮·采齐莉·门德尔松（德语：**Fanny Cäcilie Mendelssohn**），结婚后的名字：名范妮·亨塞尔（**Fanny Hensel**）, 1805年11月14日出生于德国汉堡，1847年5月14日卒于普鲁士柏林，德国钢琴家和作曲家，作曲家菲利克斯·门德尔松的姐姐和密友。
 
@@ -14,27 +14,22 @@
 
 范妮的儿子塞巴斯蒂安根据范妮的日记和信件写了一本门德尔松家族的传记，其中提供了大量关于她弟弟费利克斯的信息。
 
-## 1.2. 曲目
+# 2. 曲目
 
-### 1.2.1. String Quartet in E-Flat Major （H.277）
+## 2.1. String Quartet in E-flat Major （H.277）
 
-|      | Name                                                |
-| ---- | --------------------------------------------------- |
-| I.   | Adagio - Allegro vivace                             |
-| II.  | Adagio non lento                                    |
-| III. | Intermezzo. Allegretto con molto - Allegro di molto |
-| IV   | Presto                                              |
+|      | Name                 |
+| ---- | -------------------- |
+| I.   | Adagio ma non troppo |
+| II.  | Allegretto           |
+| III. | Romanze              |
+| IV   | Allegro molto vivace |
 
 相关录音：
 
-![](2022-02-01-06-41-25.png) 
+* [2013 - Quatuor Ébène / Felix and Fanny Mendelssohn: String Quartets](https://music.apple.com/cn/album/felix-and-fanny-mendelssohn-string-quartets/732033356?l=en)
 
-| Album  | Felix and Fanny Mendelssohn: String Quartets |
-| ------ | -------------------------------------------- |
-| Artist | Quatuor Ébène                                |
-| Year   | 2013                                         |
-
-### 1.2.2. Piano Trio in D Minor（Op. 11）
+## 2.2. Piano Trio in D Minor（Op. 11）
 
 |      | Name                 |
 | ---- | -------------------- |
@@ -45,10 +40,4 @@
 
 相关录音：
 
-![](2022-02-01-07-00-01.png)
-
-| Album  |  Fanny & Felix Mendelssohn  |
-| ------ | -------------------------------------------- |
-| Artist | Trio Chausson                                |
-| Year   | 2022                                         |
-
+* [2022 - Trio Chausson / Fanny & Felix Mendelssohn](https://music.apple.com/cn/album/fanny-felix-mendelssohn/1601626107)
