@@ -1,4 +1,4 @@
-<section class="title">COM Based Transformer</section>
+<section id="title">COM Based Transformer</section>
 
 # 1. 简介和功能概述
 
