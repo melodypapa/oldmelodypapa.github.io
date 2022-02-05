@@ -40,7 +40,7 @@ AUTOSAR提供了转换器通用规范[2]，它也适用于基于COM的转换器�
 5. 基于COM的转换器只支持字节对齐的信号组（**Signal Group**）。
 6. 基于COM的转换器应支持所有组信号依次映射到**IPdu**的信号组（可能有间隙，在信号组布局中的位置没有定义相应的信号）。
 
-如果约束3.出现了单一的原始数据元素必须使用基于COM的转换器处理的用例时（如：在序列化之后执行E2E的保护），那么可以把数据元素放在一个结构中。然后改结构将只包含这一个条目。
+如果约束3.出现了单一的原始数据元素必须使用基于COM的转换器处理的用例时（如：在序列化之后执行E2E的保护），那么可以把数据元素放在一个结构中。然后该结构将只包含这一个条目。
 
 # 4. 功能规范
 
@@ -102,7 +102,7 @@ RTE将为该信号组开始位置的所有转换器提供数据缓冲器，以�
 
 基于COM的转换器应该单独处理**SenderReceiverInterface**的每个**dataElement**。
 
-正如COM模块[4]定义的那样，当COM模块Com_SendSignal、Com_ReceiveSignal被调用处理阴影信号（**shadow signal**）时，基于COM的转换器需要处理**SenderReceiverInterface**的每个**dataElement**。这定义了基于COM的转换器对COM模块同等地执行所有操作。包括大小字转换（**Endianess Conversion**）和符号扩展（**Sign Extension**）。
+正如COM模块[4]定义的那样，当COM模块Com_SendSignal、Com_ReceiveSignal被调用处理阴影信号（**shadow signal**）时，基于COM的转换器需要处理**SenderReceiverInterface**的每个**dataElement**。这定义了基于COM的转换器对COM模块同等地执行所有操作。包括字节顺序转换（**Endianess Conversion**）和符号扩展（**Sign Extension**）。
 
 **COM**模块的配置隐式地定义了信号组的长度和信号组在**ComIPdu**中开始的起始位置。
 
