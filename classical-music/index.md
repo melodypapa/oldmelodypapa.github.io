@@ -8,4 +8,4 @@
 ## 1.2. S
 
 * [Robert Schumann](/classical-music/s/robert_schumann/index.md)
-
+* [Alfred Schnittke](/classical-music/s/alfred_schnittke/index.md)
