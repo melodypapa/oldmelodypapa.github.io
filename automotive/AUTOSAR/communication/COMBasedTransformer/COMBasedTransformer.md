@@ -1,4 +1,4 @@
-<section id="title">COM Based Transformer</section>
+<section id="title">AUTOSAR COM Based Transformer</section>
 
 # 1. 简介和功能概述
 
@@ -63,7 +63,7 @@ COM的IPdu缓冲区和转换器缓冲区内的数据处理，如下图[2]所示�
 
 在System Template[7]中，可以定义需要基于COM的转换器处理信号组。对于一个特定的转换器链，基于COM的转换器的使用是由引用**comBasedSignalGroupTransformation**从**ISignalGroup**到**DataTransformation**定义的。可参见图[3]。
 
-![System Template Transformed communication](2022-02-04-15-01-07.png)
+![System Template Transformed communication](2022-02-04-15-01-07_Figure_03.png)
 
 在COM模块的Ecu配置中，这样的**ComSignalGroups**定义了一个**ComSignalGroupArrayAccess=true**参数。
 
