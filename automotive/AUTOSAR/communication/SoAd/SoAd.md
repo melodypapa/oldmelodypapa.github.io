@@ -23,47 +23,46 @@ SoAd模块，以及以太网通信栈，首先在AUTOSAR R4.0.1中引入，在AU
 ## 2.1. 输入文档
 
 1. Layered Software Architecture 
-   AUTOSAR_EXP_LayeredSoftwareArchitecture.pdf
+   > AUTOSAR_EXP_LayeredSoftwareArchitecture.pdf
 2. General Requirements on Basic Software Modules 
-   AUTOSAR_SRS_BSWGeneral.pdf
+   > AUTOSAR_SRS_BSWGeneral.pdf
 3. Specification of Communication Stack Types
-   AUTOSAR_SWS_CommunicationStackTypes.pdf
+   > AUTOSAR_SWS_CommunicationStackTypes.pdf
 4. Specification of ECU Configuration 
-   AUTOSAR_TPS_ECUConfiguration.pdf
+   > AUTOSAR_TPS_ECUConfiguration.pdf
 5. Specification of BSW Scheduler
-   AUTOSAR_SWS_BSW_Scheduler.pdf
+   > AUTOSAR_SWS_BSW_Scheduler.pdf
 6. Specification of Default Error Tracer
-   AUTOSAR_SWS_DefaultErrorTracer.pdf
+   > AUTOSAR_SWS_DefaultErrorTracer.pdf
 7. Basic Software Module Description Template
-   AUTOSAR_TPS_BSWModuleDescriptionTemplate.pdf
+   > AUTOSAR_TPS_BSWModuleDescriptionTemplate.pdf
 8. Specification of UDP Network Management
-   AUTOSAR_SWS_UDPNetworkManagement.pdf
+   > AUTOSAR_SWS_UDPNetworkManagement.pdf
 9.  Requirements on Ethernet 
-    AUTOSAR_SRS_Ethernet.pdf
+    > AUTOSAR_SRS_Ethernet.pdf
 10. List of Basic Software Modules 
-    AUTOSAR_TR_BSWModuleList
+    > AUTOSAR_TR_BSWModuleList
 11. Specification of Service Discovery 
-    AUTOSAR_SWS_ServiceDiscovery.pdf
+    > AUTOSAR_SWS_ServiceDiscovery.pdf
 12. Specification of PDU Router 
-    AUTOSAR_SWS_PDURouter.pdf
+    > AUTOSAR_SWS_PDURouter.pdf
 13. Specification of TCP/IP Stack 
-    AUTOSAR_SWS_TCPIP.pdf
+    > AUTOSAR_SWS_TCPIP.pdf
 14. Specification of Module XCP 
-    AUTOSAR_SWS_XCP.pdf
+    > AUTOSAR_SWS_XCP.pdf
 15. Specification of Diagnostics over IP 
-    AUTOSAR_SWS_DoIP.pdf
+    > AUTOSAR_SWS_DoIP.pdf
 16. General Specification of Basic Software Modules
-    AUTOSAR_SWS_BSWGeneral.pdf
+    > AUTOSAR_SWS_BSWGeneral.pdf
 
 ## 2.2. 相关标准及规范
 
 1. IETF RFC 4702
-   http://tools.ietf.org/html/rfc4702
+   > http://tools.ietf.org/html/rfc4702
 2. IETF RFC 4704
-   http://tools.ietf.org/html/rfc4704
+   > http://tools.ietf.org/html/rfc4704
 
 # 3. 约束和假设
-
 
 在以太网上使用TCP/IP传输数据需要大约60字节的报头信息（**header information**）。这意味着对于小消息，头开销可能达到一个无法接受的高百分比。
 

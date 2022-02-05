@@ -9,21 +9,21 @@
 ## 2.1. 输入文档
 
 1. Glossary
-AUTOSAR_TR_Glossary
+    > AUTOSAR_TR_Glossary
 2. General Specification of Transformers
-AUTOSAR_ASWS_TransformerGeneral
+    > AUTOSAR_ASWS_TransformerGeneral
 3. Specification of RTE Software
-AUTOSAR_SWS_RTE
+    > AUTOSAR_SWS_RTE
 4. Specification of Communication
-AUTOSAR_SWS_COM
+    > AUTOSAR_SWS_COM
 5. General Requirements on Basic Software Modules
-AUTOSAR_SRS_BSWGeneral
+    > AUTOSAR_SRS_BSWGeneral
 6. Requirements on Transformer
-AUTOSAR_SRS_Transformer
+    > AUTOSAR_SRS_Transformer
 7. System Template
-AUTOSAR_TPS_SystemTemplate
+    > AUTOSAR_TPS_SystemTemplate
 8. General Specification of Basic Software Modules
-AUTOSAR_SWS_BSWGeneral
+    > AUTOSAR_SWS_BSWGeneral
 
 ## 2.2. 相关的规范
 
