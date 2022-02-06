@@ -14,9 +14,7 @@ SoAd模块的主要目的是在使用PDU（如：**PDU Router**）的AUTOSAR通�
 
 SoAd模块，以及以太网通信栈，首先在AUTOSAR R4.0.1中引入，在AUTOSAR R4.0.3和AUTOSAR R4.1.1之间有一些主要的概念并不相同。
 
-![](2022-02-05-15-47-50.png)
-
-图1:扩展的AUTOSAR通信堆栈。
+![扩展的AUTOSAR通信堆栈](2022-02-06-16-44-12.png)
 
 # 2. 相关的文档
 
@@ -68,8 +66,6 @@ SoAd模块，以及以太网通信栈，首先在AUTOSAR R4.0.1中引入，在AU
 
 为了避免进一步的协议开销，这里描述了对每个PDU使用单个socket连接。然而，这种解决方案是非常耗费资源的，特别是在要传输许多小型PDU的情况下。这里描述的一种解决方案是添加一个包含ID和长度信息的小PDU头（**PDU header**）。这样可以通过一个插座连接来传输多个PDU。此外，AUTOSAR规范还包括一个资源保护方案作为一个可选项。
 
-![](2022-02-05-15-47-50.png)）
-
 AUTOSAR规范不涉及**UDP**或**TCP**端口号（**Port numbers**）的分配。**IANA**分配的号码范围内没有预留空间。每个实现者负责管理使用的端口号。
 
 **SoAd**标准文档也不涉及IP地址的管理。这可以是动态的，例如使用**DHCP**，也可以是静态的。它是实现者的责任，以防止地址冲突和实现符合IANA地址分配。
@@ -117,9 +113,9 @@ TCP/IP通信是基于Internet套接字（**Internet socket**）的。Internet套
 1. 使用**SoAd_IfTransmit**()提供的**TxPduId**来识别相关的socket连接和PDU路由
 2. 如果PDU长度> 0或SoAdPduHeaderEnable为TRUE，则根据连接类型调用相应的TcpIp传输函数，否则SoAd跳过进一步处理，返回**E_NOT_OK**。
 
-![](2022-02-05-16-07-26.png)
+![](2022-02-06-16-45-34.png)
 
-### 5.2.2. 通过IF-API和nPduUdpTxBuffer传输PDU
+### 5.2.2. 通过TP-API传输PDU
 
 如果使用**TP-API**传输上层请求的PDU，则**SoAd**需要完成以下操作：
 
@@ -132,7 +128,7 @@ TCP/IP通信是基于Internet套接字（**Internet socket**）的。Internet套
 1. 通过**PduInfoType.SduLength = 0**调用可配置回调函数**\<up\>_[SoAd][Tp]CopyTxData**()，查询上层可用数据量。
 2. 根据连接类型：检索数据并调用相应的TcpIp传输函数。
 
-![](2022-02-05-16-08-51.png)
+![](2022-02-06-16-47-27.png)
 
 **注意**：
 **TxPduId**在**SoAd**配置中用来标识**SoAdPduRoute**，它包含一个或多个**SoAdPduRouteDest**容器。以及此**SoAdPduRouteDest**容器所使用的**SoAdSocketConnection**。
@@ -148,10 +144,10 @@ TCP/IP通信是基于Internet套接字（**Internet socket**）的。Internet套
 3. 将消息转换为**PDU**。
 4. 如果**PDU**长度为**0**且**SoAdPduHeaderEnable**为**FALSE**或**SoAdRxUpperLayerType**为**TP**，则跳过进一步处理。
 5. 根据**SocketRouteDest**配置中的**SoAdRxUpperLayerType**调用配置的上层模块的上层类型相关的接收函数。
+   
+![Reception – Upper Layer If API](2022-02-06-16-48-02.png)
 
-![Reception – Upper Layer If API](2022-02-05-16-13-15.png)
-
-![Reception – Upper Layer TP API](2022-02-05-16-13-35.png)
+![Reception – Upper Layer TP API](2022-02-06-16-48-39.png)
 
 ## 5.4. TP PDU取消
 
