@@ -100,7 +100,17 @@ TCP/IP通信是基于Internet套接字（**Internet socket**）的。Internet套
 
 为了抽象TCP/IP通信，SoAd定义了套接字连接。SoAd套接字连接定义了连接的本地套接字（即本地地址标识符和本地端口）和一个远程的套接字（即远程IP地址和端口）信息，以及其他的连接参数：如传输协议；SoAd PDU头的使用；缓冲需求；连接设置；传输协议等相关参数。每个套接字连接可以由一个唯一的标识符（**SoConId**）来标识。每个本地套接字为了能同时支持多个通信伙伴，可以将具有相同连接参数的套接字分组成套接字连接分组（**socket connection groups**）。
 
-当**SoAd_OpenSoCon**()**和SoAd_CloseSoCon**()分别调用时，**SoAd**应该存储一个打开或关闭套接字连接的请求。但根据连接设置和关闭策略，仅在**SoAd_MainFunction**()中处理该请求。
+当**SoAd_OpenSoCon**函数和**SoAd_CloseSoCon**函数分别调用时，**SoAd**应该存储一个打开或关闭套接字连接的请求。但根据连接设置和关闭策略，仅在**SoAd_MainFunction**函数中处理该请求。
+
+### 5.1.1. 套接字连接打开
+
+在**SoAd_MainFunction**中，SoAd应该尝试打开每个满足以下所有准则的套接字连接:
+1. 没有分配**TcpIp Socket**的套接字连接。
+2. **SoAdSocketAutomaticSoConSetup**为**TRUE**的隐性的请求，或者先前被**SoAd_OpenSoCon**函数调用的显式地请求，而该调用还没有被随后的**SoAd_CloseSoCon**函数调用撤销。
+3. 设置了远程地址（**remote address is set**），通过配置指定或通过调用函数**SoAd_SetRemoteAddr**函数。
+4. 分配本地IP地址（**local IP address is assigned**），即调用了**SoAd_LocalIpAddrAssignmentChg**函数，相关的**LocalAddrId**和**TCPIP_IPADDR_STATE_ASSIGNED**作为状态。
+
+TODO: to be continue
 
 ## 5.2. PDU传输（PDU Transmission）
 
