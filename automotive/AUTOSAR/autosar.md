@@ -12,4 +12,5 @@
 * [AUTOSAR COM Based Transformer](/automotive/AUTOSAR/communication/COMBasedTransformer/COMBasedTransformer.md)
 * [AUTOSAR Socket Adaptor](/automotive/AUTOSAR/communication/SoAd/SoAd.md)
 * [AUTOSAR Ethernet Driver](/automotive/AUTOSAR/communication/EthernetDriver/EthernetDriver.md)
+* [AUTOSAR LIN Driver](/automotive/AUTOSAR/communication/LINDriver/LINDriver.md)
 
