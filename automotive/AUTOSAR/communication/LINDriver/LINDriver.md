@@ -298,7 +298,7 @@ LIN驱动程序应该直接从上层缓冲区复制数据。LIN驱动的上层�
 
 ### 7.1.1. Lin_Init
 
-**描述**: 初始化LIN模块。
+**说明**: 初始化LIN模块。
 
 ```C
 void Lin_Init( const Lin_ConfigType* Config )
@@ -306,7 +306,7 @@ void Lin_Init( const Lin_ConfigType* Config )
 
 ### 7.1.2. Lin_CheckWakeup
 
-**描述**: 这个函数检查在指定的LIN通道上是否发生了唤醒。
+**说明**: 这个函数检查在指定的LIN通道上是否发生了唤醒。
 
 ```C
 Std_ReturnType Lin_CheckWakeup( uint8 Channel )
@@ -314,7 +314,7 @@ Std_ReturnType Lin_CheckWakeup( uint8 Channel )
 
 ### 7.1.3. Lin_GetVersionInfo
 
-**描述**: 返回此模块的版本信息。
+**说明**: 返回此模块的版本信息。
 
 ```C
 void Lin_GetVersionInfo( Std_VersionInfoType* versioninfo )
@@ -322,7 +322,7 @@ void Lin_GetVersionInfo( Std_VersionInfoType* versioninfo )
 
 ### 7.1.4. Lin_SendFrame
 
-**描述**: 如果需要发送LIN报头和LIN响应。帧响应的方向：主节点响应、从节点响应、从节点和从节点的通信，由PduInfoPtr提供。
+**说明**: 如果需要发送LIN报头和LIN响应。帧响应的方向：主节点响应、从节点响应、从节点和从节点的通信，由PduInfoPtr提供。
 
 ```C
 Std_ReturnType Lin_SendFrame( uint8 Channel, const Lin_PduType* PduInfoPtr )
@@ -330,7 +330,7 @@ Std_ReturnType Lin_SendFrame( uint8 Channel, const Lin_PduType* PduInfoPtr )
 
 ### 7.1.5. Lin_GoToSleep
 
-**描述**: 该服务指示驱动程序在指定的LIN通道上发送一个“进入休眠”命令。
+**说明**: 该服务指示驱动程序在指定的LIN通道上发送一个“进入休眠”命令。
 
 ```C
 Std_ReturnType Lin_GoToSleep( uint8 Channel )
@@ -338,7 +338,7 @@ Std_ReturnType Lin_GoToSleep( uint8 Channel )
 
 ### 7.1.6. Lin_GoToSleepInternal
 
-**描述**: 将通道状态设置为LIN_CH_SLEEP，启用唤醒检测，并可选择将LIN硬件单元设置为降低功耗的运行模式（如果HW支持）。
+**说明**: 将通道状态设置为LIN_CH_SLEEP，启用唤醒检测，并可选择将LIN硬件单元设置为降低功耗的运行模式（如果HW支持）。
 
 ```C
 Std_ReturnType Lin_GoToSleepInternal( uint8 Channel )
@@ -346,7 +346,7 @@ Std_ReturnType Lin_GoToSleepInternal( uint8 Channel )
 
 ### 7.1.7. Lin_Wakeup
 
-**描述**: 生成一个唤醒脉冲并将通道状态设置为LIN_CH_OPERATIONAL。
+**说明**: 生成一个唤醒脉冲并将通道状态设置为LIN_CH_OPERATIONAL。
 
 ```C
 Std_ReturnType Lin_Wakeup( uint8 Channel )
@@ -354,7 +354,7 @@ Std_ReturnType Lin_Wakeup( uint8 Channel )
 
 ### 7.1.8. LIN_WakeupInternal
 
-**描述**: 将通道状态设置为LIN_CH_OPERATIONAL，而不产生唤醒脉冲。
+**说明**: 将通道状态设置为LIN_CH_OPERATIONAL，而不产生唤醒脉冲。
 
 ```C
 Std_ReturnType Lin_WakeupInternal( uint8 Channel )
@@ -362,8 +362,12 @@ Std_ReturnType Lin_WakeupInternal( uint8 Channel )
 
 ### 7.1.9. Lin_GetStatus
 
-**描述**: 获取LIN驱动程序的状态。
+**说明**: 获取LIN驱动程序的状态。
 
 ```C
 Lin_StatusType Lin_GetStatus( uint8 Channel, uint8** Lin_SduPtr )
 ```
+
+# 微信扫一扫，获取更多及时资讯
+
+![](wechat.png)
