@@ -6,7 +6,7 @@
 
 本文的基础是**ISO 17987**规范[16]。本文并不会再次描述**ISO 17987**规范中已有的LIN功能，而只会对AUTOSAR相关内容进行介绍。
 
-LIN驱动适用于**ISO 17987**规范中主节点（**master node**）和从节点（**slave node**）。AUTOSAR中的LIN实现可能与ISO 17987规范中描述的LIN驱动程序有偏差，但LIN总线上的行为不会发生变化。它的目的是能够让所有现有的LIN节点以在AUTOSAR LIN实现(即LIN驱动程序)能被重用。
+LIN驱动适用于**ISO 17987**规范中主节点（**master node**）和从节点（**slave node**）。AUTOSAR中的LIN实现可能与ISO 17987规范中描述的LIN驱动程序有偏差，但LIN总线上的行为不会发生变化。它的目的是能够让所有现有的LIN节点在AUTOSAR LIN上重用。
 
 LIN驱动模块的目的是支持从简单的SCI/UART到复杂LIN硬件控制器（**LIN hardware controller**）的全部LIN硬件。SW-UART不在此模块定义的范畴。
 
@@ -49,10 +49,10 @@ LIN驱动模块可以支持多个通道。这意味着LIN驱动模块可以处�
 | LIN集群     | LIN cluster         | 一个集群是LIN总线加上线上所有的节点。                                                                                                                                                   |
 | LIN控制器   | LIN controller      | 一个专用的LIN硬件，带有一个构建Frame处理状态机。能够连接到多个LIN集群的硬件应该被视为多个LIN控制器。                                                                                    |
 | LIN帧       | LIN frame           | 所有信息以帧的形式发送。一个帧由报头和响应部分组成。                                                                                                                                    |
-| LIN帧处理器 | LIN frame processor | 帧处理意味着完整的LIN帧处理。实现可以实现软件仿真解决方案或一个专用LIN控制器。                                                                                                          |
+| LIN帧处理器 | LIN frame processor | 帧处理意味着完整的LIN帧处理。实现可以是软件仿真解决方案或一个专用LIN控制器。                                                                                                          |
 | LIN硬件单元 | LIN hardware unit   | LIN硬件单元可以驱动一个或多个LIN通道来控制一个或多个LIN集群。                                                                                                                           |
 | LIN报头     | LIN header          | 报头是帧的第一部分，总是通过主节点来发送。                                                                                                                                              |
-| LIN节点     | LIN node            | 简单的说一个节点就是一个ECU。但是单个ECU可以连接到多个LIN集群。                                                                                                                         |
+| LIN节点     | LIN node            | 简单地说，一个节点就是一个ECU。但是单个ECU可以连接到多个LIN集群。                                                                                                                         |
 | LIN响应     | LIN response        | LIN帧由报头和响应组成，因此LIN响应也被称为帧响应。                                                                                                                                      |
 
 ## 2.3. LIN硬件单元分类
@@ -129,7 +129,7 @@ AUTOSAR提供了基础软件模块[15]的通用规范，它也适用于LIN驱动
 
 一个LIN驱动程序提供对一个LIN硬件单元类型（简单的**UART**或专用LIN硬件）的访问，但这个LIN硬件单元却可能由几个LIN通道组成。对于不同的LIN硬件单元，需要实现一个单独的LIN驱动程序。并由实现者来调整驱动程序以适应类似LIN通道的不同实例。
 
-如果在一个ECU中，实现了几个LIN驱动程序实例（来自相同或不同的供应商），那么文件名、API名称和发布的参数必须进行修改，已达到不会生成两个具有相同名称的定义。名称应带有一个Vendor Id（将不同厂商区的LIN驱动程序区分开来）和一个Vendor特定名称（将同一个厂商实现的不同硬件单元区分开来）。格式如下:\<**Module abbreviation**\>\_\<**Vendor Id**\>\_\<**Vendor specific name**\>。同时LIN接口负责调用正确的函数。
+如果在一个ECU中，实现了几个LIN驱动程序实例（来自相同或不同的供应商），那么文件名、API名称和发布的参数必须进行修改，以达到不会生成两个具有相同名称的定义。名称应带有一个Vendor Id（将不同厂商区的LIN驱动程序区分开来）和一个Vendor特定名称（将同一个厂商实现的不同硬件单元区分开来）。格式如下:\<**Module abbreviation**\>\_\<**Vendor Id**\>\_\<**Vendor specific name**\>。同时LIN接口负责调用正确的函数。
 
 ## 4.2. 对汽车领域的适用性
 
@@ -139,7 +139,7 @@ AUTOSAR提供了基础软件模块[15]的通用规范，它也适用于LIN驱动
 
 ## 5.1. MCU
 
-LIN内部硬件单元的硬件取决于系统时钟（**system clock**）、预分频器（**prescaler**）和锁相环（**PLL**）。因此LIN发送每个为时间长度取决于模块MCU的时钟设置。
+LIN内部硬件单元的硬件取决于系统时钟（**system clock**）、预分频器（**prescaler**）和锁相环（**PLL**）。因此LIN发送每条帧时间长度取决于模块MCU的时钟设置。
 
 LIN驱动模块不会在它的初始化函数中负责配置时钟、预分频器和PLL的寄存器（例如打开/关闭PLL）。MCU模块必须做到这一点。
 
