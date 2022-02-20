@@ -1,4 +1,4 @@
-<section id="title">AUTOSAR CAN（CAN Driver）<section>
+<section id="title">AUTOSAR CAN（CAN Driver）</section>
 
 # 1. 简介和功能概述
 
@@ -640,6 +640,10 @@ Std_ReturnType Can_GetIngressTimeStamp (
     Can_HwHandleType Hrh, Can_TimeStampType* timeStampPtr )
 ```
 
+<section id="wechat">
+
 # 10. 微信扫一扫，获取更多及时资讯
 
 ![](wechat.png)
+
+</section>

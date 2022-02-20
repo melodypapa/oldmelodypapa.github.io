@@ -9,6 +9,10 @@ section#title {
   font-weight: bold;
 }
 
+section#wechat {
+  text-align: center;
+}
+
 .markdown-section h2 {
   font-size: 1.3rem;
   margin: 0.8rem 0 .8rem
