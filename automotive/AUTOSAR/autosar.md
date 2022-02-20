@@ -13,4 +13,5 @@
 * [AUTOSAR Socket Adaptor](/automotive/AUTOSAR/communication/SoAd/SoAd.md)
 * [AUTOSAR Ethernet Driver](/automotive/AUTOSAR/communication/EthernetDriver/EthernetDriver.md)
 * [AUTOSAR LIN Driver](/automotive/AUTOSAR/communication/LINDriver/LINDriver.md)
+* [AUTOSAR CAN Driver](/automotive/AUTOSAR/communication/CANDriver/CANDriver.md)
 
