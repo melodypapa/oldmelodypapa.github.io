@@ -892,7 +892,7 @@ void UdpNm_MainFunction<Instance_Id>( void )
 
 <section id="wechat">
 
-# 8. 微信扫一扫，获取更多及时资讯
+# 微信扫一扫，获取更多及时资讯
 
 ![](wechat.png)
 
