@@ -30,30 +30,39 @@ UDP 网络管理（**UdpNm**）功能提供网络管理接口（**Nm**）和**TC
 
 ## 2.2. 术语 
 
-* PDU传输能力被禁用（**PDU transmission ability is disabled**）
+**PDU传输能力被禁用**（**PDU transmission ability is disabled**）
   > 这意味着**NM**消息传输已被可选服务**UdpNm_DisableCommunication**禁用。
-* 重复消息请求位指示（**Repeat Message Request Bit Indication**）
+
+**重复消息请求位指示**（**Repeat Message Request Bit Indication**）
   > 在接收到的**NM**消息时，**UdpNm_SoAdIfRxIndication**函数寻找**Control Bit Vector**的重复消息位。
-* **NM PDU** 
+
+**NM PDU** 
   > 指在数据包中传输的有效载荷。 它包含**NM**用户数据以及控制位向量和源节点标识符。
-* **NM Packet**
+  
+**NM Packet**
   > 指一个以太网帧，除了由NM在有效载荷部分传输的数据（**PDU**）之外，还包含一个**IP**和一个**UDP**报头。
-* NM Message
+
+**NM Message**
   > 抽象术语，指在NM算法的方法中传输的任何单个信息项。
-* **Bus-Off state**
+
+**Bus-Off state**
   > 指没有电缆连接到以太网硬件的情况。
-* 顶级PNC协调员（**Top-level PNC coordinator**）
+
+**顶级PNC协调员**（**Top-level PNC coordinator**）
   > 顶级PNC协调器是一个ECU，它充当网络中的PNC网关，并在所有分配的通道上主动协调处理至少一个PNC。如果启用了同步PNC关闭，如果网络中没有其他ECU请求它们，顶级PNC协调器将为这些PNC触发关闭。
-* 中间PNC协调器（**Intermediate PNC coordinator**）
+
+**中间PNC协调器**（**Intermediate PNC coordinator**）
   > 中间PNC协调器是一个ECU，它充当网络中的PNC网关，并在至少一个分配的通道上将至少一个PNC处理为被动协调。如果启用了同步PNC关闭，它会将收到的这些PNC的关闭请求转发到相应的主动协调通道，并相应地启动它们的关闭。
-* PNC叶节点（**PNC leaf node**）
+
+**PNC叶节点**（**PNC leaf node**）
   > PNC叶节点是一个ECU，在网络中根本不充当PNC协调器。它像通常的NM消息一样处理PN关闭消息。
-* PN关闭消息（**PN shutdown message**）
+
+**PN关闭消息**（**PN shutdown message**）
   > 顶级PNC协调器发送PN关闭消息以指示跨PN拓扑的同步PNC关闭。PN关闭消息是作为**NM**消息，它在控制位向量中具有**PNSR**位，并且所有被指示用于同步关闭的PNC都设置为**1**。
 
-  # 3. 相关文档
+# 3. 相关文档
 
-  ## 3.1. 输入文件
+## 3.1. 输入文件
 
 [1] Layered Software Architecture 
 > AUTOSAR_EXP_LayeredSoftwareArchitecture.pdf
