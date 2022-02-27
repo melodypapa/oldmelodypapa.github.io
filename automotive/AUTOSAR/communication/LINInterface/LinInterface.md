@@ -18,7 +18,7 @@ LIN接口可以处理多个LIN驱动程序。LIN驱动可以支持多个通道�
 
 根据分层软件体系结构[2]，LIN接口位于基础软件体系结构中，如图1所示。本例中，LIN接口连接到两个LIN驱动程序。然而单个的LIN驱动程序是最常见的配置。
 
-![](2022-02-07-13-34-11.png)
+![AUTOSAR BSW software architecture (LIN relevant modules)](Figure1.png)
 
 ## 1.2. 功能概述
 
@@ -343,7 +343,9 @@ LIN主节点负责调度表的调度，启动总线上的所有帧。
 
 #### 6.2.1.3. 状态检查
 
-LIN接口应该在最大帧长度之后最早调用Lin_GetStatus函数，在下一个schedule entry到期时最晚调用Lin_GetStatus函数来确定LIN Driver模块的状态。
+LIN接口需要最早在最大帧长度，最迟在下一个调度条目到期时，调用函数**Lin_GetStatus**确定LIN驱动模块的状态。
+
+LIN接口模块的实现者需要找到一种有效的方法来确定LIN驱动程序的状态检查。正常的实现是在最大帧长度过去后在每个LinIf_MainFunction_<LinIfChannel.ShortName>函数调用中检查状态。 在这种情况下，帧传输仍在继续（忙）状态确定应在下一次LinIf_MainFunction_<LinIfChannel.ShortName> 函数调用中再次检查（如果当前 LinIf_MainFunction_<LinIfChannel.ShortName> 当然没有开始新帧 ）。
 
 
 
