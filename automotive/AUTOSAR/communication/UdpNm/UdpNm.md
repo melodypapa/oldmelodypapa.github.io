@@ -442,6 +442,449 @@ NM用户数据的支持需使用**UdpNmUserDataEnabled**开关（配置参数）
 
 ### 6.7.5. 通讯控制（可选）
 
+通信控制（**Communication Control**）需使用**UdpNmComControlEnabled**开关（配置参数）进行静态配置。
 
+可选服务**UdpNm_DisableCommunication**可禁用**NM PDU**传输能力。
 
+**注意：**
+如果禁用**NM PDU**传输能力，**NM**协调算法将无法正常工作。 因此，必须确保即使**NM PDU**传输能力被禁用，**ECU**也不会关闭（**shutdown**）。
 
+如果UdpNm_NetworkRelease被调用，并且**NM PDU**传输能力也已被禁用，则**ECU**将关闭。 这确保了**ECU**也可以在以下的情况下关闭：
+
+* 竞争条件（例如：在启用通信之前不久离开诊断会话）
+* 错误使用通信控制的。
+
+如果当前模式不是网络模式，可选服务**UdpNm_DisableCommunication**应返回**E_NOT_OK**。
+
+**当NM PDU传输能力被禁用时**：
+
+* UdpNm模块需停止UdpNm消息周期定时器以停止**NM PDU**的传输。
+* 需要停止NM超时定时器（**NM-Timeout Timer**）。
+* 远程睡眠指示定时器（**Remote Sleep Indication Timer**）的检测将被暂停。
+* 可选服务**UdpNm_RequestBusSynchronization**应返回**E_NOT_OK**。
+
+**当NM PDU传输能力被启用时**：
+
+* **NM PDU**的传输需最晚在下一个NM主函数中开始。
+* 需重新启动NM超时定时器（**NM-Timeout Timer**）。
+* 需恢复远程睡眠指示定时器（**Remote Sleep Indication Timer**）的检测。
+
+### 6.7.6. NM 协调器同步支持（可选）
+
+当有多个协调器连接到同一总线时，CBV中有一个特殊位，**NmCoordinatorSleepReady位**用于指示主协调器请求启动关闭序列。该算法的主要功能可参考Nm模块中的描述。
+
+如果**UdpNm**调用**NM_CoordReadyToSleepIndication**，并且仍处于网络模式，它应在第一次接收到带有**NmCoordinatorSleepReady位**的NM消息时调用 **Nm_CoordReadyToSleepCancellation**通知Nm，将其设置为**0**。
+
+如果**UdpNm**已进入网络模式或调用**Nm_CoordReadyToSleepCancellation**，则它应在第一次收到NM消息时，调用**Nm_CoordReadyToSleepIndication**通知NM，并且**NmCoordinatorSleepReady位**设置为**1**。
+
+如果**UdpNmCoodinatorSyncSupport**设置为**TRUE**，并且API **UdpNm_SetSleepReadyBit**被调用，**UdpNm**应设置**NmCoordinatorSleepReady位**,并触发单个**NM PDU**。
+
+仅当**UdpNmCoordinatorSyncSupport**设置为**TRUE**时，程序接口**UdpNm_SetSleepReadyBit** 和**Coordinated Bus Shutdown**功能才可用。
+
+## 6.8. 部分联网（Partial Networking）
+
+### 6.8.1. NM PDU的Rx处理
+
+当**UdpNmPnEnabled**为**FALSE**，则**UdpNm**应执行正常的Rx指示处理，并且应禁用部分网络（**partial networking**）扩展。
+
+当**UdpNmPnEnabled**为**TRUE**：
+* 如果接收到的**NM-PDU**中的**PNI**位为**0**，并且**UdpNmAllNmMessagesKeepAwake**为**TRUE**，则**UdpNm**模块需执行正常的**Rx**指示处理，省略部分网络的扩展。
+* 如果接收到的**NM-PDU**中的**PNI**位为**0**，并且**UdpNmAllNmMessagesKeepAwake**为**FALSE**，则**UdpNm**模块需忽略接收到的**NM-PDU**。
+* 如果接收到的**NM-PDU**中的**PNI**位为**1**，则**UdpNm**模块需按照第6.8.3至6.8.5所述处理**NM-PDU**的部分网络信息。
+
+### 6.8.2. NM PDU的Tx处理
+
+如果**UdpNmPnEnabled**为**TRUE**，则**UdpNm**模块需将**CBV**中发送的**PNI**位的值设置为**1**。
+
+如果**UdpNmPnEnabled**为**FALSE**，则**UdpNm**模块需将**CBV**中发送的**PNI**位的值始终设置为**0**。
+
+**注意：**
+如果使用部分网络，则必须使用CBV。
+
+### 6.8.3. NM PDU过滤算法
+
+接收到的**NM-PDU**中包含PN请求信息（**PN request information**）的范围，已字节位单位。它由**UdpNmPnInfoOffset**（字节）和**UdpNmPnInfoLength**（字节）定义。 此范围称为PN信息范围（**PN Info Range**）。
+
+**例如:**
+
+- UdpNmPnInfoOffset = 3
+- UdpNmPnInfoLength = 2
+
+表示NM消息中只有第3个字节和第4字节，包含PN请求信息。
+
+PN信息范围的每一位代表一个部分网络（**Partial Network**）。如果该位设置为**1**，则请求部分网络。如果该位设置为**0**，则没有对该PN的请求。
+
+通过配置参数**UdpNmPnFilterMaskByte**，UdpNm能够检测哪些**PN**与**ECU**相关，哪些不相关。**UdpNmPnFilterMaskByte**的每一位具有以下含义：
+
+* 0：PN请求与ECU无关。即使在接收到的**NM-PDU**中设置了该位，ECU的通信堆栈也不会保持唤醒。
+* 1：PN请求与ECU相关。如果在接收到的**NM-PDU**中设置了该位，则ECU的通信堆栈保持唤醒
+
+每个PN过滤器掩码字节需按位与（**bitwise AND**）的方式映射到**NM**消息的PN信息范围内的相应字节。如果接收到的**NM-PDU**的PN信息范围内至少一位与NM过滤掩码中的一位匹配，则PN请求信息与ECU相关。
+
+如果在接收到的**NM-PDU**中没有请求相关的PN，并且**UdpNmAllNmMessagesKeepAwake** 为**FALSE**，则UpdNm模块需丢弃该PDU。
+
+如果在接收到的**NM-PDU**中没有请求相关的PN，并且**UdpNmAllNmMessagesKeepAwake**为**TRUE**，则UpdNm模块不应丢弃该**PDU**，并在进一步的Rx指示处理。
+
+### 6.8.4. 内部和外部请求的部分网络的聚合
+
+由于部分网络的活动，每个使用此功能**ECU**都必须切换**I-PDU Group**。 例如：为了防止错误超时）。如果内部或外部请求相应的**PN**，则需打开**I-PDU Group**。直到所有内部和外部对相应**PN**的请求都被释放后，**I-PDU Group**才会被关闭。
+
+切换**I-PDU Group**的逻辑由**ComM**实现。**UdpNm**模块仅提供是否请求PN的信息，COM模块用于将数据传输到上层。
+
+为了在所有直接连接的ECU上同步切换**I-PDU Group**，UdpNm需要实现每个ECU几乎在同一时刻，向上层提供请求更改的信息。这就是为什么每次收到和发送的NM消息都会重新启动重置计时器。
+
+内部和外部请求PN的聚合状态，称为（**EIRA**）。即：外部内部请求聚合（**External Internal Requests Aggregated**）。
+
+如果**UdpNmPnEiraCalcEnabled**为**TRUE**，则**UdpNm**应提供在所有相关通道（即：所有**UdpNmPnEnabled**为**TRUE**的**UdpNm**通道）上组合存储外部和内部请求PN的可能性。在初始化时，所有PN的值应设置为**0**（未请求）。
+
+如果外部请求满足以下条件，**UdpNm**需存储这些PN的请求信息，并把PN的值设置为**1**
+
+* **UdpNmPnEiraCalcEnabled**为**TRUE**
+* 接收到**NM-PDU**
+* PN在此消息中被请求（即：相关位都已经设置为**1**）
+* 请求的PN在配置的PN过滤器掩码中设置也都为**1**
+
+如果内部请求满足以下条件，**UdpNm**也需存储这些PN的请求信息，并把PN的值设置为**1**
+
+* **UdpNmPnEiraCalcEnabled**为**TRUE**
+* UdpNM正在请求发送**NM-PDU**
+* 在此消息中请求PN（即：相关位都已经设置为**1**）
+* 请求的PN在配置的PN过滤器掩码中设置也都为**1**
+
+如果**UdpNmPnEiraCalcEnabled**为TRUE，并且此PN仍然在至少一个相关通道上被外部或内部请求，则**UdpNm**模块需提供监视每个PN的可能性。
+
+**注意：**
+这意味着只需要一个计时器来处理多个连接的物理通道上的一个PN。例如：只需要8个EIRA重置定时器（**reset timer**）来处理具有6个物理通道和8个部分网络的网关的请求。这主要因为PN的**PDU Group**的切换是为ECU全局完成的，而不依赖于任何物理通道。
+
+如果**UdpNmPnEiraCalcEnabled**为TRUE，并且在消息接收或发送时请求PN，则应根据**UdpNmPnResetTime**重新开始对该PN的监视。
+
+**注意：**
+**UdpNmPnResetTime**需配置为大于**UdpNmMsgCycleTime**的值。如果将 **UdpNmPnResetTime**配置为小于**UdpNmMsgCycleTime**的值，并且只有一个ECU请求PN，则请求状态在**EIRA**中切换。因为请求状态在请求的ECU能够发送下一个NM消息之前已停止。
+
+同时**UdpNmPnResetTime**应配置为小于**UdpNmTimeoutTime**的值，以避免在NM已更改为准备总线睡眠（**Prepare Bus Sleep**）后，定时器可能会超时。
+
+如果**UdpNmPnEiraCalcEnabled**为**TRUE**，并且在**UdpNmPnResetTime**时间内未再次请求PN，则该PN的相应存储值应设置为**0**（未请求）。
+
+如果**UdpNmPnEiraCalcEnabled**为**TRUE**，并且存储的PN值设置为已请求或返回为未请求，**UdpNm**需通过调用**PduR_UdpNmRxIndication**通知上层关于配置的**EIRA PDU**（更改的**EIRA**信息需要传递给COM）。
+
+如果**UdpNmPnEiraCalcEnabled**为**TRUE**，并且**UdpNmPnEraCalcEnabled**为**TRUE**，则PN状态信息必须分别存储为两份：**EIRA**和**ERA**信息。
+
+### 6.8.5. 外部请求的部分网络的聚合
+
+此功能主要供网关（**gateway**）收集外部PN请求（**external PN request**）使用。外部PN请求被镜像回请求总线，并提供给中央网关的其他物理通道。
+
+在子网关的情况下，请求位（**requests bit**）不得镜像回请求的物理通道，以避免中央网关和子网关之间的静态唤醒。 该逻辑应由**ComM**模块实现。
+
+**UdpNm**模块提供是否从外部请求PN的信息。COM模块用于向上层传输数据。外部请求的PN的聚合状态称为ERA，即：外部请求聚合（**External Requests Aggregated**）。
+
+如果**UdpNmPnEraCalcEnabled**为**TRUE**，则**UdpNM**应提供在每个相关通道上存储外部请求的**PN**的可能性。 在初始化时，所有PN的值应设置为**0**（未请求）。
+
+如果以下条件满足，UdpNm 将存储这些PN的请求信息，并把PN的值设置为**1**。
+* **UdpNmPnEraCalcEnabled**为**TRUE**。
+* 接收到**NM-PDU**。
+* 在此接收消息中请求PN（即：相关位都已经设置为**1**）。
+* 请求的PN在配置的PN过滤器掩码中设置为**1**。
+
+如果**UdpNmPnEraCalcEnabled**为**TRUE**，并且此PN仍然被外部请求，则**UdpNm**模块需提供监视每个相关通道和每个PN的可能性。
+
+这意味着需要一个单独的计时器（**separate timer**）来处理多个物理通道上的一个PN。例如：需要48个ERA复位定时器来处理具有6个物理通道和8个部分网络的网关的请求。不能像 **EIRA**定时器那样组合复位定时器，因为外部请求不能通过子网关（**sub gateway**）镜像回请求总线。因此需要检测作为请求位源的物理通道。
+
+如果**UdpNmPnEraCalcEnabled**为**TRUE**，并且消息接收请求PN，则应根据 **UdpNmPnResetTime**重新开始对该PN的监视。
+
+**注意：**
+**UdpNmPnResetTime**需配置为大于**UdpNmMsgCycleTime**的值。如果将 **UdpNmPnResetTime**配置为小于**UdpNmMsgCycleTime**的值，并且只有一个ECU请求PN，则请求状态在**ERA**中切换，因为请求状态在请求的ECU能够发送下一个**NM-PDU**之前已停止。
+
+同时**UdpNmPnResetTime**应配置为小于**UdpNmTimeoutTime**的值，以避免在NM已更改为准备总线睡眠（**Prepare Bus Sleep**）后，定时器可能会超时。
+
+如果**UdpNmPnEraCalcEnabled**为**TRUE**，并且在**UdpNmPnResetTime**时间内未再次请求PN，则该PN的相应存储值应设置为**0**（未请求）。
+
+如果**UdpNmPnEraCalcEnabled**为**TRUE**，并且存储的PN值设置为已请求或返回为未请求，**UdpNm**需通过调用**PduR_UdpNmRxIndication**通知上层关于配置的**ERA PDU**（更改的**ERA**信息需要传递给COM）。
+
+如果**UdpNmPnEiraCalcEnabled**为**TRUE**，并且**UdpNmPnEraCalcEnabled**为**TRUE**，则PN状态信息必须分别存储为两份：**EIRA**和**ERA**信息。
+
+### 6.8.6. 通过UdpNm_NetworkRequest自发传输NM-PDU
+
+如果**UdpNmPnHandleMultipleNetworkRequests**设置为**TRUE**，**UdpNm_NetworkRequest**接口被调用，并且**UdpNm**处于就绪睡眠状态（**Ready Sleep State**）、正常操作状态（**Normal Operation State**）或重复消息状态（**Repeat Message State**），则UdpNm将更改为或重新启动重复消息状态（**Repeat Message State**）。
+
+**注意：**
+如果**UdpNmPnHandleMultipleNetworkRequests**设置为**TRUE**，则**UdpNm**的立即传输（**Immediate Transmission**）功能是强制性的。
+
+如果PN请求位发生变化，PN控制模块（例如：ComM）负责调用**UdpNm_NetworkRequest**。
+
+## 6.9. 有效载荷（PDU）的结构
+
+下图显示了n字节长度PDU的示例。
+
+![](Figure_5.png)
+
+网络管理PDU的长度是由全局ECUC模块（**global ECUC module**）中的PduLength参数定义。（请参阅EcuC的规范）。启用系统的字节数和长度之间的差异是用户数据字节（**user data bytes**）的数量。
+
+* 源节点标识符（**Source Node Identifier**）的位置应可通过**UDPNM_PDU_NID_POSITION**配置为**字节0**、**字节1**或**关闭**。默认为字节0。
+* 控制位向量（**Control Bit Vector**）的位置应可通过**UDPNM_PDU_CBV_POSITION** 配置为**字节0**、**字节1**或**关闭**。默认为字节1。
+
+NM包的长度不能超过底层物理传输层的MTU（**Maximum Transmission Unit**）。
+
+### 6.9.1. 控制位向量（**Control Bit Vector**）
+
+下图描述了控制位向量的格式：
+
+![](Figure_6.png)
+
+控制位向量应包括：
+* 位0：重复消息请求。
+  * 0：未请求重复消息状态；
+  * 1：请求重复消息状态。
+* 位1：保留用于将来的扩展。默认为0。
+* 位2：保留用于将来的扩展。默认为0。
+* 位3：NM协调器休眠位。
+  * 0：主协调器未请求启动同步关机。
+  * 1：主协调器请求启动同步关机。
+* 位4: 主动唤醒位。
+  * 0：节点未唤醒网络（被动唤醒）。
+  * 1：节点已唤醒网络（主动唤醒）。
+* 位5：保留用于将来的扩展。默认为0。
+* 位6：部分网络信息位 (PNI)。
+  * 0：NM消息不包含部分网络（**Partial Network**）请求信息。
+  * 1：NM消息包含部分网络（**Partial Network**）请求信息。
+* 位7：保留用于将来的扩展。默认为0。
+
+控制位向量在初始化为**0x00**。
+
+除非**UDPNM_PDU_NID_POSITION**设置为关闭，否则源节点标识符应使用配置参数**UDPNM_NODE_ID**设置。
+
+如果**UdpNmActiveWakeupBitEnabled**参数为**TRUE**:
+
+1. **UdpNm**由于调用 **UdpNm_NetworkRequest**（即由于主动唤醒）而执行从**Bus Sleep**状态或 **Prepare Bus Sleep**状态到**Network Mode**状态更改，则**UdpNm**需在CBV中设置**Active Wakeup Bit**。
+2. **UdpNm**模块离开**Network Mode**，则**UdpNm**模块应清除CBV中的**Active Wakeup Bit**。
+
+## 6.10. 车辆唤醒
+
+**NM-PDU**中车辆唤醒位（**Car Wakeup bit**）的位置由配置参数**UdpNmCarWakeUpBytePosition**和**UdpNmCarWakeUpBitPosition**定义。
+
+针对无车辆唤醒过滤器的情况，如果满足下列的条件，**UdpNm**应调用**Nm_CarWakeUpIndication**，并执行标准接收指示处理。
+
+* 接收到的任意**NM-PDU**中的车辆唤醒位为**1**，
+* **UdpNmCarWakeUpRxEnabled**为**TRUE**，
+* **UdpNmCarWakeUpFilterEnabled**为**FALSE**。
+
+如果在**Nm_CarWakeUpIndication**的上下文中调用**UdpNm_GetPduData**，并且**UdpNmNodeDetectionEnabled**或者**UdpNmUserDataEnabled**或者 **UdpNmNodeIdEnabled**设置为**TRUE**，**UdpNm**应返回引起 **Nm_CarWakeUpIndication**调用的PDU的数据。
+
+**注意：**
+这是使ECU识别有关车辆唤醒请求发送者的详细信息所必需的。
+
+针对包含车辆唤醒过滤器的情况，如果满足下列的条件，**UdpNm**应调用**Nm_CarWakeUpIndication**，并执行标准接收指示处理。
+
+* **UdpNmCarWakeUpFilterEnabled**为**TRUE**，
+* 接收到的任意NM-PDU中的车辆唤醒位为**1**，
+* **UdpNmCarWakeUpRxEnabled**为**TRUE**，
+* 接收到的**NM-PDU**中的节点ID等于**UdpNmCarWakeUpFilterNodeId** 
+
+注意：车辆唤醒过滤器是实现子网关（**sub gateway**）所必需的，它只考虑中央网关的车辆唤醒，以避免错误唤醒。
+
+# 7. API规范
+
+## 7.1. 函数定义
+
+### 7.1.1. UdpNm_Init
+
+**说明**: 初始化完整的 **UdpNm** 模块，即：配置时激活的所有通道都被初始化。并通过**TCP/IP**堆栈设置**UDP**套接字。
+
+```C
+void UdpNm_Init( const UdpNm_ConfigType* UdpNmConfigPtr )
+```
+
+### 7.1.2. UdpNm_PassiveStartUp
+
+**说明**: **AUTOSAR UdpNm**的被动启动。它触发从总线睡眠模式（Bus-Sleep Mode）或准备总线睡眠模式（Prepare Bus Sleep Mode）到重复消息状态（Repeat Message State）的网络模式（Network Mode）的转换。
+
+```C
+Std_ReturnType UdpNm_PassiveStartUp( NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.3. UdpNm_NetworkRequest
+
+**说明**: 请求网络，因为ECU需要在总线上通信。网络状态应更改为“已请求”。
+
+```C
+Std_ReturnType UdpNm_NetworkRequest( NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.4. UdpNm_NetworkRelease
+
+**说明**: 释放网络，因为ECU不必在总线上通信。网络状态应更改为“已释放”。
+
+```C
+Std_ReturnType UdpNm_NetworkRelease( NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.5. UdpNm_DisableCommunication
+
+**说明**: 由于 **ISO14229** 通信控制 (0x28) 服务而禁用 NM PDU 传输能力。（仅当 UdpNmComControlEnabled == true 时可用）
+
+```C
+Std_ReturnType UdpNm_DisableCommunication( NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.6. UdpNm_EnableCommunication
+
+**说明**: 由于 **ISO14229** 通信控制 (0x28) 服务而启用 NM PDU 传输能力。（仅当 UdpNmComControlEnabled == true 时可用）
+
+```C
+Std_ReturnType UdpNm_EnableCommunication( NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.7. UdpNm_SetUserData
+
+**说明**: 在此函数无错误返回后，为总线上传输的所有 NM 消息（**NM messages**）设置用户数据。
+
+```C
+Std_ReturnType UdpNm_SetUserData( 
+  NetworkHandleType nmChannelHandle, const uint8* nmUserDataPtr )
+```
+
+### 7.1.8. UdpNm_GetUserData
+
+**说明**: 从最近收到的 NM 消息（**NM messages**）中获取用户数据。
+
+```C
+Std_ReturnType UdpNm_GetUserData( 
+  NetworkHandleType nmChannelHandle, uint8* nmUserDataPtr )
+```
+
+### 7.1.9. UdpNm_GetNodeIdentifier
+
+**说明**: 从最近收到的 NM PDU 中获取节点标识符。
+
+```C
+Std_ReturnType UdpNm_GetNodeIdentifier( 
+  NetworkHandleType nmChannelHandle, uint8* nmNodeIdPtr )
+```
+
+### 7.1.10. UdpNm_GetLocalNodeIdentifier
+
+**说明**: 获取为本地节点（**local node**）配置的节点标识符。
+
+```C
+Std_ReturnType UdpNm_GetLocalNodeIdentifier( 
+  NetworkHandleType nmChannelHandle, uint8* nmNodeIdPtr )
+```
+
+### 7.1.11. UdpNm_RepeatMessageRequest
+
+**说明**: 在此函数无错误返回后，为总线上传输的所有NM消息设置重复消息请求位（**Repeat Message Request Bit**）。
+
+```C
+Std_ReturnType UdpNm_RepeatMessageRequest( 
+  NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.12. UdpNm_GetPduData
+
+**说明**: 从最近收到的 NM 消息中获取整个 PDU 数据。
+
+```C
+Std_ReturnType UdpNm_GetPduData( 
+  NetworkHandleType nmChannelHandle, uint8* nmPduDataPtr )
+```
+
+### 7.1.13. UdpNm_GetState
+
+**说明**: 返回网络管理的状态和模式。
+
+```C
+Std_ReturnType UdpNm_GetState( 
+  NetworkHandleType nmChannelHandle, 
+  Nm_StateType* nmStatePtr, 
+  Nm_ModeType* nmModePtr )
+```
+
+### 7.1.14. UdpNm_GetVersionInfo
+
+**说明**: 该服务返回该模块的版本信息
+
+```C
+void UdpNm_GetVersionInfo( Std_VersionInfoType* versioninfo )
+```
+
+### 7.1.15. UdpNm_RequestBusSynchronization
+
+**说明**: 请求总线同步。（仅当 UdpNmBusSynchronizationEnabled==true 和 UdpNmPassiveModeEnabled==false 时可用）。
+
+```C
+Std_ReturnType UdpNm_RequestBusSynchronization( NetworkHandleType nmChannelHandle )
+```
+
+### 7.1.16. UdpNm_CheckRemoteSleepIndication
+
+**说明**: 检查远程睡眠指示是否发生。（仅当 UdpNmRemoteSleepIndEnabled == true 时可用）
+
+```C
+Std_ReturnType UdpNm_CheckRemoteSleepIndication( NetworkHandleType nmChannelHandle, boolean* NmRemoteSleepIndPtr )
+```
+
+### 7.1.17. UdpNm_SetSleepReadyBit
+
+**说明**: 设置控制位向量（**CBV**）中的 NM 协调器睡眠就绪位
+
+```C
+Std_ReturnType UdpNm_SetSleepReadyBit( 
+  NetworkHandleType nmChannelHandle, boolean nmSleepReadyBit )
+```
+
+### 7.1.18. UdpNm_Transmit
+
+**说明**: 请求传输 PDU。
+
+```C
+Std_ReturnType UdpNm_Transmit( 
+  PduIdType TxPduId, const PduInfoType* PduInfoPtr )
+```
+
+## 7.2. Call-back通知
+
+### 7.2.1. UdpNm_SoAdIfTxConfirmation
+
+**说明**: 下层通信接口模块确认PDU的传输，或者PDU的传输失败。
+
+```C
+void UdpNm_SoAdIfTxConfirmation( PduIdType TxPduId, Std_ReturnType result )
+```
+
+### 7.2.2. UdpNm_SoAdIfRxIndication
+
+**说明**: 指示从较低层通信接口模块接收到的 PDU。
+
+```C
+void UdpNm_SoAdIfRxIndication( 
+  PduIdType RxPduId, const PduInfoType* PduInfoPtr )
+```
+
+### 7.2.3. UdpNm_TriggerTransmit
+
+**说明**: 在此API中，上层模块将检查可用数据是否适合**PduInfoPtr->SduLength**报告的缓冲区大小。 如果合适，它将其数据复制到**PduInfoPtr->SduDataPtr**提供的缓冲区中，并更新实际复制数据的长度到**PduInfoPtr->SduLength**中。 如果不是，则返回**E_NOT_OK**而不更改**PduInfoPtr**。
+
+```C
+Std_ReturnType UdpNm_TriggerTransmit( 
+  PduIdType TxPduId, PduInfoType* PduInfoPtr )
+```
+
+## 7.3. 调度函数
+
+### 7.3.1. UdpNm_MainFunction_\<Instance Id\>
+
+**说明**: 处理本文档中描述的算法的**UdpNm**的主函数。
+例如：
+* **UdpNm_MainFunction_0()** 表示UDP通道**0**的**UdpNm**实例。
+* **UdpNm_MainFunction_1()** 表示UDP通道**1**的**UdpNm**实例 ... 
+
+```C
+void UdpNm_MainFunction<Instance_Id>( void )
+```
+
+<section id="wechat">
+
+# 8. 微信扫一扫，获取更多及时资讯
+
+![](wechat.png)
+
+</section>
